@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage Academy: Worked Examples 2 & 3 (Projector Mode)</title>
+</head>
+<body style="margin:0; font-family:sans-serif; background-color:#FFFDF5;">
+    <div id="app"></div>
+
+    <script>
+        const BLUE = 'background:#0D47A1; color:#FFFFFF; border:3px solid #083378; padding:12px 18px; font-size:18px; cursor:pointer; border-radius:5px; margin:5px; font-weight:bold;';
+        const BLUE_DIS = 'background:#888; color:#fff; border:3px solid #666; padding:12px 18px; font-size:18px; cursor:not-allowed; border-radius:5px; margin:5px; font-weight:bold;';
+        const GREY = 'background:#fff; color:#000; border:2px solid #333; padding:12px 18px; font-size:18px; cursor:pointer; border-radius:5px; margin:5px; font-weight:bold;';
+        const NAV = 'background:#B8860B; color:#fff; border:2px solid #8B6508; padding:10px 15px; font-size:16px; cursor:pointer; border-radius:4px; margin:5px; font-weight:bold;';
+        const NAV_DIS = 'background:#D4C890; color:#888; border:2px solid #D4C890; padding:10px 15px; font-size:16px; cursor:not-allowed; border-radius:4px; margin:5px; font-weight:bold;';
+
+        const data = [
+            {
+                t: "Worked Example 2 — Trapezium PQRS (Page 15)",
+                qs: [
+                    {
+                        label: "Vertices: P(-4,2), Q(-2,-2), R(1,-2), S(4,2)",
+                        type: "trap",
+                        steps: [
+                            { w: ["(a) Draw and label trapezium PQRS."], a: "Plot points and connect", e: "P is in the top-left, Q and R form the flat base, and S is in the top-right." },
+                            { w: ["(b)(i) Find the gradient of PQ."], a: "Rise = -4, Run = 2", e: "From P(-4,2) to Q(-2,-2), we go down 4 units and right 2 units. Gradient = -4 / 2 = -2." },
+                            { w: ["(b)(ii) Find the gradient of QR."], a: "Horizontal line", e: "From Q(-2,-2) to R(1,-2), the line is completely flat. Rise is 0. Gradient = 0." },
+                            { w: ["(b)(iii) Find the gradient of RS."], a: "Rise = 4, Run = 3", e: "From R(1,-2) to S(4,2), we travel up 4 units and right 3 units. Gradient = 4 / 3 (or 1 1/3)." },
+                            { w: ["(c) Write down the equation of line QR."], a: "Passes through y = -2", e: "Because QR is a horizontal line where every y-coordinate is exactly -2, its equation is simply y = -2." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Worked Example 3 — Graphing y = 2 - 3x (Pages 17-19)",
+                qs: [
+                    {
+                        label: "Parts (a) & (b): Table of Values & Drawing",
+                        type: "ex3_ab",
+                        steps: [
+                            { w: ["(a) Complete the table for y = 2 - 3x", "When x = -3, y = 2 - 3(-3) = 11", "When x = 0, y = 2 - 3(0) = 2", "When x = 3, y = 2 - 3(3) = -7"], a: "Calculate coordinates", e: "Substitute the given x values into the equation to find the corresponding y outputs." },
+                            { w: ["Plot the points: (-3, 11), (0, 2), (3, -7)"], a: "Mark coordinates on grid", e: "Watch the graph to see where these three calculated points land." },
+                            { w: ["(b) Draw the graph"], a: "Join with straight line", e: "Connect the points with a single straight line spanning from x = -3 to x = 3." }
+                        ]
+                    },
+                    {
+                        label: "Part (c): Read values from the graph",
+                        type: "ex3_c",
+                        steps: [
+                            { w: ["(c)(i) Find the value of y when x = -1.5"], a: "Start at x-axis", e: "Locate -1.5 on the horizontal axis and travel straight up to hit the graph line." },
+                            { w: ["y = 6.5"], a: "Read across to y-axis", e: "Travel horizontally from the line to the y-axis. The value is halfway between 6 and 7." },
+                            { w: ["(c)(ii) Find the value of x when y = 5"], a: "Start at y-axis", e: "Locate 5 on the vertical axis and travel across to hit the graph line." },
+                            { w: ["x = -1"], a: "Read down to x-axis", e: "Travel straight down to the x-axis. The corresponding input is -1." }
+                        ]
+                    },
+                    {
+                        label: "Part (d): Find the gradient",
+                        type: "ex3_d",
+                        steps: [
+                            { w: ["(d) Find the gradient of the graph"], a: "Gradient = Rise / Run", e: "Let's use the points (0, 2) and (3, -7) to calculate the steepness of our drawn line." },
+                            { w: ["Run = 3 units right"], a: "Horizontal change", e: "From x = 0 to x = 3, we move 3 units horizontally." },
+                            { w: ["Rise = -9 units down"], a: "Vertical change", e: "From y = 2 down to y = -7, we drop 9 units. Rise is negative." },
+                            { w: ["Gradient = -9 / 3 = -3"], a: "Calculate ratio", e: "The gradient is -3. This perfectly matches the coefficient of x in our original equation y = -3x + 2!" }
+                        ]
+                    },
+                    {
+                        label: "Parts (e) & (f): Intersection of Lines",
+                        type: "ex3_ef",
+                        steps: [
+                            { w: ["(e) Draw a straight line y = -4 on the same grid"], a: "Horizontal line", e: "This is a line with a gradient of 0. All points on it have a y-coordinate of -4." },
+                            { w: ["Find where the two lines cross"], a: "Look for intersection", e: "The point where the blue line (y = 2 - 3x) and the orange line (y = -4) meet is our solution." },
+                            { w: ["(f) Write down the coordinates of intersection", "Point = (2, -4)"], a: "Read the crossing point", e: "At x = 2, both equations share the exact same y-value of -4." }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        function createEl(tag, style, text) {
+            let e = document.createElement(tag);
+            if (style) e.setAttribute('style', style);
+            if (text) e.innerHTML = text;
+            return e;
+        }
+
+        let selectedEx = null;
+        let currentQ = 0;
+        let currentStep = 0;
+
+        function render() {
+            let app = document.getElementById('app');
+            app.innerHTML = '';
+            // Widened container for projector
+            app.setAttribute('style', 'max-width:1400px; margin:0 auto; padding:20px; min-height:100vh; position:relative; padding-bottom:100px;');
+
+            app.appendChild(createEl('div', 'position:sticky; top:0; background:#fff; border-bottom:4px solid #B8860B; padding:15px; z-index:100; box-shadow:0 2px 5px rgba(0,0,0,0.1); margin-bottom:20px; font-size:20px;', `<strong>Identity Reference:</strong> Gradient measures steepness (Rise ÷ Run). The point of intersection between two graph lines is the specific (x, y) coordinate that solves both equations simultaneously.`));
+
+            data.forEach((ex, idx) => {
+                if (selectedEx === idx) {
+                    let backBtn = createEl('button', 'display:block; width:100%; text-align:left; background:#eee; border:2px solid #bbb; padding:15px; font-size:20px; font-weight:bold; cursor:pointer; margin-bottom:20px; border-radius:6px;', ex.t + ' ▲ (Click to close)');
+                    backBtn.onclick = () => { selectedEx = null; render(); };
+                    app.appendChild(backBtn);
+
+                    let contentDiv = createEl('div', 'margin-bottom: 40px;', '');
+                    let q = ex.qs[currentQ];
+                    
+                    contentDiv.appendChild(createEl('div', 'border:4px solid #B8860B; padding:20px; text-align:center; font-family:monospace; font-size:28px; font-weight:bold; background:#fff; margin-bottom:20px; border-radius:8px;', q.label));
+
+                    if (ex.qs.length > 1) {
+                        let nav = createEl('div', 'text-align:center; margin-bottom:20px;', '');
+                        let prevBtn = createEl('button', currentQ > 0 ? NAV : NAV_DIS, '◀ Prev Part');
+                        let nextBtn = createEl('button', currentQ < ex.qs.length - 1 ? NAV : NAV_DIS, 'Next Part ▶');
+                        if (currentQ > 0) prevBtn.onclick = () => { currentQ--; currentStep=0; render(); };
+                        if (currentQ < ex.qs.length - 1) nextBtn.onclick = () => { currentQ++; currentStep=0; render(); };
+                        nav.appendChild(prevBtn); nav.appendChild(nextBtn); contentDiv.appendChild(nav);
+                    }
+
+                    let splitLayout = createEl('div', 'display:flex; flex-wrap:wrap; gap:30px;', '');
+                    
+                    let stepsDiv = createEl('div', 'flex:1; min-width:350px;', '');
+                    for (let i = 0; i < currentStep; i++) {
+                        let stepData = q.steps[i];
+                        let stepWrap = createEl('div', 'margin-bottom:15px; border-left:6px solid #0D47A1; padding-left:15px; background:#fff; padding:15px;', '');
+                        stepWrap.appendChild(createEl('div', 'font-family:monospace; font-size:22px; font-weight:bold; margin-bottom:10px;', stepData.w.join('<br>')));
+                        if (stepData.a) stepWrap.appendChild(createEl('div', 'background:#FFF9C4; border:2px solid #FBC02D; padding:10px; display:inline-block; margin-bottom:8px; font-size:18px; border-radius:4px; font-weight:bold;', `💡 ${stepData.a}`));
+                        if (stepData.e) stepWrap.appendChild(createEl('div', 'background:#E8F5E9; border:2px solid #4CAF50; padding:10px; display:inline-block; font-size:18px; border-radius:4px;', `💬 ${stepData.e}`));
+                        stepsDiv.appendChild(stepWrap);
+                    }
+                    splitLayout.appendChild(stepsDiv);
+
+                    // Enlarged Canvas Container for flex:2 proportion
+                    let canvasContainer = createEl('div', 'flex:2; min-width:500px; text-align:center; background:#fff; border:3px solid #ccc; border-radius:8px; padding:15px;', '');
+                    let canvas = document.createElement('canvas');
+                    canvas.width = 800; canvas.height = 800; // Much larger internal resolution
+                    canvas.setAttribute('style', 'max-width:100%; height:auto; background:#fafafa;');
+                    canvasContainer.appendChild(canvas);
+                    splitLayout.appendChild(canvasContainer);
+                    
+                    setTimeout(() => drawGraph(canvas, q, currentStep), 0);
+
+                    contentDiv.appendChild(splitLayout);
+
+                    let controlsDiv = createEl('div', 'text-align:center; margin-top:30px;', '');
+                    let isDone = currentStep >= q.steps.length;
+                    let stepBtn = createEl('button', isDone ? BLUE_DIS : BLUE, `Show next step (${currentStep}/${q.steps.length})`);
+                    if (!isDone) stepBtn.onclick = () => { currentStep++; render(); };
+                    let resetBtn = createEl('button', GREY, 'Reset');
+                    resetBtn.onclick = () => { currentStep = 0; render(); };
+                    
+                    controlsDiv.appendChild(stepBtn); controlsDiv.appendChild(resetBtn);
+                    contentDiv.appendChild(controlsDiv);
+                    
+                    app.appendChild(contentDiv);
+                    
+                } else {
+                    let btn = createEl('button', 'display:block; width:100%; text-align:left; background:#fff; border:2px solid #ccc; padding:15px; font-size:20px; font-weight:bold; cursor:pointer; margin-bottom:10px; border-radius:6px;', ex.t + ' ▼');
+                    btn.onclick = () => { selectedEx = idx; currentQ = 0; currentStep = 0; render(); };
+                    app.appendChild(btn);
+                }
+            });
+
+            app.appendChild(createEl('div', 'position:absolute; bottom:20px; width:100%; text-align:center; color:#888; font-size:15px; left:0;', `Created by Joshua Poon | Heritage Academy, Singapore<br>Worked Examples 2 & 3 — Secondary 1`));
+        }
+
+        function drawGraph(canvas, q, step) {
+            let ctx = canvas.getContext('2d');
+            let w = canvas.width, h = canvas.height;
+            let cx = w / 2, cy = h / 2;
+            
+            // Scaled up for the 800x800 canvas
+            let scale = q.type === 'trap' ? 50 : 30; 
+            
+            ctx.clearRect(0, 0, w, h);
+
+            // Draw Grid (Thicker for projector)
+            ctx.strokeStyle = '#ddd'; ctx.lineWidth = 2;
+            for(let i=0; i<w; i+=scale) {
+                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, h); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(w, i); ctx.stroke();
+            }
+
+            // Draw Axes
+            ctx.strokeStyle = '#000'; ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.stroke(); 
+            ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.stroke(); 
+            
+            ctx.fillStyle = '#000'; ctx.font = '18px Arial';
+            ctx.fillText('x', w - 20, cy - 15);
+            ctx.fillText('y', cx + 15, 20);
+            ctx.fillText('0', cx - 20, cy + 20);
+
+            // Number Axes
+            let maxUnits = Math.floor(cx / scale);
+            for(let i=-maxUnits; i<=maxUnits; i++) {
+                if(i!==0 && (scale > 35 || i%2===0)) { 
+                    ctx.fillText(i, cx + (i*scale) - 8, cy + 20); 
+                    ctx.fillText(-i, cx - 28, cy + (i*scale) + 6); 
+                }
+            }
+
+            // --- WORKED EXAMPLE 2 (Trapezium) ---
+            if (q.type === 'trap') {
+                if (step >= 1) {
+                    ctx.strokeStyle = '#333'; ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.moveTo(cx + (-4*scale), cy - (2*scale)); // P
+                    ctx.lineTo(cx + (-2*scale), cy - (-2*scale)); // Q
+                    ctx.lineTo(cx + (1*scale), cy - (-2*scale)); // R
+                    ctx.lineTo(cx + (4*scale), cy - (2*scale)); // S
+                    ctx.closePath();
+                    ctx.fillStyle = 'rgba(13, 71, 161, 0.1)'; ctx.fill(); ctx.stroke();
+                    
+                    let pts = [{x:-4,y:2,l:'P'}, {x:-2,y:-2,l:'Q'}, {x:1,y:-2,l:'R'}, {x:4,y:2,l:'S'}];
+                    pts.forEach(pt => {
+                        let px = cx + (pt.x * scale), py = cy - (pt.y * scale);
+                        ctx.beginPath(); ctx.arc(px, py, 7, 0, Math.PI*2); ctx.fillStyle = '#000'; ctx.fill();
+                        ctx.font = 'bold 20px monospace'; ctx.fillText(pt.l, px - 25, py - 15);
+                    });
+                }
+                if (step >= 2) {
+                    // Highlight PQ & Show Rise/Run
+                    ctx.strokeStyle = '#e53935'; ctx.lineWidth = 6;
+                    ctx.beginPath(); ctx.moveTo(cx + (-4*scale), cy - (2*scale)); ctx.lineTo(cx + (-2*scale), cy - (-2*scale)); ctx.stroke();
+                    
+                    ctx.strokeStyle = '#e53935'; ctx.lineWidth = 3; ctx.setLineDash([6, 6]);
+                    ctx.beginPath(); ctx.moveTo(cx + (-4*scale), cy - (2*scale)); ctx.lineTo(cx + (-2*scale), cy - (2*scale)); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(cx + (-2*scale), cy - (2*scale)); ctx.lineTo(cx + (-2*scale), cy - (-2*scale)); ctx.stroke();
+                    ctx.setLineDash([]);
+                    ctx.fillStyle = '#e53935'; ctx.fillText('Run:2', cx + (-3.5*scale), cy - (2.2*scale));
+                    ctx.fillText('Rise:-4', cx + (-1.8*scale), cy - (0*scale));
+                }
+                if (step >= 3) {
+                    // Highlight QR
+                    ctx.strokeStyle = '#B8860B'; ctx.lineWidth = 6;
+                    ctx.beginPath(); ctx.moveTo(cx + (-2*scale), cy - (-2*scale)); ctx.lineTo(cx + (1*scale), cy - (-2*scale)); ctx.stroke();
+                }
+                if (step >= 4) {
+                    // Highlight RS & Show Rise/Run
+                    ctx.strokeStyle = '#4CAF50'; ctx.lineWidth = 6;
+                    ctx.beginPath(); ctx.moveTo(cx + (1*scale), cy - (-2*scale)); ctx.lineTo(cx + (4*scale), cy - (2*scale)); ctx.stroke();
+
+                    ctx.strokeStyle = '#4CAF50'; ctx.lineWidth = 3; ctx.setLineDash([6, 6]);
+                    ctx.beginPath(); ctx.moveTo(cx + (1*scale), cy - (-2*scale)); ctx.lineTo(cx + (4*scale), cy - (-2*scale)); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(cx + (4*scale), cy - (-2*scale)); ctx.lineTo(cx + (4*scale), cy - (2*scale)); ctx.stroke();
+                    ctx.setLineDash([]);
+                    ctx.fillStyle = '#4CAF50'; ctx.fillText('Run:3', cx + (2*scale), cy - (-1.5*scale));
+                    ctx.fillText('Rise:4', cx + (4.2*scale), cy - (0*scale));
+                }
+                if (step >= 5) {
+                    // Equation of QR line
+                    ctx.strokeStyle = '#B8860B'; ctx.lineWidth = 4; ctx.setLineDash([8, 8]);
+                    ctx.beginPath(); ctx.moveTo(0, cy - (-2*scale)); ctx.lineTo(w, cy - (-2*scale)); ctx.stroke();
+                    ctx.setLineDash([]);
+                    ctx.fillStyle = '#B8860B'; ctx.font = 'bold 24px monospace'; ctx.fillText('y = -2', w - 100, cy - (-2*scale) - 15);
+                }
+            }
+            
+            // --- WORKED EXAMPLE 3 helpers ---
+            function drawEx3BaseLine() {
+                ctx.strokeStyle = '#083378'; ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(cx + (-4*scale), cy - (14*scale)); 
+                ctx.lineTo(cx + (4*scale), cy - (-10*scale)); 
+                ctx.stroke();
+            }
+
+            if (q.type === 'ex3_ab') {
+                if (step >= 2) {
+                    let pts = [{x:-3,y:11}, {x:0,y:2}, {x:3,y:-7}];
+                    pts.forEach(pt => {
+                        let px = cx + (pt.x * scale), py = cy - (pt.y * scale);
+                        ctx.beginPath(); ctx.arc(px, py, 7, 0, Math.PI*2); ctx.fillStyle = '#0D47A1'; ctx.fill();
+                        ctx.fillStyle = '#000'; ctx.font = 'bold 20px monospace'; ctx.fillText(`(${pt.x}, ${pt.y})`, px + 15, py);
+                    });
+                }
+                if (step >= 3) drawEx3BaseLine();
+            }
+            else if (q.type === 'ex3_c') {
+                drawEx3BaseLine();
+                if (step >= 1) {
+                    ctx.strokeStyle = '#e53935'; ctx.lineWidth = 3; ctx.setLineDash([8, 8]);
+                    ctx.beginPath(); ctx.moveTo(cx + (-1.5*scale), cy); ctx.lineTo(cx + (-1.5*scale), cy - (6.5*scale)); ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+                if (step >= 2) {
+                    ctx.strokeStyle = '#e53935'; ctx.lineWidth = 3; ctx.setLineDash([8, 8]);
+                    ctx.beginPath(); ctx.moveTo(cx + (-1.5*scale), cy - (6.5*scale)); ctx.lineTo(cx, cy - (6.5*scale)); ctx.stroke();
+                    ctx.setLineDash([]);
+                    ctx.fillStyle = '#e53935'; ctx.font = 'bold 20px monospace'; ctx.fillText('y = 6.5', cx + 10, cy - (6.5*scale) - 10);
+                }
+                if (step >= 3) {
+                    ctx.strokeStyle = '#4CAF50'; ctx.lineWidth = 3; ctx.setLineDash([8, 8]);
+                    ctx.beginPath(); ctx.moveTo(cx, cy - (5*scale)); ctx.lineTo(cx + (-1*scale), cy - (5*scale)); ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+                if (step >= 4) {
+                    ctx.strokeStyle = '#4CAF50'; ctx.lineWidth = 3; ctx.setLineDash([8, 8]);
+                    ctx.beginPath(); ctx.moveTo(cx + (-1*scale), cy - (5*scale)); ctx.lineTo(cx + (-1*scale), cy); ctx.stroke();
+                    ctx.setLineDash([]);
+                    ctx.fillStyle = '#4CAF50'; ctx.font = 'bold 20px monospace'; ctx.fillText('x = -1', cx + (-1*scale) - 80, cy - 10);
+                }
+            }
+            else if (q.type === 'ex3_d') {
+                drawEx3BaseLine();
+                if (step >= 1) {
+                    ctx.beginPath(); ctx.arc(cx, cy - (2*scale), 8, 0, Math.PI*2); ctx.fillStyle = '#e53935'; ctx.fill();
+                    ctx.beginPath(); ctx.arc(cx + (3*scale), cy - (-7*scale), 8, 0, Math.PI*2); ctx.fillStyle = '#e53935'; ctx.fill();
+                }
+                if (step >= 2) {
+                    ctx.strokeStyle = '#B8860B'; ctx.lineWidth = 4; ctx.setLineDash([8, 8]);
+                    ctx.beginPath(); ctx.moveTo(cx, cy - (2*scale)); ctx.lineTo(cx + (3*scale), cy - (2*scale)); ctx.stroke();
+                    ctx.setLineDash([]);
+                    ctx.fillStyle = '#B8860B'; ctx.font = 'bold 20px monospace'; ctx.fillText('Run = 3', cx + (1.5*scale), cy - (2.5*scale));
+                }
+                if (step >= 3) {
+                    ctx.strokeStyle = '#4CAF50'; ctx.lineWidth = 4; ctx.setLineDash([8, 8]);
+                    ctx.beginPath(); ctx.moveTo(cx + (3*scale), cy - (2*scale)); ctx.lineTo(cx + (3*scale), cy - (-7*scale)); ctx.stroke();
+                    ctx.setLineDash([]);
+                    ctx.fillStyle = '#4CAF50'; ctx.font = 'bold 20px monospace'; ctx.fillText('Rise = -9', cx + (3.2*scale), cy - (-2.5*scale));
+                }
+            }
+            else if (q.type === 'ex3_ef') {
+                drawEx3BaseLine();
+                if (step >= 1) {
+                    ctx.strokeStyle = '#B8860B'; ctx.lineWidth = 4;
+                    ctx.beginPath(); ctx.moveTo(0, cy - (-4*scale)); ctx.lineTo(w, cy - (-4*scale)); ctx.stroke();
+                    ctx.fillStyle = '#B8860B'; ctx.font = 'bold 20px monospace'; ctx.fillText('y = -4', 15, cy - (-4*scale) - 15);
+                }
+                if (step >= 2) {
+                    let ix = cx + (2*scale), iy = cy - (-4*scale);
+                    ctx.beginPath(); ctx.arc(ix, iy, 10, 0, Math.PI*2); ctx.fillStyle = '#e53935'; ctx.fill();
+                }
+                if (step >= 3) {
+                    let ix = cx + (2*scale), iy = cy - (-4*scale);
+                    ctx.fillStyle = '#e53935'; ctx.font = 'bold 22px monospace'; ctx.fillText('Intersection (2, -4)', ix + 20, iy - 20);
+                }
+            }
+        }
+
+        render();
+    </script>
+</body>
+</html>

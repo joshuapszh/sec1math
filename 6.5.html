@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage Academy: Real-World Linear Graphs (Projector Mode)</title>
+</head>
+<body style="margin:0; font-family:sans-serif; background-color:#FFFDF5;">
+    <div id="app"></div>
+
+    <script>
+        const BLUE = 'background:#0D47A1; color:#FFFFFF; border:3px solid #083378; padding:12px 18px; font-size:18px; cursor:pointer; border-radius:5px; margin:5px; font-weight:bold;';
+        const BLUE_DIS = 'background:#888; color:#fff; border:3px solid #666; padding:12px 18px; font-size:18px; cursor:not-allowed; border-radius:5px; margin:5px; font-weight:bold;';
+        const GREY = 'background:#fff; color:#000; border:2px solid #333; padding:12px 18px; font-size:18px; cursor:pointer; border-radius:5px; margin:5px; font-weight:bold;';
+        const NAV = 'background:#B8860B; color:#fff; border:2px solid #8B6508; padding:10px 15px; font-size:16px; cursor:pointer; border-radius:4px; margin:5px; font-weight:bold;';
+        const NAV_DIS = 'background:#D4C890; color:#888; border:2px solid #D4C890; padding:10px 15px; font-size:16px; cursor:not-allowed; border-radius:4px; margin:5px; font-weight:bold;';
+
+        const data = [
+            {
+                t: "Worked Example 1 — Taxi Fares (Pages 20-22)",
+                qs: [
+                    {
+                        label: "Taxi Fare: $4 flag-down + $0.40/km",
+                        type: "taxi",
+                        steps: [
+                            { w: ["Let x = distance (km)", "Let y = cost ($)"], a: "Real-world variables", e: "The axes now represent actual, physical quantities instead of just abstract numbers." },
+                            { w: ["Plot known values:", "(5, 6), (10, 8), (15, 10)"], a: "Build from table", e: "A 5km ride costs $6, a 10km ride costs $8, and a 15km ride costs $10." },
+                            { w: ["Draw the line:", "y = 0.4x + 4"], a: "Gradient & y-intercept", e: "The starting flag-down cost ($4) is our y-intercept. The rate of $0.40/km is our gradient." },
+                            { w: ["Find the cost for a 12 km ride."], a: "Read the graph", e: "Travel from x = 12 up to the line, and read across to the y-axis. The cost is $8.80." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Worked Example 2 — Conversion Graphs (Page 23)",
+                qs: [
+                    {
+                        label: "Convert between Miles and Kilometres",
+                        type: "conversion",
+                        steps: [
+                            { w: ["Draw the conversion line."], a: "Linear relationship", e: "A straight line starting from the origin lets us directly translate between two different units of measurement." },
+                            { w: ["(a)(i) Convert 8 miles to km"], a: "Start at x-axis", e: "Find 8 on the Miles (x-axis), travel straight up to the line, and read across to the Kilometres. It is approx 13 km." },
+                            { w: ["(a)(ii) Convert 20 miles to km"], a: "Start at x-axis", e: "Find 20 on the Miles axis, travel up to the line, read across. It is approx 32 km." },
+                            { w: ["(b)(i) Convert 24 km to miles"], a: "Start at y-axis", e: "Find 24 on the Kilometres (y-axis), travel across to the line, and read straight down to the Miles. It is approx 15 miles." },
+                            { w: ["(b)(ii) Convert 43 km to miles"], a: "Start at y-axis", e: "Find 43 on the Kilometres axis, travel across, read down. It is approx 27 miles." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Worked Example 3 — Distance-Time Graph (Pages 24-26)",
+                qs: [
+                    {
+                        label: "Parts (a) & (b): Distance and Time",
+                        type: "dist_time_ab",
+                        steps: [
+                            { w: ["Draw the full journey profile."], a: "Distance from home over time", e: "O to A (driving), A to B (at bank), B to C (driving to supermarket), C to D (at supermarket), D to E (driving home)." },
+                            { w: ["(a) How far is the bank from her home?"], a: "Look at point A or B", e: "The maximum distance reached during the first stop is 9 km." },
+                            { w: ["(b) How long was she at the bank?"], a: "Horizontal line AB", e: "From 10 mins to 30 mins. A completely flat line means the distance from home is not changing. She was stationary for 20 mins." }
+                        ]
+                    },
+                    {
+                        label: "Part (c): Gradients and Speeds",
+                        type: "dist_time_c",
+                        steps: [
+                            { w: ["(c)(i) Find the gradient of OA"], a: "Gradient = Average Speed", e: "Rise (9km) / Run (10 mins, which is 1/6 hour). Speed = 54 km/h." },
+                            { w: ["(c)(ii) Find the gradient of AB"], a: "Flat horizontal line", e: "Rise is 0. Gradient is 0. Her speed was 0 km/h (stationary)." },
+                            { w: ["(c)(iii) Find the gradient of BC"], a: "Speed going to supermarket", e: "She drove 5km (from 9km to 4km distance) in 5 mins (which is 1/12 hour). Average speed = 60 km/h." }
+                        ]
+                    },
+                    {
+                        label: "Parts (d) & (e): Total Journey",
+                        type: "dist_time_de",
+                        steps: [
+                            { w: ["(d) Average speed for the whole journey?", "Average Speed = Total Dist / Total Time"], a: "Do NOT average the speeds!", e: "We must look at the grand totals." },
+                            { w: ["Total Distance: 9km out + 9km back = 18km", "Total Time: 54 minutes = 9/10 hours"], a: "Calculate total totals", e: "She traveled exactly 18km in exactly 54 minutes." },
+                            { w: ["Average Speed = 18 / (9/10) = 20 km/h"], a: "Final Calculation", e: "Her average speed across the entire trip was 20 km/h." },
+                            { w: ["(e) What time did she reach home?"], a: "Start time + Total duration", e: "She left at 12:30. The journey took 54 minutes. 12:30 + 54 mins = 13:24." }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        function createEl(tag, style, text) {
+            let e = document.createElement(tag);
+            if (style) e.setAttribute('style', style);
+            if (text) e.innerHTML = text;
+            return e;
+        }
+
+        let selectedEx = null;
+        let currentQ = 0;
+        let currentStep = 0;
+
+        function render() {
+            let app = document.getElementById('app');
+            app.innerHTML = '';
+            app.setAttribute('style', 'max-width:1400px; margin:0 auto; padding:20px; min-height:100vh; position:relative; padding-bottom:100px;');
+
+            app.appendChild(createEl('div', 'position:sticky; top:0; background:#fff; border-bottom:4px solid #B8860B; padding:15px; z-index:100; box-shadow:0 2px 5px rgba(0,0,0,0.1); margin-bottom:20px; font-size:20px;', `<strong>Identity Reference:</strong> In real-world graphs, the axes represent actual quantities. Gradient represents a <strong>rate of change</strong> (e.g., Speed = Distance ÷ Time).`));
+
+            data.forEach((ex, idx) => {
+                if (selectedEx === idx) {
+                    let backBtn = createEl('button', 'display:block; width:100%; text-align:left; background:#eee; border:2px solid #bbb; padding:15px; font-size:20px; font-weight:bold; cursor:pointer; margin-bottom:20px; border-radius:6px;', ex.t + ' ▲ (Click to close)');
+                    backBtn.onclick = () => { selectedEx = null; render(); };
+                    app.appendChild(backBtn);
+
+                    let contentDiv = createEl('div', 'margin-bottom: 40px;', '');
+                    let q = ex.qs[currentQ];
+                    
+                    contentDiv.appendChild(createEl('div', 'border:4px solid #B8860B; padding:20px; text-align:center; font-family:monospace; font-size:28px; font-weight:bold; background:#fff; margin-bottom:20px; border-radius:8px;', q.label));
+
+                    if (ex.qs.length > 1) {
+                        let nav = createEl('div', 'text-align:center; margin-bottom:20px;', '');
+                        let prevBtn = createEl('button', currentQ > 0 ? NAV : NAV_DIS, '◀ Prev Part');
+                        let nextBtn = createEl('button', currentQ < ex.qs.length - 1 ? NAV : NAV_DIS, 'Next Part ▶');
+                        if (currentQ > 0) prevBtn.onclick = () => { currentQ--; currentStep=0; render(); };
+                        if (currentQ < ex.qs.length - 1) nextBtn.onclick = () => { currentQ++; currentStep=0; render(); };
+                        nav.appendChild(prevBtn); nav.appendChild(nextBtn); contentDiv.appendChild(nav);
+                    }
+
+                    let splitLayout = createEl('div', 'display:flex; flex-wrap:wrap; gap:30px;', '');
+                    
+                    let stepsDiv = createEl('div', 'flex:1; min-width:350px;', '');
+                    for (let i = 0; i < currentStep; i++) {
+                        let stepData = q.steps[i];
+                        let stepWrap = createEl('div', 'margin-bottom:15px; border-left:6px solid #0D47A1; padding-left:15px; background:#fff; padding:15px;', '');
+                        stepWrap.appendChild(createEl('div', 'font-family:monospace; font-size:22px; font-weight:bold; margin-bottom:10px;', stepData.w.join('<br>')));
+                        if (stepData.a) stepWrap.appendChild(createEl('div', 'background:#FFF9C4; border:2px solid #FBC02D; padding:10px; display:inline-block; margin-bottom:8px; font-size:18px; border-radius:4px; font-weight:bold;', `💡 ${stepData.a}`));
+                        if (stepData.e) stepWrap.appendChild(createEl('div', 'background:#E8F5E9; border:2px solid #4CAF50; padding:10px; display:inline-block; font-size:18px; border-radius:4px;', `💬 ${stepData.e}`));
+                        stepsDiv.appendChild(stepWrap);
+                    }
+                    splitLayout.appendChild(stepsDiv);
+
+                    let canvasContainer = createEl('div', 'flex:2; min-width:500px; text-align:center; background:#fff; border:3px solid #ccc; border-radius:8px; padding:15px;', '');
+                    let canvas = document.createElement('canvas');
+                    canvas.width = 800; canvas.height = 800; 
+                    canvas.setAttribute('style', 'max-width:100%; height:auto; background:#fafafa;');
+                    canvasContainer.appendChild(canvas);
+                    splitLayout.appendChild(canvasContainer);
+                    
+                    setTimeout(() => drawGraph(canvas, q, currentStep), 0);
+
+                    contentDiv.appendChild(splitLayout);
+
+                    let controlsDiv = createEl('div', 'text-align:center; margin-top:30px;', '');
+                    let isDone = currentStep >= q.steps.length;
+                    let stepBtn = createEl('button', isDone ? BLUE_DIS : BLUE, `Show next step (${currentStep}/${q.steps.length})`);
+                    if (!isDone) stepBtn.onclick = () => { currentStep++; render(); };
+                    let resetBtn = createEl('button', GREY, 'Reset');
+                    resetBtn.onclick = () => { currentStep = 0; render(); };
+                    
+                    controlsDiv.appendChild(stepBtn); controlsDiv.appendChild(resetBtn);
+                    contentDiv.appendChild(controlsDiv);
+                    
+                    app.appendChild(contentDiv);
+                    
+                } else {
+                    let btn = createEl('button', 'display:block; width:100%; text-align:left; background:#fff; border:2px solid #ccc; padding:15px; font-size:20px; font-weight:bold; cursor:pointer; margin-bottom:10px; border-radius:6px;', ex.t + ' ▼');
+                    btn.onclick = () => { selectedEx = idx; currentQ = 0; currentStep = 0; render(); };
+                    app.appendChild(btn);
+                }
+            });
+
+            app.appendChild(createEl('div', 'position:absolute; bottom:20px; width:100%; text-align:center; color:#888; font-size:15px; left:0;', `Created by Joshua Poon | Heritage Academy, Singapore<br>Chapter 6.5 — Secondary 1`));
+        }
+
+        function drawGraph(canvas, q, step) {
+            let ctx = canvas.getContext('2d');
+            let w = canvas.width, h = canvas.height;
+            
+            // First Quadrant Setup
+            let ox = 100; // Origin X (shifted right for labels)
+            let oy = h - 100; // Origin Y (shifted up for labels)
+            let chartW = w - 150;
+            let chartH = h - 150;
+
+            ctx.clearRect(0, 0, w, h);
+
+            let maxX, maxY, labelX, labelY;
+
+            if (q.type === 'taxi') {
+                maxX = 16; maxY = 12;
+                labelX = "Distance (km)"; labelY = "Cost ($)";
+            } else if (q.type === 'conversion') {
+                maxX = 30; maxY = 50;
+                labelX = "Miles"; labelY = "Kilometres";
+            } else if (q.type.startsWith('dist_time')) {
+                maxX = 60; maxY = 10;
+                labelX = "Time (minutes)"; labelY = "Distance (km)";
+            }
+
+            let sx = chartW / maxX;
+            let sy = chartH / maxY;
+
+            // Draw Grid
+            ctx.strokeStyle = '#e0e0e0'; ctx.lineWidth = 2;
+            
+            // Vertical grid lines
+            let xTick = q.type === 'conversion' ? 5 : (q.type.startsWith('dist_time') ? 10 : 2);
+            for(let i=0; i<=maxX; i+=xTick) {
+                ctx.beginPath(); ctx.moveTo(ox + (i*sx), oy); ctx.lineTo(ox + (i*sx), oy - chartH); ctx.stroke();
+                ctx.fillStyle = '#666'; ctx.font = '16px Arial'; ctx.textAlign = 'center';
+                if(i !== 0) ctx.fillText(i, ox + (i*sx), oy + 25);
+            }
+
+            // Horizontal grid lines
+            let yTick = q.type === 'conversion' ? 10 : (q.type.startsWith('dist_time') ? 1 : 2);
+            for(let i=0; i<=maxY; i+=yTick) {
+                ctx.beginPath(); ctx.moveTo(ox, oy - (i*sy)); ctx.lineTo(ox + chartW, oy - (i*sy)); ctx.stroke();
+                ctx.fillStyle = '#666'; ctx.font = '16px Arial'; ctx.textAlign = 'right';
+                ctx.fillText(i, ox - 15, oy - (i*sy) + 6);
+            }
+
+            // Draw Axes
+            ctx.strokeStyle = '#000'; ctx.lineWidth = 4;
+            ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox + chartW + 20, oy); ctx.stroke(); // X
+            ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox, oy - chartH - 20); ctx.stroke(); // Y
+            
+            ctx.fillStyle = '#000'; ctx.font = 'bold 20px Arial';
+            ctx.textAlign = 'center'; ctx.fillText(labelX, ox + (chartW/2), oy + 60);
+            ctx.save(); ctx.translate(ox - 60, oy - (chartH/2)); ctx.rotate(-Math.PI/2);
+            ctx.textAlign = 'center'; ctx.fillText(labelY, 0, 0); ctx.restore();
+            ctx.fillText('0', ox - 15, oy + 20);
+
+            // --- DRAWING LOGIC FOR EACH EXAMPLE ---
+
+            if (q.type === 'taxi') {
+                let pts = [{x:5,y:6}, {x:10,y:8}, {x:15,y:10}];
+                
+                if (step >= 2) {
+                    pts.forEach(pt => {
+                        let px = ox + (pt.x * sx), py = oy - (pt.y * sy);
+                        ctx.beginPath(); ctx.arc(px, py, 8, 0, Math.PI*2); ctx.fillStyle = '#0D47A1'; ctx.fill();
+                        ctx.fillStyle = '#000'; ctx.font = 'bold 22px monospace'; ctx.fillText(`(${pt.x}, ${pt.y})`, px, py - 15);
+                    });
+                }
+                if (step >= 3) {
+                    ctx.strokeStyle = '#083378'; ctx.lineWidth = 4;
+                    ctx.beginPath();
+                    ctx.moveTo(ox + (0*sx), oy - (4*sy)); // y-int = 4
+                    ctx.lineTo(ox + (16*sx), oy - (10.4*sy)); // extend line
+                    ctx.stroke();
+                    
+                    ctx.beginPath(); ctx.arc(ox, oy - (4*sy), 8, 0, Math.PI*2); ctx.fillStyle = '#B8860B'; ctx.fill();
+                    ctx.fillStyle = '#B8860B'; ctx.fillText('Flag-down $4', ox + 80, oy - (4*sy) - 15);
+                }
+                if (step >= 4) {
+                    let tgtX = ox + (12*sx), tgtY = oy - (8.8*sy);
+                    ctx.strokeStyle = '#e53935'; ctx.lineWidth = 4; ctx.setLineDash([8, 8]);
+                    ctx.beginPath(); ctx.moveTo(tgtX, oy); ctx.lineTo(tgtX, tgtY); ctx.lineTo(ox, tgtY); ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    ctx.beginPath(); ctx.arc(tgtX, tgtY, 10, 0, Math.PI*2); ctx.fillStyle = '#e53935'; ctx.fill();
+                    ctx.fillStyle = '#e53935'; ctx.fillText('12 km ➔ $8.80', tgtX, tgtY - 20);
+                }
+            } 
+            else if (q.type === 'conversion') {
+                if (step >= 1) {
+                    ctx.strokeStyle = '#083378'; ctx.lineWidth = 4;
+                    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox + (30*sx), oy - (48*sy)); ctx.stroke();
+                }
+                if (step >= 2) {
+                    let tx = ox + (8*sx), ty = oy - (12.8*sy); // (a)(i) 8m -> ~13km
+                    ctx.strokeStyle = '#B8860B'; ctx.lineWidth = 4; ctx.setLineDash([8, 8]);
+                    ctx.beginPath(); ctx.moveTo(tx, oy); ctx.lineTo(tx, ty); ctx.lineTo(ox, ty); ctx.stroke(); ctx.setLineDash([]);
+                    ctx.beginPath(); ctx.arc(tx, ty, 10, 0, Math.PI*2); ctx.fillStyle = '#B8860B'; ctx.fill();
+                    ctx.fillText('~13 km', ox + 40, ty - 15);
+                }
+                if (step >= 3) {
+                    let tx = ox + (20*sx), ty = oy - (32*sy); // (a)(ii) 20m -> 32km
+                    ctx.strokeStyle = '#B8860B'; ctx.lineWidth = 4; ctx.setLineDash([8, 8]);
+                    ctx.beginPath(); ctx.moveTo(tx, oy); ctx.lineTo(tx, ty); ctx.lineTo(ox, ty); ctx.stroke(); ctx.setLineDash([]);
+                    ctx.beginPath(); ctx.arc(tx, ty, 10, 0, Math.PI*2); ctx.fillStyle = '#B8860B'; ctx.fill();
+                    ctx.fillText('32 km', ox + 40, ty - 15);
+                }
+                if (step >= 4) {
+                    let ty = oy - (24*sy), tx = ox + (15*sx); // (b)(i) 24km -> 15m
+                    ctx.strokeStyle = '#4CAF50'; ctx.lineWidth = 4; ctx.setLineDash([8, 8]);
+                    ctx.beginPath(); ctx.moveTo(ox, ty); ctx.lineTo(tx, ty); ctx.lineTo(tx, oy); ctx.stroke(); ctx.setLineDash([]);
+                    ctx.beginPath(); ctx.arc(tx, ty, 10, 0, Math.PI*2); ctx.fillStyle = '#4CAF50'; ctx.fill();
+                    ctx.fillText('15 miles', tx + 40, oy - 20);
+                }
+                if (step >= 5) {
+                    let ty = oy - (43*sy), tx = ox + (26.875*sx); // (b)(ii) 43km -> ~27m
+                    ctx.strokeStyle = '#4CAF50'; ctx.lineWidth = 4; ctx.setLineDash([8, 8]);
+                    ctx.beginPath(); ctx.moveTo(ox, ty); ctx.lineTo(tx, ty); ctx.lineTo(tx, oy); ctx.stroke(); ctx.setLineDash([]);
+                    ctx.beginPath(); ctx.arc(tx, ty, 10, 0, Math.PI*2); ctx.fillStyle = '#4CAF50'; ctx.fill();
+                    ctx.fillText('~27 miles', tx - 80, oy - 20);
+                }
+            }
+            else if (q.type.startsWith('dist_time')) {
+                let pts = [
+                    {x:0, y:0, l:'O'}, {x:10, y:9, l:'A'}, {x:30, y:9, l:'B'},
+                    {x:35, y:4, l:'C'}, {x:48, y:4, l:'D'}, {x:54, y:0, l:'E'}
+                ];
+
+                function drawBaseGraph() {
+                    ctx.strokeStyle = '#083378'; ctx.lineWidth = 4;
+                    ctx.beginPath(); ctx.moveTo(ox, oy);
+                    for(let i=1; i<pts.length; i++) ctx.lineTo(ox + (pts[i].x*sx), oy - (pts[i].y*sy));
+                    ctx.stroke();
+
+                    pts.forEach(pt => {
+                        let px = ox + (pt.x*sx), py = oy - (pt.y*sy);
+                        ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI*2); ctx.fillStyle = '#000'; ctx.fill();
+                        ctx.font = 'bold 22px monospace'; ctx.fillText(pt.l, px, py - 15);
+                    });
+                }
+
+                if (q.type === 'dist_time_ab') {
+                    if (step >= 1) drawBaseGraph();
+                    if (step >= 2) {
+                        ctx.strokeStyle = '#e53935'; ctx.lineWidth = 4; ctx.setLineDash([8, 8]);
+                        ctx.beginPath(); ctx.moveTo(ox + (10*sx), oy - (9*sy)); ctx.lineTo(ox, oy - (9*sy)); ctx.stroke(); ctx.setLineDash([]);
+                        ctx.fillStyle = '#e53935'; ctx.fillText('9 km', ox + 40, oy - (9*sy) - 15);
+                    }
+                    if (step >= 3) {
+                        ctx.strokeStyle = '#B8860B'; ctx.lineWidth = 8;
+                        ctx.beginPath(); ctx.moveTo(ox + (10*sx), oy - (9*sy)); ctx.lineTo(ox + (30*sx), oy - (9*sy)); ctx.stroke();
+                        ctx.fillStyle = '#B8860B'; ctx.fillText('Stationary (20 min)', ox + (20*sx), oy - (9*sy) + 30);
+                    }
+                } 
+                else if (q.type === 'dist_time_c') {
+                    drawBaseGraph();
+                    if (step >= 1) {
+                        ctx.strokeStyle = '#4CAF50'; ctx.lineWidth = 8;
+                        ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox + (10*sx), oy - (9*sy)); ctx.stroke();
+                        ctx.fillStyle = '#4CAF50'; ctx.fillText('Speed = 54 km/h', ox + (4*sx), oy - (4.5*sy) - 15);
+                    }
+                    if (step >= 2) {
+                        ctx.strokeStyle = '#999'; ctx.lineWidth = 8;
+                        ctx.beginPath(); ctx.moveTo(ox + (10*sx), oy - (9*sy)); ctx.lineTo(ox + (30*sx), oy - (9*sy)); ctx.stroke();
+                        ctx.fillStyle = '#666'; ctx.fillText('Speed = 0', ox + (20*sx), oy - (9*sy) - 15);
+                    }
+                    if (step >= 3) {
+                        ctx.strokeStyle = '#e53935'; ctx.lineWidth = 8;
+                        ctx.beginPath(); ctx.moveTo(ox + (30*sx), oy - (9*sy)); ctx.lineTo(ox + (35*sx), oy - (4*sy)); ctx.stroke();
+                        ctx.fillStyle = '#e53935'; ctx.fillText('Speed = 60 km/h', ox + (45*sx), oy - (6.5*sy));
+                    }
+                }
+                else if (q.type === 'dist_time_de') {
+                    drawBaseGraph();
+                    if (step >= 2) {
+                        // Highlight total distance path
+                        ctx.strokeStyle = '#B8860B'; ctx.lineWidth = 8;
+                        ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox + (10*sx), oy - (9*sy)); ctx.stroke(); // up 9
+                        ctx.beginPath(); ctx.moveTo(ox + (30*sx), oy - (9*sy)); ctx.lineTo(ox + (35*sx), oy - (4*sy)); ctx.lineTo(ox + (48*sx), oy - (4*sy)); ctx.lineTo(ox + (54*sx), oy); ctx.stroke(); // down 9
+                        
+                        // Time span
+                        ctx.strokeStyle = '#083378'; ctx.lineWidth = 4; ctx.setLineDash([8,8]);
+                        ctx.beginPath(); ctx.moveTo(ox, oy+40); ctx.lineTo(ox + (54*sx), oy+40); ctx.stroke(); ctx.setLineDash([]);
+                        ctx.fillStyle = '#083378'; ctx.fillText('Total Time: 54 mins', ox + (27*sx), oy + 70);
+                    }
+                    if (step >= 3) {
+                        ctx.fillStyle = '#4CAF50'; ctx.font = 'bold 28px monospace';
+                        ctx.fillText('Avg Speed = 20 km/h', ox + (30*sx), oy - (5*sy));
+                    }
+                    if (step >= 4) {
+                        ctx.fillStyle = '#e53935'; ctx.font = 'bold 28px monospace';
+                        ctx.fillText('Arrive: 13:24', ox + (54*sx), oy - (1*sy));
+                    }
+                }
+            }
+        }
+
+        render();
+    </script>
+</body>
+</html>

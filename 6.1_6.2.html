@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage Academy: Cartesian Plane & Functions</title>
+</head>
+<body style="margin:0; font-family:sans-serif; background-color:#FFFDF5;">
+    <div id="app"></div>
+
+    <script>
+        const BLUE = 'background:#0D47A1; color:#FFFFFF; border:3px solid #083378; padding:10px 15px; font-size:16px; cursor:pointer; border-radius:5px; margin:5px; font-weight:bold;';
+        const BLUE_DIS = 'background:#888; color:#fff; border:3px solid #666; padding:10px 15px; font-size:16px; cursor:not-allowed; border-radius:5px; margin:5px; font-weight:bold;';
+        const GREY = 'background:#fff; color:#000; border:2px solid #333; padding:10px 15px; font-size:16px; cursor:pointer; border-radius:5px; margin:5px; font-weight:bold;';
+        const NAV = 'background:#B8860B; color:#fff; border:2px solid #8B6508; padding:8px 12px; font-size:14px; cursor:pointer; border-radius:4px; margin:5px; font-weight:bold;';
+        const NAV_DIS = 'background:#D4C890; color:#888; border:2px solid #D4C890; padding:8px 12px; font-size:14px; cursor:not-allowed; border-radius:4px; margin:5px; font-weight:bold;';
+
+        const data = [
+            {
+                t: "Chapter 6.1 — Introduction to the Cartesian Plane",
+                qs: [
+                    {
+                        label: "(a) Plot the point A(2, 3)",
+                        type: "plot", targetX: 2, targetY: 3, pointLabel: "A",
+                        steps: [
+                            { w: ["Point A is an ordered pair: (2, 3)"], a: "x-coordinate is 2, y-coordinate is 3", e: "The order is strictly horizontal first, vertical second. This is how we map numbers to physical space." },
+                            { w: ["Start at the Origin O(0,0)", "Move 2 units right along the x-axis"], a: "Locate horizontal position", e: "The origin is the intersection. A positive x-value means we travel to the right." },
+                            { w: ["Move 3 units UP parallel to the y-axis"], a: "Locate vertical position", e: "From our x-position, we move positively (up) to secure the final location." }
+                        ]
+                    },
+                    {
+                        label: "(b) Plot the point C(-4, -2)",
+                        type: "plot", targetX: -4, targetY: -2, pointLabel: "C",
+                        steps: [
+                            { w: ["Point C is (-4, -2)"], a: "x is -4, y is -2", e: "Both coordinates are negative. Let's see what quadrant this lands in." },
+                            { w: ["Start at O(0,0)", "Move 4 units left"], a: "Negative x means move left", e: "We travel backwards along the horizontal axis." },
+                            { w: ["Move 2 units DOWN"], a: "Negative y means move down", e: "Drop below the x-axis by 2 units to plot point C." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Worked Example 1 — Geometrical Shapes (Page 3)",
+                qs: [
+                    {
+                        label: "Plot (2,3), (-2,0), (1,-2), (5,1) and join them.",
+                        type: "shape",
+                        pts: [
+                            {x: 2, y: 3, l: '(2,3)'},
+                            {x: -2, y: 0, l: '(-2,0)'},
+                            {x: 1, y: -2, l: '(1,-2)'},
+                            {x: 5, y: 1, l: '(5,1)'}
+                        ],
+                        steps: [
+                            { w: ["Plot point (2, 3)"], a: "2 right, 3 up", e: "Locate our first vertex in the top right quadrant." },
+                            { w: ["Plot point (-2, 0)"], a: "2 left, 0 vertical", e: "Because the y-coordinate is 0, this point sits exactly ON the x-axis. It is an x-intercept." },
+                            { w: ["Plot point (1, -2)"], a: "1 right, 2 down", e: "Locate the third vertex." },
+                            { w: ["Plot point (5, 1)"], a: "5 right, 1 up", e: "Locate the final vertex." },
+                            { w: ["Join the points with straight lines"], a: "Form the polygon", e: "Connecting them in order reveals a Parallelogram! Notice it has two pairs of parallel opposite sides." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Chapter 6.2 — Linear Functions (Page 4)",
+                qs: [
+                    {
+                        label: "The equation of a function is y = 3x - 2. Find y when x = 4.",
+                        type: "text",
+                        steps: [
+                            { w: ["Function: y = 3x - 2", "Input: x = 4"], a: "Every input gives exactly one output", e: "In your ACE PACES, you used input/output tables. This equation is the 'machine' doing the work." },
+                            { w: ["y = 3(4) - 2"], a: "Substitute x with 4", e: "We replace the variable 'x' with the number 4. Brackets indicate multiplication." },
+                            { w: ["y = 12 - 2", "y = 10"], a: "Order of operations", e: "Multiply first, then subtract. The ordered pair is (4, 10)." }
+                        ]
+                    },
+                    {
+                        label: "Find the value of x when y = -1. (Function: y = 3x - 2)",
+                        type: "text",
+                        steps: [
+                            { w: ["-1 = 3x - 2"], a: "Substitute the output (y)", e: "This time, we know the output, but we need to work backward to find the input." },
+                            { w: ["3x = -1 + 2", "3x = 1"], a: "Isolate the x term", e: "We balance the equation by adding 2 to both sides." },
+                            { w: ["x = 1/3"], a: "Divide by the coefficient", e: "Divide both sides by 3. Our input x is the fraction 1/3." }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        function createEl(tag, style, text) {
+            let e = document.createElement(tag);
+            if (style) e.setAttribute('style', style);
+            if (text) e.innerHTML = text;
+            return e;
+        }
+
+        let selectedEx = null;
+        let currentQ = 0;
+        let currentStep = 0;
+
+        function render() {
+            let app = document.getElementById('app');
+            app.innerHTML = '';
+            app.setAttribute('style', 'max-width:1000px; margin:0 auto; padding:20px; min-height:100vh; position:relative; padding-bottom:100px;');
+
+            app.appendChild(createEl('div', 'position:sticky; top:0; background:#fff; border-bottom:4px solid #B8860B; padding:15px; z-index:100; box-shadow:0 2px 5px rgba(0,0,0,0.1); margin-bottom:20px; font-size:18px;', `<strong>Identity Reference:</strong> The Cartesian plane is formed by two perpendicular lines intersecting at the Origin O. Points are written as (x, y). A function connects every input (x) to exactly one output (y).`));
+
+            data.forEach((ex, idx) => {
+                if (selectedEx === idx) {
+                    // Render expanded state heading
+                    let backBtn = createEl('button', 'display:block; width:100%; text-align:left; background:#eee; border:2px solid #bbb; padding:15px; font-size:18px; font-weight:bold; cursor:pointer; margin-bottom:20px; border-radius:6px;', ex.t + ' ▲ (Click to close)');
+                    backBtn.onclick = () => { selectedEx = null; render(); };
+                    app.appendChild(backBtn);
+
+                    // Render the content of the selected example
+                    let contentDiv = createEl('div', 'margin-bottom: 40px;', '');
+                    let q = ex.qs[currentQ];
+                    
+                    contentDiv.appendChild(createEl('div', 'border:4px solid #B8860B; padding:20px; text-align:center; font-family:monospace; font-size:26px; font-weight:bold; background:#fff; margin-bottom:20px; border-radius:8px;', q.label));
+
+                    if (ex.qs.length > 1) {
+                        let nav = createEl('div', 'text-align:center; margin-bottom:20px;', '');
+                        let prevBtn = createEl('button', currentQ > 0 ? NAV : NAV_DIS, '◀ Prev Part');
+                        let nextBtn = createEl('button', currentQ < ex.qs.length - 1 ? NAV : NAV_DIS, 'Next Part ▶');
+                        if (currentQ > 0) prevBtn.onclick = () => { currentQ--; currentStep=0; render(); };
+                        if (currentQ < ex.qs.length - 1) nextBtn.onclick = () => { currentQ++; currentStep=0; render(); };
+                        nav.appendChild(prevBtn); nav.appendChild(nextBtn); contentDiv.appendChild(nav);
+                    }
+
+                    let splitLayout = createEl('div', 'display:flex; flex-wrap:wrap; gap:20px;', '');
+                    
+                    let stepsDiv = createEl('div', 'flex:1; min-width:300px;', '');
+                    for (let i = 0; i < currentStep; i++) {
+                        let stepData = q.steps[i];
+                        let stepWrap = createEl('div', 'margin-bottom:15px; border-left:5px solid #0D47A1; padding-left:15px; background:#fff; padding:10px;', '');
+                        stepWrap.appendChild(createEl('div', 'font-family:monospace; font-size:19px; font-weight:bold; margin-bottom:10px;', stepData.w.join('<br>')));
+                        if (stepData.a) stepWrap.appendChild(createEl('div', 'background:#FFF9C4; border:1px solid #FBC02D; padding:8px; display:inline-block; margin-bottom:5px; font-size:15px; border-radius:4px; font-weight:bold;', `💡 ${stepData.a}`));
+                        if (stepData.e) stepWrap.appendChild(createEl('div', 'background:#E8F5E9; border:1px solid #4CAF50; padding:8px; display:inline-block; font-size:15px; border-radius:4px;', `💬 ${stepData.e}`));
+                        stepsDiv.appendChild(stepWrap);
+                    }
+                    splitLayout.appendChild(stepsDiv);
+
+                    if (q.type === 'plot' || q.type === 'shape') {
+                        let canvasContainer = createEl('div', 'flex:1; min-width:300px; text-align:center; background:#fff; border:2px solid #ccc; border-radius:8px; padding:10px;', '');
+                        let canvas = document.createElement('canvas');
+                        canvas.width = 400; canvas.height = 400;
+                        canvas.setAttribute('style', 'max-width:100%; height:auto; background:#fafafa;');
+                        canvasContainer.appendChild(canvas);
+                        splitLayout.appendChild(canvasContainer);
+                        
+                        setTimeout(() => drawGraph(canvas, q, currentStep), 0);
+                    }
+
+                    contentDiv.appendChild(splitLayout);
+
+                    let controlsDiv = createEl('div', 'text-align:center; margin-top:30px;', '');
+                    let isDone = currentStep >= q.steps.length;
+                    let stepBtn = createEl('button', isDone ? BLUE_DIS : BLUE, `Show next step (${currentStep}/${q.steps.length})`);
+                    if (!isDone) stepBtn.onclick = () => { currentStep++; render(); };
+                    let resetBtn = createEl('button', GREY, 'Reset');
+                    resetBtn.onclick = () => { currentStep = 0; render(); };
+                    
+                    controlsDiv.appendChild(stepBtn); controlsDiv.appendChild(resetBtn);
+                    contentDiv.appendChild(controlsDiv);
+                    
+                    app.appendChild(contentDiv);
+                    
+                } else {
+                    // Render collapsed button state
+                    let btn = createEl('button', 'display:block; width:100%; text-align:left; background:#fff; border:2px solid #ccc; padding:15px; font-size:18px; font-weight:bold; cursor:pointer; margin-bottom:10px; border-radius:6px;', ex.t + ' ▼');
+                    btn.onclick = () => { selectedEx = idx; currentQ = 0; currentStep = 0; render(); };
+                    app.appendChild(btn);
+                }
+            });
+
+            app.appendChild(createEl('div', 'position:absolute; bottom:20px; width:100%; text-align:center; color:#888; font-size:13px; left:0;', `Created by Joshua Poon | Heritage Academy, Singapore<br>Chapter 6.1 & 6.2 — Secondary 1`));
+        }
+
+        function drawGraph(canvas, q, step) {
+            let ctx = canvas.getContext('2d');
+            let w = canvas.width, h = canvas.height;
+            let cx = w / 2, cy = h / 2;
+            let scale = 30; // pixels per unit
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Draw Grid
+            ctx.strokeStyle = '#eee'; ctx.lineWidth = 1;
+            for(let i=0; i<w; i+=scale) {
+                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, h); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(w, i); ctx.stroke();
+            }
+
+            // Draw Axes
+            ctx.strokeStyle = '#000'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.stroke(); // X
+            ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.stroke(); // Y
+            
+            ctx.fillStyle = '#000'; ctx.font = '14px Arial';
+            ctx.fillText('x', w - 15, cy - 10);
+            ctx.fillText('y', cx + 10, 15);
+            ctx.fillText('0', cx - 15, cy + 15);
+
+            for(let i=-6; i<=6; i++) {
+                if(i!==0) {
+                    ctx.fillText(i, cx + (i*scale) - 5, cy + 15); 
+                    ctx.fillText(-i, cx - 20, cy + (i*scale) + 5); 
+                }
+            }
+
+            if (q.type === 'plot') {
+                if (step >= 2) {
+                    ctx.strokeStyle = '#B8860B'; ctx.lineWidth = 4;
+                    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + (q.targetX * scale), cy); ctx.stroke();
+                    ctx.beginPath(); ctx.arc(cx + (q.targetX * scale), cy, 4, 0, Math.PI*2);
+                    ctx.fillStyle = '#B8860B'; ctx.fill();
+                }
+                if (step >= 3) {
+                    ctx.strokeStyle = '#4CAF50'; ctx.lineWidth = 4;
+                    ctx.setLineDash([5, 5]);
+                    ctx.beginPath(); ctx.moveTo(cx + (q.targetX * scale), cy); ctx.lineTo(cx + (q.targetX * scale), cy - (q.targetY * scale)); ctx.stroke();
+                    ctx.setLineDash([]); 
+
+                    let px = cx + (q.targetX * scale), py = cy - (q.targetY * scale);
+                    ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI*2);
+                    ctx.fillStyle = '#0D47A1'; ctx.fill();
+                    ctx.fillStyle = '#000'; ctx.font = 'bold 16px Arial';
+                    ctx.fillText(`${q.pointLabel}(${q.targetX}, ${q.targetY})`, px + 10, py - 10);
+                }
+            } else if (q.type === 'shape') {
+                for (let i = 0; i < step && i < q.pts.length; i++) {
+                    let pt = q.pts[i];
+                    let px = cx + (pt.x * scale), py = cy - (pt.y * scale);
+                    ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI*2);
+                    ctx.fillStyle = '#0D47A1'; ctx.fill();
+                    ctx.fillStyle = '#000'; ctx.font = 'bold 16px Arial';
+                    ctx.fillText(pt.l, px + 8, py - 8);
+                }
+                if (step >= 5) {
+                    ctx.strokeStyle = '#083378'; ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    let startPt = q.pts[0];
+                    ctx.moveTo(cx + (startPt.x * scale), cy - (startPt.y * scale));
+                    for (let i = 1; i < q.pts.length; i++) {
+                        ctx.lineTo(cx + (q.pts[i].x * scale), cy - (q.pts[i].y * scale));
+                    }
+                    ctx.lineTo(cx + (startPt.x * scale), cy - (startPt.y * scale)); 
+                    ctx.stroke();
+                }
+            }
+        }
+
+        render();
+    </script>
+</body>
+</html>
