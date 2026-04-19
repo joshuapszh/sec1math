@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial 6 - Part 3: Real-World & Kinematics (Complete)</title>
+</head>
+<body style="margin:0; font-family:sans-serif; background-color:#FFFDF5;">
+    <div id="app"></div>
+
+    <script>
+        const BLUE = 'background:#0D47A1; color:#FFFFFF; border:3px solid #083378; padding:12px 18px; font-size:18px; cursor:pointer; border-radius:5px; margin:5px; font-weight:bold;';
+        const BLUE_DIS = 'background:#888; color:#fff; border:3px solid #666; padding:12px 18px; font-size:18px; cursor:not-allowed; border-radius:5px; margin:5px; font-weight:bold;';
+        const GREY = 'background:#fff; color:#000; border:2px solid #333; padding:12px 18px; font-size:18px; cursor:pointer; border-radius:5px; margin:5px; font-weight:bold;';
+        const NAV = 'background:#B8860B; color:#fff; border:2px solid #8B6508; padding:10px 15px; font-size:16px; cursor:pointer; border-radius:4px; margin:5px; font-weight:bold;';
+        const NAV_DIS = 'background:#D4C890; color:#888; border:2px solid #D4C890; padding:10px 15px; font-size:16px; cursor:not-allowed; border-radius:4px; margin:5px; font-weight:bold;';
+
+        const data = [
+            {
+                t: "Question 47 — TV Rental",
+                qs: [
+                    {
+                        label: "Company M Rental: y = 5x + h",
+                        type: "q47",
+                        steps: [
+                            { w: ["(a) State the gradient of the graph", "Gradient = 5"], a: "Read from equation", e: "The gradient is the coefficient of x in the equation y = 5x + h[cite: 1705]." },
+                            { w: ["(b) Find the basic fee, h"], a: "Find y-intercept", e: "Looking at the graph, the line crosses the y-axis at 30. Therefore, h = $30[cite: 1705, 1708, 1714]." },
+                            { w: ["(c) Total amount for 7 days"], a: "Substitute x = 7", e: "y = 5(7) + 30 = 35 + 30 = $65[cite: 1728, 1729]." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 49 — Courier Charges",
+                qs: [
+                    {
+                        label: "Basic Fee $5 + $2/kg. Equation: y = 2x + 5",
+                        type: "q49",
+                        steps: [
+                            { w: ["(a) Complete table for y = 2x + 5", "x=1 ➔ y=7", "x=3 ➔ y=11", "x=5 ➔ y=15"], a: "Calculate values", e: "Multiply mass by 2, then add 5[cite: 1744, 1745, 1749]." },
+                            { w: ["(b) & (c) Draw graph & write equation", "Equation: y = 2x + 5"], a: "Plot (1,7), (3,11), (5,15)", e: "The straight line visualizes the delivery charges[cite: 1751, 1753]." },
+                            { w: ["(d) Calculate specific costs", "(i) 2.5 kg: y = 2(2.5) + 5 = $10", "(ii) 3.8 kg: y = 2(3.8) + 5 = $12.60"], a: "Substitute into equation", e: "Reading from the graph or using algebra yields the same exact cost[cite: 1755, 1756, 1757]." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 50 — Spring Length",
+                qs: [
+                    {
+                        label: "Length vs Mass: y = 0.12x + 3.5",
+                        type: "q50",
+                        steps: [
+                            { w: ["(a) Complete the table", "x=0 ➔ y=3.5", "x=30 ➔ y=7.1", "x=50 ➔ y=9.5"], a: "Calculate values", e: "Substitute the mass (x) into the formula to find length (y)[cite: 1760, 1763]." },
+                            { w: ["(c) Find weight for given length", "(i) y=5 ➔ x = 12.5 g", "(ii) y=8.9 ➔ x = 45 g"], a: "Work backwards", e: "Solve 5 = 0.12x + 3.5 to get x = 1.5 / 0.12 = 12.5g[cite: 1769, 1770, 1771]." },
+                            { w: ["(d) Find length for given weight", "(i) x=26 ➔ y = 6.62 cm", "(ii) x=41 ➔ y = 8.42 cm"], a: "Substitute directly", e: "y = 0.12(26) + 3.5 = 6.62cm[cite: 1773, 1774, 1775]." },
+                            { w: ["(e) Significance of y-intercept"], a: "Real-world meaning", e: "The y-intercept (3.5) represents the original, un-stretched length of the spring when 0g of mass is attached[cite: 1777]." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 53 — Factory Sales & Expenses",
+                qs: [
+                    {
+                        label: "Analyze Break-Even Graph",
+                        type: "q53",
+                        steps: [
+                            { w: ["(a) At 370 chairs (calculate from equations)", "Sales: y=55x ➔ $20,350", "Expenses: y=10x+9000 ➔ $12,700"], a: "Find exact values", e: "We determine the equations from the graph to find exact values instead of estimating[cite: 1806, 1818, 1825, 1826]." },
+                            { w: ["(a)(iii) Profit for 370 chairs", "Profit = Sales - Expenses", "$20,350 - $12,700 = $7,650"], a: "Difference between lines", e: "The vertical gap between the two lines represents the profit[cite: 1827]." },
+                            { w: ["(b) Break-even point", "200 Chairs"], a: "Intersection point", e: "The factory breaks even exactly where the Sales line crosses the Expenses line at 200 chairs[cite: 1829]." },
+                            { w: ["(c) Profit for 500 chairs", "Sales($27,500) - Exp($14,000) = $13,500"], a: "Calculate difference", e: "At x=500, find the gap between the upper and lower lines[cite: 1831]." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 54 — Telephone Companies",
+                qs: [
+                    {
+                        label: "Compare Company A and B",
+                        type: "q54",
+                        steps: [
+                            { w: ["(a) Cost of 8 min call", "(i) Company A = 60 cents", "(ii) Company B = 50 cents"], a: "Read at x=8", e: "Company B is the lower line at x=8[cite: 1857, 1858, 1860]." },
+                            { w: ["(b) Find flat fee (x) and rate (y) for A"], a: "y = mx + c", e: "Line A crosses y-axis at 20 (Flat fee = 20c). Gradient = (60-20)/8 = 5 (Rate = 5c/min)[cite: 1863, 1864]." },
+                            { w: ["(c) Range where B is cheaper"], a: "Look for lower line", e: "Company B is cheaper from 0 minutes up until the lines intersect at 11 minutes[cite: 1866]." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 55 — Cyclist Journey",
+                qs: [
+                    {
+                        label: "Distance-Time Graph Analysis",
+                        type: "q55",
+                        steps: [
+                            { w: ["(a) Distance before breakfast", "30 km"], a: "Read peak of first segment", e: "He rode steadily until 09:00, reaching 30km[cite: 1870, 1883]." },
+                            { w: ["(b) Time spent at breakfast", "30 minutes"], a: "Horizontal segment AB", e: "From 09:00 to 09:30, distance did not change[cite: 1880, 1885]." },
+                            { w: ["(c) Distance from destination", "50 km (Total) - 30 km = 20 km"], a: "Remaining distance", e: "He stopped at 30km, and the destination is at 50km[cite: 1872, 1887]." },
+                            { w: ["(d) Gradients = Speed", "(i) OA = 15 km/h", "(ii) AB = 0 km/h", "(iii) BC = 20 km/h"], a: "Rise / Run", e: "Gradient on a distance-time graph always represents speed[cite: 1889, 1890, 1891, 1893]." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 57 — Tim's Journey",
+                qs: [
+                    {
+                        label: "Singapore to Kota Tinggi and back",
+                        type: "q57",
+                        steps: [
+                            { w: ["(a) Dist before rest = 30 km", "(b) Rest time = 1 hour"], a: "Read flat segment", e: "Rest occurred from 08:00 to 09:00 at the 30km mark[cite: 1935, 1957, 1959]." },
+                            { w: ["(c) Avg speed to KT after rest = 40 km/h", "(d) Total time to KT = 2.5 hours"], a: "Calculate final leg", e: "From 30km to 50km took 0.5 hours (20/0.5 = 40)[cite: 1961, 1966]." },
+                            { w: ["(e) Distance travelled at 10:00", "Total = 50 + 16.67 = 66.67 km"], a: "Outward + Return distance", e: "He arrived at 09:30. In 0.5h returning at 33.3km/h, he covered 16.67km[cite: 1969]." },
+                            { w: ["(f) Fastest period: Return journey", "(g) Return Speed = 33.3 km/h"], a: "Steepest slope", e: "50km covered in 1.5 hours[cite: 1974, 1977]." },
+                            { w: ["(h) Avg speed for whole journey", "100 km / 4 hours = 25 km/h"], a: "Total Dist / Total Time", e: "Total journey is 50km out and 50km back[cite: 1984]." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 58 — Steve's Journey",
+                qs: [
+                    {
+                        label: "Town A to Town B and back",
+                        type: "q58",
+                        steps: [
+                            { w: ["(a) Dist before stopping = 56 km", "(b)(i) Speed 15:00-16:00 = 56 km/h"], a: "First segment", e: "Travelled 56km in 1 hour[cite: 1991, 2000, 2003]." },
+                            { w: ["(b)(ii) Avg speed 15:00-18:00", "124 km / 3 h = 41.3 km/h"], a: "Total dist / Total time", e: "Calculate average across multiple segments[cite: 2005]." },
+                            { w: ["(c) Distance A to B = 184 km", "(d) Stop at B = 1.5 hours", "(e) Left B at 20:45"], a: "Read peak", e: "He stayed at 184km from 19:15 to 20:45[cite: 1991, 2007, 2009, 2011]." },
+                            { w: ["(f) Return speed = 81.8 km/h", "(g) Total Dist = 368 km", "(h) Total Avg Speed = 46 km/h"], a: "Calculate totals", e: "368km total / 8 hours total duration[cite: 2013, 2015, 2017]." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 59 — Andy and Bobby",
+                qs: [
+                    {
+                        label: "Two intersecting journeys",
+                        type: "q59",
+                        steps: [
+                            { w: ["(a) Distance P to Q = 80 km", "(b) Andy left P at 11:15"], a: "Read axes", e: "Town Q is at y=80. Andy's line starts at x=11:15[cite: 2045, 2061, 2063]." },
+                            { w: ["(c) Andy's avg speed = 20 km/h"], a: "80 km / 4 hours", e: "Andy travelled from 11:15 to 15:15[cite: 2045, 2065]." },
+                            { w: ["(d) Time they passed each other = 13:30"], a: "Intersection point", e: "The lines cross exactly halfway[cite: 2045, 2067]." },
+                            { w: ["(e) Andy's distance from Q", "80 - 45 = 35 km"], a: "Subtract from total", e: "At 13:30, Andy was 45km away from P[cite: 2045, 2069]." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 61 — Car and Van (Penang to Ipoh)",
+                qs: [
+                    {
+                        label: "Complex Intersecting Journeys",
+                        type: "q61",
+                        steps: [
+                            { w: ["(a) Distance when they met", "(i) 1st time: ~30 km (at 10:15)", "(ii) 2nd time: ~72 km (at 12:45)"], a: "Read intersections", e: "Look where the Car and Van lines cross[cite: 2113, 2132, 2133]." },
+                            { w: ["(b) Total time car stopped", "1 hour + 45 mins = 1 h 45 m"], a: "Add flat segments", e: "Car stopped from 11:30-12:30 and 13:30-14:15[cite: 2113, 2135]." },
+                            { w: ["(c) Van average speeds", "(i) To Ipoh: 100/5.5 = 18.2 km/h", "(ii) Return: 100/1.5 = 66.7 km/h"], a: "Rise / Run", e: "Calculate total distance over total time for each leg[cite: 2113, 2138, 2139]." },
+                            { w: ["(d) Car avg speed for whole journey", "200 km / 5 hours = 40 km/h"], a: "Total Totals", e: "Car travelled 100km out and 100km back from 09:30 to 14:30[cite: 2113, 2140]." }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        function createEl(tag, style, text) { let e = document.createElement(tag); if(style) e.setAttribute('style', style); if(text) e.innerHTML = text; return e; }
+        let selectedEx = null, currentQ = 0, currentStep = 0;
+
+        function render() {
+            let app = document.getElementById('app'); app.innerHTML = '';
+            app.setAttribute('style', 'max-width:1400px; margin:0 auto; padding:20px; min-height:100vh; position:relative; padding-bottom:100px;');
+            app.appendChild(createEl('div', 'position:sticky; top:0; background:#fff; border-bottom:4px solid #B8860B; padding:15px; z-index:100; margin-bottom:20px; font-size:20px;', `<strong>Part 3:</strong> Real-World Contexts & Kinematics (Q47 - Q61). Focus on gradients representing physical rates.`));
+
+            data.forEach((ex, idx) => {
+                if (selectedEx === idx) {
+                    let backBtn = createEl('button', 'display:block; width:100%; text-align:left; background:#eee; border:2px solid #bbb; padding:15px; font-size:20px; font-weight:bold; cursor:pointer; margin-bottom:20px; border-radius:6px;', ex.t + ' ▲ (Click to close)');
+                    backBtn.onclick = () => { selectedEx = null; render(); }; app.appendChild(backBtn);
+
+                    let contentDiv = createEl('div', 'margin-bottom: 40px;', '');
+                    let q = ex.qs[currentQ];
+                    contentDiv.appendChild(createEl('div', 'border:4px solid #B8860B; padding:20px; text-align:center; font-family:monospace; font-size:28px; font-weight:bold; background:#fff; margin-bottom:20px; border-radius:8px;', q.label));
+
+                    if (ex.qs.length > 1) {
+                        let nav = createEl('div', 'text-align:center; margin-bottom:20px;', '');
+                        let prevBtn = createEl('button', currentQ > 0 ? NAV : NAV_DIS, '◀ Prev Part');
+                        let nextBtn = createEl('button', currentQ < ex.qs.length - 1 ? NAV : NAV_DIS, 'Next Part ▶');
+                        if (currentQ > 0) prevBtn.onclick = () => { currentQ--; currentStep=0; render(); };
+                        if (currentQ < ex.qs.length - 1) nextBtn.onclick = () => { currentQ++; currentStep=0; render(); };
+                        nav.appendChild(prevBtn); nav.appendChild(nextBtn); contentDiv.appendChild(nav);
+                    }
+
+                    let splitLayout = createEl('div', 'display:flex; flex-wrap:wrap; gap:30px;', '');
+                    let stepsDiv = createEl('div', 'flex:1; min-width:350px;', '');
+                    for (let i = 0; i < currentStep; i++) {
+                        let s = q.steps[i];
+                        let w = createEl('div', 'margin-bottom:15px; border-left:6px solid #0D47A1; padding-left:15px; background:#fff; padding:15px;', '');
+                        w.appendChild(createEl('div', 'font-family:monospace; font-size:22px; font-weight:bold; margin-bottom:10px;', s.w.join('<br>')));
+                        if (s.a) w.appendChild(createEl('div', 'background:#FFF9C4; border:2px solid #FBC02D; padding:10px; display:inline-block; margin-bottom:8px; font-size:18px; border-radius:4px; font-weight:bold;', `💡 ${s.a}`));
+                        if (s.e) w.appendChild(createEl('div', 'background:#E8F5E9; border:2px solid #4CAF50; padding:10px; display:inline-block; font-size:18px; border-radius:4px;', `💬 ${s.e}`));
+                        stepsDiv.appendChild(w);
+                    }
+                    splitLayout.appendChild(stepsDiv);
+
+                    // Add Canvas
+                    let canvasContainer = createEl('div', 'flex:2; min-width:500px; text-align:center; background:#fff; border:3px solid #ccc; border-radius:8px; padding:15px;', '');
+                    let canvas = document.createElement('canvas'); canvas.width = 800; canvas.height = 800; 
+                    canvas.setAttribute('style', 'max-width:100%; height:auto; background:#fafafa;');
+                    canvasContainer.appendChild(canvas); splitLayout.appendChild(canvasContainer);
+                    setTimeout(() => drawGraph(canvas, q, currentStep), 0);
+
+                    contentDiv.appendChild(splitLayout);
+
+                    let controlsDiv = createEl('div', 'text-align:center; margin-top:30px;', '');
+                    let isDone = currentStep >= q.steps.length;
+                    let stepBtn = createEl('button', isDone ? BLUE_DIS : BLUE, `Show next step (${currentStep}/${q.steps.length})`);
+                    if (!isDone) stepBtn.onclick = () => { currentStep++; render(); };
+                    let resetBtn = createEl('button', GREY, 'Reset'); resetBtn.onclick = () => { currentStep = 0; render(); };
+                    controlsDiv.appendChild(stepBtn); controlsDiv.appendChild(resetBtn); contentDiv.appendChild(controlsDiv); app.appendChild(contentDiv);
+                } else {
+                    let btn = createEl('button', 'display:block; width:100%; text-align:left; background:#fff; border:2px solid #ccc; padding:15px; font-size:20px; font-weight:bold; cursor:pointer; margin-bottom:10px; border-radius:6px;', ex.t + ' ▼');
+                    btn.onclick = () => { selectedEx = idx; currentQ = 0; currentStep = 0; render(); }; app.appendChild(btn);
+                }
+            });
+        }
+
+        function drawGraph(canvas, q, step) {
+            let ctx = canvas.getContext('2d'); let w = canvas.width, h = canvas.height;
+            let ox = 100, oy = h - 100, cw = w - 150, ch = h - 150;
+            ctx.clearRect(0, 0, w, h);
+
+            // Generic setup, overridden below based on type
+            let maxX = 10, maxY = 10, labelX = "X", labelY = "Y", xTick=2, yTick=2;
+
+            if (q.type === 'q47') { maxX=12; maxY=100; labelX="Time (days)"; labelY="Charges ($)"; xTick=2; yTick=10; }
+            else if (q.type === 'q49') { maxX=6; maxY=20; labelX="Mass (kg)"; labelY="Cost ($)"; xTick=1; yTick=2; }
+            else if (q.type === 'q50') { maxX=50; maxY=10; labelX="Mass (g)"; labelY="Length (cm)"; xTick=10; yTick=1; }
+            else if (q.type === 'q53') { maxX=500; maxY=30; labelX="Chairs Sold"; labelY="Amount ($1000)"; xTick=100; yTick=5; }
+            else if (q.type === 'q54') { maxX=15; maxY=120; labelX="Time (min)"; labelY="Cost (c)"; xTick=3; yTick=20; }
+            else if (q.type === 'q55') { maxX=4; maxY=50; labelX="Time (hrs)"; labelY="Distance (km)"; xTick=1; yTick=10; }
+            else if (q.type === 'q57') { maxX=4; maxY=60; labelX="Time (hrs)"; labelY="Distance (km)"; xTick=1; yTick=10; }
+            else if (q.type === 'q58') { maxX=8; maxY=200; labelX="Time (hrs)"; labelY="Distance (km)"; xTick=1; yTick=40; }
+            else if (q.type === 'q59') { maxX=6; maxY=100; labelX="Time (hrs)"; labelY="Distance (km)"; xTick=1; yTick=20; }
+            else if (q.type === 'q61') { maxX=7; maxY=120; labelX="Time (hrs)"; labelY="Distance (km)"; xTick=1; yTick=20; }
+
+            let sx = cw / maxX, sy = ch / maxY;
+
+            ctx.strokeStyle = '#e0e0e0'; ctx.lineWidth = 2;
+            for(let i=0; i<=maxX; i+=xTick) { ctx.beginPath(); ctx.moveTo(ox+(i*sx), oy); ctx.lineTo(ox+(i*sx), oy-ch); ctx.stroke(); ctx.fillStyle = '#666'; ctx.font='16px Arial'; ctx.textAlign='center'; ctx.fillText(i, ox+(i*sx), oy+25); }
+            for(let i=0; i<=maxY; i+=yTick) { ctx.beginPath(); ctx.moveTo(ox, oy-(i*sy)); ctx.lineTo(ox+cw, oy-(i*sy)); ctx.stroke(); ctx.textAlign='right'; ctx.fillText(i, ox-15, oy-(i*sy)+6); }
+            
+            ctx.strokeStyle = '#000'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox+cw+20, oy); ctx.stroke(); ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox, oy-ch-20); ctx.stroke();
+            ctx.fillStyle = '#000'; ctx.font='bold 20px Arial'; ctx.textAlign='center'; ctx.fillText(labelX, ox+(cw/2), oy+60);
+            ctx.save(); ctx.translate(ox-60, oy-(ch/2)); ctx.rotate(-Math.PI/2); ctx.fillText(labelY, 0, 0); ctx.restore();
+
+            function drawLine(p1, p2, color='#083378') { ctx.strokeStyle=color; ctx.lineWidth=4; ctx.beginPath(); ctx.moveTo(ox+(p1.x*sx), oy-(p1.y*sy)); ctx.lineTo(ox+(p2.x*sx), oy-(p2.y*sy)); ctx.stroke(); }
+            function drawDot(p, col='#0D47A1', txt='') { ctx.beginPath(); ctx.arc(ox+(p.x*sx), oy-(p.y*sy), 8, 0, Math.PI*2); ctx.fillStyle=col; ctx.fill(); if(txt) { ctx.textAlign='left'; ctx.font='bold 20px monospace'; ctx.fillText(txt, ox+(p.x*sx)+15, oy-(p.y*sy)-10); } }
+
+            // SPECIFIC DRAWINGS
+            if (q.type === 'q47') {
+                drawLine({x:0, y:30}, {x:12, y:90});
+                if(step >= 1) { ctx.fillStyle='#e53935'; ctx.fillText('m = 5', ox+(6*sx)-20, oy-(60*sy)-20); }
+                if(step >= 2) { drawDot({x:0, y:30}, '#e53935', 'h = 30'); }
+                if(step >= 3) { drawDot({x:7, y:65}, '#4CAF50', '(7, $65)'); }
+            } 
+            else if (q.type === 'q49') {
+                if(step >= 1) { drawDot({x:1, y:7}, '#0D47A1', '(1, 7)'); drawDot({x:3, y:11}, '#0D47A1', '(3, 11)'); drawDot({x:5, y:15}, '#0D47A1', '(5, 15)'); }
+                if(step >= 2) { drawLine({x:0, y:5}, {x:6, y:17}); }
+                if(step >= 3) { drawDot({x:2.5, y:10}, '#e53935', '(2.5, $10)'); drawDot({x:3.8, y:12.6}, '#4CAF50', '(3.8, $12.6)'); }
+            }
+            else if (q.type === 'q50') {
+                if(step >= 1) { drawDot({x:0, y:3.5}); drawDot({x:30, y:7.1}); drawDot({x:50, y:9.5}); }
+                if(step >= 2) { drawLine({x:0, y:3.5}, {x:50, y:9.5}); }
+                if(step >= 3) { drawDot({x:12.5, y:5}, '#e53935', '12.5g'); drawDot({x:45, y:8.9}, '#e53935', '45g'); }
+                if(step >= 4) { drawDot({x:26, y:6.62}, '#4CAF50', '6.62cm'); drawDot({x:41, y:8.42}, '#4CAF50', '8.42cm'); }
+            }
+            else if (q.type === 'q53') {
+                drawLine({x:0, y:0}, {x:500, y:27.5}, '#083378'); ctx.fillText('Sales', ox+(450*sx), oy-(26*sy));
+                drawLine({x:0, y:9}, {x:500, y:14}, '#B8860B'); ctx.fillStyle='#B8860B'; ctx.fillText('Exp.', ox+(450*sx), oy-(12*sy));
+                if(step >= 1) { drawDot({x:370, y:20.35}, '#0D47A1', 'Sales'); drawDot({x:370, y:12.7}, '#B8860B', 'Exp.'); }
+                if(step >= 2) { ctx.strokeStyle='#4CAF50'; ctx.lineWidth=6; ctx.beginPath(); ctx.moveTo(ox+(370*sx), oy-(20.35*sy)); ctx.lineTo(ox+(370*sx), oy-(12.7*sy)); ctx.stroke(); ctx.fillStyle='#4CAF50'; ctx.fillText('Profit', ox+(370*sx)+10, oy-(16*sy)); }
+                if(step >= 3) { drawDot({x:200, y:11}, '#e53935', 'Break-even'); }
+            }
+            else if (q.type === 'q54') {
+                drawLine({x:0, y:20}, {x:15, y:95}, '#083378'); ctx.fillText('Comp A', ox+(1*sx), oy-(35*sy));
+                drawLine({x:0, y:34}, {x:5, y:34}, '#B8860B'); drawLine({x:5, y:34}, {x:15, y:109}, '#B8860B'); ctx.fillStyle='#B8860B'; ctx.fillText('Comp B', ox+(6*sx), oy-(35*sy));
+                if(step >= 1) { drawDot({x:8, y:60}, '#083378', '60c'); drawDot({x:8, y:56.5}, '#B8860B', '50c'); } // B is approx 56.5 based on eq y=7.5(x-5)+34
+                if(step >= 3) { drawDot({x:11, y:75}, '#e53935', 'Intersect'); }
+            }
+            else if (q.type === 'q55') {
+                drawLine({x:0, y:0}, {x:2, y:30}); drawLine({x:2, y:30}, {x:2.5, y:30}); drawLine({x:2.5, y:30}, {x:3.5, y:50});
+                if(step >= 1) drawDot({x:2, y:30}, '#e53935', '30km');
+                if(step >= 2) { ctx.strokeStyle='#e53935'; ctx.lineWidth=8; ctx.beginPath(); ctx.moveTo(ox+(2*sx), oy-(30*sy)); ctx.lineTo(ox+(2.5*sx), oy-(30*sy)); ctx.stroke(); }
+                if(step >= 4) { ctx.fillStyle='#4CAF50'; ctx.fillText('m=15', ox+(1*sx)-40, oy-(15*sy)); ctx.fillText('m=20', ox+(3*sx)-40, oy-(40*sy)); }
+            }
+            else if (q.type === 'q57') {
+                drawLine({x:0, y:0}, {x:1, y:30}); drawLine({x:1, y:30}, {x:2, y:30}); drawLine({x:2, y:30}, {x:2.5, y:50}); drawLine({x:2.5, y:50}, {x:4, y:0});
+                if(step >= 1) drawDot({x:1, y:30}, '#e53935', '30km');
+                if(step >= 3) { drawDot({x:3, y:33.3}, '#4CAF50', '33.3km'); }
+            }
+            else if (q.type === 'q58') {
+                drawLine({x:0, y:0}, {x:1, y:56}); drawLine({x:1, y:56}, {x:2, y:56}); drawLine({x:2, y:56}, {x:3, y:124}); drawLine({x:3, y:124}, {x:3.5, y:124}); drawLine({x:3.5, y:124}, {x:4.25, y:184}); drawLine({x:4.25, y:184}, {x:5.75, y:184}); drawLine({x:5.75, y:184}, {x:8, y:0});
+                if(step >= 1) drawDot({x:1, y:56}, '#e53935');
+                if(step >= 3) drawDot({x:4.25, y:184}, '#4CAF50');
+            }
+            else if (q.type === 'q59') {
+                drawLine({x:0.25, y:0}, {x:4.25, y:80}, '#083378'); ctx.fillText('Andy', ox+(3*sx), oy-(50*sy));
+                drawLine({x:0.5, y:80}, {x:4.5, y:0}, '#B8860B'); ctx.fillStyle='#B8860B'; ctx.fillText('Bobby', ox+(1.5*sx), oy-(70*sy));
+                if(step >= 3) drawDot({x:2.5, y:45}, '#e53935', 'Intersect');
+            }
+            else if (q.type === 'q61') {
+                // Car
+                drawLine({x:0.5, y:0}, {x:2, y:100}, '#083378'); drawLine({x:2, y:100}, {x:3, y:100}, '#083378'); drawLine({x:3, y:100}, {x:4, y:30}, '#083378'); drawLine({x:4, y:30}, {x:4.5, y:30}, '#083378'); drawLine({x:4.5, y:30}, {x:5.5, y:0}, '#083378');
+                // Van
+                drawLine({x:0, y:0}, {x:2, y:55}, '#B8860B'); drawLine({x:2, y:55}, {x:3.5, y:55}, '#B8860B'); drawLine({x:3.5, y:55}, {x:4.5, y:100}, '#B8860B'); drawLine({x:4.5, y:100}, {x:5.5, y:100}, '#B8860B'); drawLine({x:5.5, y:100}, {x:7, y:0}, '#B8860B');
+                
+                if(step >= 1) { drawDot({x:1.1, y:35}, '#e53935', '1st'); drawDot({x:3.6, y:60}, '#e53935', '2nd'); }
+            }
+        }
+        render();
+    </script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial 6 - Part 2: Drawing & Gradients (Complete)</title>
+</head>
+<body style="margin:0; font-family:sans-serif; background-color:#FFFDF5;">
+    <div id="app"></div>
+
+    <script>
+        const BLUE = 'background:#0D47A1; color:#FFFFFF; border:3px solid #083378; padding:12px 18px; font-size:18px; cursor:pointer; border-radius:5px; margin:5px; font-weight:bold;';
+        const BLUE_DIS = 'background:#888; color:#fff; border:3px solid #666; padding:12px 18px; font-size:18px; cursor:not-allowed; border-radius:5px; margin:5px; font-weight:bold;';
+        const GREY = 'background:#fff; color:#000; border:2px solid #333; padding:12px 18px; font-size:18px; cursor:pointer; border-radius:5px; margin:5px; font-weight:bold;';
+        const NAV = 'background:#B8860B; color:#fff; border:2px solid #8B6508; padding:10px 15px; font-size:16px; cursor:pointer; border-radius:4px; margin:5px; font-weight:bold;';
+        const NAV_DIS = 'background:#D4C890; color:#888; border:2px solid #D4C890; padding:10px 15px; font-size:16px; cursor:not-allowed; border-radius:4px; margin:5px; font-weight:bold;';
+
+        const data = [
+            {
+                t: "Question 26 — Graphing Intersections",
+                qs: [
+                    {
+                        label: "Graph y = 4 - 0.5x and y = 1",
+                        type: "draw_q26",
+                        steps: [
+                            { w: ["(a) Complete the table for y = 4 - 0.5x", "x = 0 ➔ y = 4", "x = 4 ➔ y = 2", "x = 8 ➔ y = 0"], a: "Substitute x-values", e: "Multiply x by 0.5, then subtract from 4." },
+                            { w: ["(b) Draw the graph of y = 4 - 0.5x"], a: "Plot points and join", e: "Draw the line from x=0 to x=8 on the grid." },
+                            { w: ["(c) Draw the straight line y = 1"], a: "Horizontal line", e: "A flat line crossing the y-axis at 1." },
+                            { w: ["(d) Coordinates of point of intersection", "Intersection = (6, 1)"], a: "Read the crossing point", e: "At x=6, both equations give a y-value of 1." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 28 — Bounded Area",
+                qs: [
+                    {
+                        label: "Graph 4x + 3y = 12",
+                        type: "draw_q28",
+                        steps: [
+                            { w: ["(a) Find a and b", "x=-3 ➔ 4(-3) + 3y = 12 ➔ 3y = 24 ➔ a = 8", "y=0 ➔ 4x + 3(0) = 12 ➔ 4x = 12 ➔ b = 3"], a: "Solve for unknowns", e: "Substitute known values into the equation to find the missing coordinates." },
+                            { w: ["(b) Draw the graph of 4x + 3y = 12"], a: "Plot the points", e: "Using (-3, 8), (0, 4), and (3, 0), draw the straight line." },
+                            { w: ["(c)(i) Find the x-intercept", "x-intercept = 3"], a: "Where line crosses x-axis", e: "This is the point (3, 0)." },
+                            { w: ["(c)(ii) Find the y-intercept", "y-intercept = 4"], a: "Where line crosses y-axis", e: "This is the point (0, 4)." },
+                            { w: ["(c)(iii) Area of triangle bounded by axes and line", "Base = 3, Height = 4", "Area = 1/2 × 3 × 4 = 6 units²"], a: "Apply 1/2 × b × h", e: "The triangle is formed by the origin (0,0), the x-intercept, and the y-intercept." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 31 — Parallel Lines",
+                qs: [
+                    {
+                        label: "Graphing multiple lines with gradient -0.5",
+                        type: "draw_q31",
+                        steps: [
+                            { w: ["(a)(i) Draw y = -0.5x - 1", "(a)(ii) Draw y = -0.5x + 2", "(a)(iii) Draw y = -0.5x + 5", "(a)(iv) Draw y = -0.5x"], a: "Plot all four lines", e: "Watch as all four lines are drawn on the same axes." },
+                            { w: ["(b) Common property of the four lines:"], a: "Visual observation", e: "The lines are all PARALLEL to each other. They will never intersect." },
+                            { w: ["(c) Common property of the equations:"], a: "Algebraic observation", e: "They all share the exact same GRADIENT (m = -0.5). Only their y-intercepts differ." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 33 — Enclosed Figures",
+                qs: [
+                    {
+                        label: "Draw bounding lines: y=2.5, x=-1, x=2, y=-2",
+                        type: "draw_q33",
+                        steps: [
+                            { w: ["(a) Draw y = 2.5 and y = -2", "Draw x = -1 and x = 2"], a: "Horizontal and Vertical", e: "y= lines are horizontal. x= lines are vertical." },
+                            { w: ["(b) Name the figure formed", "The figure is a RECTANGLE."], a: "Identify shape", e: "The intersections form four 90-degree right angles with opposite sides equal." },
+                            { w: ["(c) Calculate the area enclosed", "Width = 2 - (-1) = 3 units", "Height = 2.5 - (-2) = 4.5 units", "Area = 3 × 4.5 = 13.5 units²"], a: "Length × Breadth", e: "Count the grid squares or subtract the coordinate limits to find the dimensions." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 34 — Rise/Run Table",
+                qs: [
+                    {
+                        label: "Complete the table: Gradient = Rise / Run",
+                        type: "text",
+                        steps: [
+                            { w: ["(a) Run = 3, Rise = 6", "Gradient = 6 / 3 = 2"], a: "Positive slope", e: "Line goes up." },
+                            { w: ["(b) Run = 3, Rise = -6", "Gradient = -6 / 3 = -2"], a: "Negative slope", e: "Line goes down." },
+                            { w: ["(c) Run = 2, Rise = 0", "Gradient = 0 / 2 = 0"], a: "Horizontal line", e: "Zero steepness." },
+                            { w: ["(d) Run = 0, Rise = 8", "Gradient = Undefined"], a: "Vertical line", e: "Cannot divide by zero." },
+                            { w: ["(e) Run = 3, Rise = 0", "Gradient = 0 / 3 = 0"], a: "Horizontal line", e: "Zero steepness." },
+                            { w: ["(f) Run = 0, Rise = -3", "Gradient = Undefined"], a: "Vertical line", e: "Cannot divide by zero." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 35 — Identifying Gradients",
+                qs: [
+                    {
+                        label: "Find the gradient of line l from graphs (a) to (f)",
+                        type: "text",
+                        steps: [
+                            { w: ["(a) Passes through (0,0) and (2,2)"], a: "Rise=2, Run=2 ➔ m = 1", e: "Upwards to the right." },
+                            { w: ["(b) Passes through (0,2) and (2,0)"], a: "Rise=-2, Run=2 ➔ m = -1", e: "Downwards to the right." },
+                            { w: ["(c) Passes through (0,0) and (2,4)"], a: "Rise=4, Run=2 ➔ m = 2", e: "Steeper upward slope." },
+                            { w: ["(d) Passes through (0,4) and (4,0)"], a: "Rise=-4, Run=4 ➔ m = -1", e: "Downwards to the right." },
+                            { w: ["(e) Passes through (0,4) and (2,0)"], a: "Rise=-4, Run=2 ➔ m = -2", e: "Steeper downward slope." },
+                            { w: ["(f) Passes through (0,-2) and (2,4)"], a: "Rise=6, Run=2 ➔ m = 3", e: "Very steep upward slope." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 37 — Line PQ properties",
+                qs: [
+                    {
+                        label: "Analyze the line segment PQ",
+                        type: "draw_q37",
+                        steps: [
+                            { w: ["(a) Coordinates of P and Q", "P(-4, -3) and Q(4, 5)"], a: "Read the graph", e: "Identify the exact endpoints of the segment." },
+                            { w: ["(b) Find the gradient of PQ", "Rise = 5 - (-3) = 8", "Run = 4 - (-4) = 8", "Gradient = 8 / 8 = 1"], a: "Rise / Run", e: "The line goes up 1 unit for every 1 unit right." },
+                            { w: ["(c) Write the equation of PQ", "y-intercept (c) = 1", "Equation: y = x + 1"], a: "y = mx + c", e: "Substitute our m=1 and c=1." },
+                            { w: ["(d) Find k if (k, 1) lies on PQ", "Substitute into y = x + 1", "1 = k + 1 ➔ k = 0"], a: "Algebraic check", e: "The coordinate is exactly on the y-axis at (0, 1)." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 43 — Quadrilateral PQRS",
+                qs: [
+                    {
+                        label: "Analyze the quadrilateral",
+                        type: "draw_q43",
+                        steps: [
+                            { w: ["(a) Coordinates: P(-3,2), Q(-3,-3), R(5,-1), S(1,-1)"], a: "Read the graph", e: "Identify all four vertices." },
+                            { w: ["(b) Find the gradients", "(i) PQ: Vertical line ➔ Undefined", "(ii) QR: Rise=2, Run=8 ➔ m = 1/4"], a: "Check PQ and QR", e: "Notice PQ is a straight drop." },
+                            { w: ["Find the remaining gradients", "(iii) RS: Horizontal line ➔ m = 0", "(iv) PS: Rise=-3, Run=4 ➔ m = -3/4"], a: "Check RS and PS", e: "RS is perfectly flat." },
+                            { w: ["(c) Write down the equations", "(i) Equation of PQ: x = -3", "(ii) Equation of RS: y = -1"], a: "Vertical & Horizontal", e: "Vertical lines are x=c. Horizontal lines are y=c." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 44 — Graphing y = 2x - 3",
+                qs: [
+                    {
+                        label: "Graph analysis and intersections",
+                        type: "draw_q44",
+                        steps: [
+                            { w: ["(a) Find a", "x = -2 ➔ y = 2(-2) - 3 = -7 ➔ a = -7"], a: "Substitute", e: "Table point is (-2, -7)." },
+                            { w: ["(b) Draw y = 2x - 3", "(c) Calculate gradient", "Gradient = 2"], a: "m is the coefficient", e: "We can read this straight from the equation y = 2x - 3." },
+                            { w: ["(d)(i) Value of y when x = -1.5 ➔ y = -6", "(d)(ii) Value of x when y = -3.6 ➔ 2x - 3 = -3.6 ➔ x = -0.3"], a: "Algebraic solving", e: "Use the equation to solve for the missing variable." },
+                            { w: ["(d)(iii) Find k given (k, -2.2)", "-2.2 = 2k - 3 ➔ 0.8 = 2k ➔ k = 0.4"], a: "Substitute point", e: "Plug in the coordinates." },
+                            { w: ["(e) Draw y = 0.6", "(f) Find point of intersection", "0.6 = 2x - 3 ➔ 3.6 = 2x ➔ x = 1.8", "Intersection = (1.8, 0.6)"], a: "Equate lines", e: "Where the drawn line crosses the horizontal line y = 0.6." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 45 — Real World: Computer Repair",
+                qs: [
+                    {
+                        label: "Analyze the Repair Charges Graph",
+                        type: "draw_q45",
+                        steps: [
+                            { w: ["(a)(i) Charge for 45 minutes", "From x=45, read up to graph ➔ y = $45"], a: "Read the graph", e: "Identify the cost on the y-axis." },
+                            { w: ["(a)(ii) Charge for 1 hour (60 mins)", "From x=60, read up to graph ➔ y = $55"], a: "Convert units", e: "Make sure to use minutes (60) on the x-axis." },
+                            { w: ["(b) Find time taken if charged $29", "Read from y=29 across to the line, then down."], a: "Work backwards", e: "Let's calculate exactly. The line starts at 15 and hits 35 at 30 mins. m = 20/30 = 2/3." },
+                            { w: ["Equation: C = 2/3t + 15", "29 = 2/3t + 15 ➔ 14 = 2/3t ➔ t = 21 mins"], a: "Exact calculation", e: "Mr Lim's computer took exactly 21 minutes to repair." }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        function createEl(tag, style, text) { let e = document.createElement(tag); if(style) e.setAttribute('style', style); if(text) e.innerHTML = text; return e; }
+        let selectedEx = null, currentQ = 0, currentStep = 0;
+
+        function render() {
+            let app = document.getElementById('app'); app.innerHTML = '';
+            app.setAttribute('style', 'max-width:1400px; margin:0 auto; padding:20px; min-height:100vh; position:relative; padding-bottom:100px;');
+            app.appendChild(createEl('div', 'position:sticky; top:0; background:#fff; border-bottom:4px solid #B8860B; padding:15px; z-index:100; margin-bottom:20px; font-size:20px;', `<strong>Part 2:</strong> Drawing Graphs & Gradients (Q26 - Q45). Ensure every sub-part is fully answered!`));
+
+            data.forEach((ex, idx) => {
+                if (selectedEx === idx) {
+                    let backBtn = createEl('button', 'display:block; width:100%; text-align:left; background:#eee; border:2px solid #bbb; padding:15px; font-size:20px; font-weight:bold; cursor:pointer; margin-bottom:20px; border-radius:6px;', ex.t + ' ▲ (Click to close)');
+                    backBtn.onclick = () => { selectedEx = null; render(); }; app.appendChild(backBtn);
+
+                    let contentDiv = createEl('div', 'margin-bottom: 40px;', '');
+                    let q = ex.qs[currentQ];
+                    contentDiv.appendChild(createEl('div', 'border:4px solid #B8860B; padding:20px; text-align:center; font-family:monospace; font-size:28px; font-weight:bold; background:#fff; margin-bottom:20px; border-radius:8px;', q.label));
+
+                    if (ex.qs.length > 1) {
+                        let nav = createEl('div', 'text-align:center; margin-bottom:20px;', '');
+                        let prevBtn = createEl('button', currentQ > 0 ? NAV : NAV_DIS, '◀ Prev Part');
+                        let nextBtn = createEl('button', currentQ < ex.qs.length - 1 ? NAV : NAV_DIS, 'Next Part ▶');
+                        if (currentQ > 0) prevBtn.onclick = () => { currentQ--; currentStep=0; render(); };
+                        if (currentQ < ex.qs.length - 1) nextBtn.onclick = () => { currentQ++; currentStep=0; render(); };
+                        nav.appendChild(prevBtn); nav.appendChild(nextBtn); contentDiv.appendChild(nav);
+                    }
+
+                    let splitLayout = createEl('div', 'display:flex; flex-wrap:wrap; gap:30px;', '');
+                    let stepsDiv = createEl('div', 'flex:1; min-width:350px;', '');
+                    for (let i = 0; i < currentStep; i++) {
+                        let s = q.steps[i];
+                        let w = createEl('div', 'margin-bottom:15px; border-left:6px solid #0D47A1; padding-left:15px; background:#fff; padding:15px;', '');
+                        w.appendChild(createEl('div', 'font-family:monospace; font-size:22px; font-weight:bold; margin-bottom:10px;', s.w.join('<br>')));
+                        if (s.a) w.appendChild(createEl('div', 'background:#FFF9C4; border:2px solid #FBC02D; padding:10px; display:inline-block; margin-bottom:8px; font-size:18px; border-radius:4px; font-weight:bold;', `💡 ${s.a}`));
+                        if (s.e) w.appendChild(createEl('div', 'background:#E8F5E9; border:2px solid #4CAF50; padding:10px; display:inline-block; font-size:18px; border-radius:4px;', `💬 ${s.e}`));
+                        stepsDiv.appendChild(w);
+                    }
+                    splitLayout.appendChild(stepsDiv);
+
+                    // Load canvas for graphical types
+                    if(q.type.startsWith('draw_')) {
+                        let canvasContainer = createEl('div', 'flex:2; min-width:500px; text-align:center; background:#fff; border:3px solid #ccc; border-radius:8px; padding:15px;', '');
+                        let canvas = document.createElement('canvas'); canvas.width = 800; canvas.height = 800; 
+                        canvas.setAttribute('style', 'max-width:100%; height:auto; background:#fafafa;');
+                        canvasContainer.appendChild(canvas); splitLayout.appendChild(canvasContainer);
+                        setTimeout(() => drawGraph(canvas, q, currentStep), 0);
+                    }
+
+                    contentDiv.appendChild(splitLayout);
+
+                    let controlsDiv = createEl('div', 'text-align:center; margin-top:30px;', '');
+                    let isDone = currentStep >= q.steps.length;
+                    let stepBtn = createEl('button', isDone ? BLUE_DIS : BLUE, `Show next step (${currentStep}/${q.steps.length})`);
+                    if (!isDone) stepBtn.onclick = () => { currentStep++; render(); };
+                    let resetBtn = createEl('button', GREY, 'Reset'); resetBtn.onclick = () => { currentStep = 0; render(); };
+                    controlsDiv.appendChild(stepBtn); controlsDiv.appendChild(resetBtn); contentDiv.appendChild(controlsDiv); app.appendChild(contentDiv);
+                } else {
+                    let btn = createEl('button', 'display:block; width:100%; text-align:left; background:#fff; border:2px solid #ccc; padding:15px; font-size:20px; font-weight:bold; cursor:pointer; margin-bottom:10px; border-radius:6px;', ex.t + ' ▼');
+                    btn.onclick = () => { selectedEx = idx; currentQ = 0; currentStep = 0; render(); }; app.appendChild(btn);
+                }
+            });
+        }
+
+        function drawGraph(canvas, q, step) {
+            let ctx = canvas.getContext('2d'); let w = canvas.width, h = canvas.height; let cx = w / 2, cy = h / 2;
+            let scale = 35; // Default Cartesian Scale
+            
+            ctx.clearRect(0, 0, w, h);
+            
+            // Standard Axis Setup (unless it's a first-quadrant specific graph like Q45)
+            if(q.type !== 'draw_q45') {
+                ctx.strokeStyle = '#ddd'; ctx.lineWidth = 2;
+                for(let i=0; i<w; i+=scale) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, h); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(w, i); ctx.stroke(); }
+                ctx.strokeStyle = '#000'; ctx.lineWidth = 3;
+                ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.stroke(); ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.stroke(); 
+                ctx.fillStyle = '#000'; ctx.font = '18px Arial'; ctx.fillText('x', w - 20, cy - 15); ctx.fillText('y', cx + 15, 20); ctx.fillText('0', cx - 20, cy + 20);
+                
+                for(let i=-10; i<=10; i++) {
+                    if(i!==0 && i%2===0) { ctx.fillText(i, cx + (i*scale) - 8, cy + 20); ctx.fillText(-i, cx - 28, cy + (i*scale) + 6); }
+                }
+            }
+
+            if (q.type === 'draw_q26') {
+                if(step >= 2) {
+                    ctx.strokeStyle = '#083378'; ctx.lineWidth = 4; ctx.beginPath();
+                    ctx.moveTo(cx + (-2*scale), cy - (5*scale)); ctx.lineTo(cx + (10*scale), cy - (-1*scale)); ctx.stroke();
+                    ctx.fillStyle = '#083378'; ctx.font='bold 20px monospace'; ctx.fillText('y = 4 - 0.5x', cx + (7*scale), cy - (1.5*scale));
+                }
+                if(step >= 3) {
+                    ctx.strokeStyle = '#B8860B'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(0, cy - (1*scale)); ctx.lineTo(w, cy - (1*scale)); ctx.stroke();
+                    ctx.fillStyle = '#B8860B'; ctx.fillText('y = 1', 20, cy - (1*scale) - 10);
+                }
+                if(step >= 4) {
+                    ctx.beginPath(); ctx.arc(cx + (6*scale), cy - (1*scale), 8, 0, Math.PI*2); ctx.fillStyle = '#e53935'; ctx.fill();
+                    ctx.fillStyle = '#e53935'; ctx.fillText('Intersection (6, 1)', cx + (6*scale) - 50, cy - (1*scale) - 20);
+                }
+            } else if (q.type === 'draw_q28') {
+                if(step >= 2) {
+                    ctx.strokeStyle = '#083378'; ctx.lineWidth = 4; ctx.beginPath();
+                    ctx.moveTo(cx + (-6*scale), cy - (12*scale)); ctx.lineTo(cx + (6*scale), cy - (-4*scale)); ctx.stroke();
+                }
+                if(step >= 3) {
+                    ctx.beginPath(); ctx.arc(cx + (3*scale), cy, 8, 0, Math.PI*2); ctx.fillStyle = '#e53935'; ctx.fill();
+                    ctx.fillText('x-int: 3', cx + (3*scale) + 15, cy - 10);
+                }
+                if(step >= 4) {
+                    ctx.beginPath(); ctx.arc(cx, cy - (4*scale), 8, 0, Math.PI*2); ctx.fillStyle = '#4CAF50'; ctx.fill();
+                    ctx.fillText('y-int: 4', cx + 15, cy - (4*scale) - 10);
+                }
+                if(step >= 5) {
+                    ctx.fillStyle = 'rgba(229, 57, 53, 0.2)'; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + (3*scale), cy); ctx.lineTo(cx, cy - (4*scale)); ctx.fill();
+                    ctx.fillStyle = '#e53935'; ctx.fillText('Area = 6', cx + (1*scale), cy - (1*scale));
+                }
+            } else if (q.type === 'draw_q31') {
+                if(step >= 1) {
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = '#e53935'; ctx.beginPath(); ctx.moveTo(cx+(-6*scale), cy-(2*scale)); ctx.lineTo(cx+(6*scale), cy-(-4*scale)); ctx.stroke(); ctx.fillText('y=-0.5x-1', cx+(4*scale), cy-(-3*scale));
+                    ctx.strokeStyle = '#4CAF50'; ctx.beginPath(); ctx.moveTo(cx+(-6*scale), cy-(5*scale)); ctx.lineTo(cx+(6*scale), cy-(-1*scale)); ctx.stroke(); ctx.fillText('y=-0.5x+2', cx+(4*scale), cy-(0*scale));
+                    ctx.strokeStyle = '#083378'; ctx.beginPath(); ctx.moveTo(cx+(-6*scale), cy-(8*scale)); ctx.lineTo(cx+(6*scale), cy-(2*scale)); ctx.stroke(); ctx.fillText('y=-0.5x+5', cx+(4*scale), cy-(3*scale));
+                    ctx.strokeStyle = '#B8860B'; ctx.beginPath(); ctx.moveTo(cx+(-6*scale), cy-(3*scale)); ctx.lineTo(cx+(6*scale), cy-(-3*scale)); ctx.stroke(); ctx.fillText('y=-0.5x', cx+(4*scale), cy-(-2*scale));
+                }
+            } else if (q.type === 'draw_q33') {
+                if(step >= 1) {
+                    ctx.lineWidth = 4;
+                    ctx.strokeStyle = '#083378'; ctx.beginPath(); ctx.moveTo(0, cy-(2.5*scale)); ctx.lineTo(w, cy-(2.5*scale)); ctx.stroke(); ctx.fillText('y=2.5', 20, cy-(2.5*scale)-10);
+                    ctx.strokeStyle = '#083378'; ctx.beginPath(); ctx.moveTo(0, cy-(-2*scale)); ctx.lineTo(w, cy-(-2*scale)); ctx.stroke(); ctx.fillText('y=-2', 20, cy-(-2*scale)-10);
+                    ctx.strokeStyle = '#B8860B'; ctx.beginPath(); ctx.moveTo(cx+(-1*scale), 0); ctx.lineTo(cx+(-1*scale), h); ctx.stroke(); ctx.fillText('x=-1', cx+(-1*scale)+10, 30);
+                    ctx.strokeStyle = '#B8860B'; ctx.beginPath(); ctx.moveTo(cx+(2*scale), 0); ctx.lineTo(cx+(2*scale), h); ctx.stroke(); ctx.fillText('x=2', cx+(2*scale)+10, 30);
+                }
+                if(step >= 2) {
+                    ctx.fillStyle = 'rgba(13, 71, 161, 0.2)'; ctx.fillRect(cx+(-1*scale), cy-(2.5*scale), 3*scale, 4.5*scale);
+                }
+                if(step >= 3) {
+                    ctx.fillStyle = '#083378'; ctx.font='bold 24px monospace'; ctx.fillText('Area = 13.5', cx+(0.5*scale)-60, cy);
+                }
+            } else if (q.type === 'draw_q37') {
+                if(step >= 1) {
+                    ctx.strokeStyle = '#333'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(cx+(-4*scale), cy-(-3*scale)); ctx.lineTo(cx+(4*scale), cy-(5*scale)); ctx.stroke();
+                    ctx.beginPath(); ctx.arc(cx+(-4*scale), cy-(-3*scale), 7, 0, Math.PI*2); ctx.fillStyle='#000'; ctx.fill(); ctx.fillText('P(-4,-3)', cx+(-4*scale)-80, cy-(-3*scale)+20);
+                    ctx.beginPath(); ctx.arc(cx+(4*scale), cy-(5*scale), 7, 0, Math.PI*2); ctx.fill(); ctx.fillText('Q(4,5)', cx+(4*scale)+10, cy-(5*scale)-10);
+                }
+                if(step >= 2) {
+                    ctx.strokeStyle = '#B8860B'; ctx.lineWidth=4; ctx.setLineDash([8,8]); ctx.beginPath(); ctx.moveTo(cx+(-4*scale), cy-(-3*scale)); ctx.lineTo(cx+(4*scale), cy-(-3*scale)); ctx.stroke();
+                    ctx.strokeStyle = '#4CAF50'; ctx.beginPath(); ctx.moveTo(cx+(4*scale), cy-(-3*scale)); ctx.lineTo(cx+(4*scale), cy-(5*scale)); ctx.stroke(); ctx.setLineDash([]);
+                    ctx.fillStyle = '#B8860B'; ctx.fillText('Run=8', cx, cy-(-3*scale)+30); ctx.fillStyle = '#4CAF50'; ctx.fillText('Rise=8', cx+(4*scale)+15, cy-(1*scale));
+                }
+                if(step >= 3) { ctx.fillStyle='#0D47A1'; ctx.fillText('c = 1', cx+15, cy-(1*scale)); ctx.beginPath(); ctx.arc(cx, cy-(1*scale), 7, 0, Math.PI*2); ctx.fill(); }
+            } else if (q.type === 'draw_q43') {
+                if(step >= 1) {
+                    ctx.strokeStyle = '#333'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(cx+(-3*scale), cy-(2*scale)); ctx.lineTo(cx+(-3*scale), cy-(-3*scale)); ctx.lineTo(cx+(5*scale), cy-(-1*scale)); ctx.lineTo(cx+(1*scale), cy-(-1*scale)); ctx.closePath(); ctx.stroke();
+                    ctx.fillStyle = 'rgba(13, 71, 161, 0.1)'; ctx.fill();
+                    let p = [{x:-3,y:2,l:'P'}, {x:-3,y:-3,l:'Q'}, {x:5,y:-1,l:'R'}, {x:1,y:-1,l:'S'}];
+                    p.forEach(pt => { ctx.beginPath(); ctx.arc(cx+(pt.x*scale), cy-(pt.y*scale), 6, 0, Math.PI*2); ctx.fillStyle='#000'; ctx.fill(); ctx.fillText(pt.l, cx+(pt.x*scale)-20, cy-(pt.y*scale)-10); });
+                }
+                if(step >= 2) {
+                    ctx.strokeStyle='#e53935'; ctx.lineWidth=5; ctx.beginPath(); ctx.moveTo(cx+(-3*scale), cy-(2*scale)); ctx.lineTo(cx+(-3*scale), cy-(-3*scale)); ctx.stroke();
+                    ctx.strokeStyle='#4CAF50'; ctx.beginPath(); ctx.moveTo(cx+(-3*scale), cy-(-3*scale)); ctx.lineTo(cx+(5*scale), cy-(-1*scale)); ctx.stroke();
+                }
+                if(step >= 3) {
+                    ctx.strokeStyle='#B8860B'; ctx.lineWidth=5; ctx.beginPath(); ctx.moveTo(cx+(5*scale), cy-(-1*scale)); ctx.lineTo(cx+(1*scale), cy-(-1*scale)); ctx.stroke();
+                    ctx.strokeStyle='#083378'; ctx.beginPath(); ctx.moveTo(cx+(1*scale), cy-(-1*scale)); ctx.lineTo(cx+(-3*scale), cy-(2*scale)); ctx.stroke();
+                }
+            } else if (q.type === 'draw_q44') {
+                if(step >= 2) {
+                    ctx.strokeStyle = '#083378'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(cx+(-4*scale), cy-(-11*scale)); ctx.lineTo(cx+(5*scale), cy-(7*scale)); ctx.stroke();
+                }
+                if(step >= 5) {
+                    ctx.strokeStyle = '#B8860B'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(0, cy-(0.6*scale)); ctx.lineTo(w, cy-(0.6*scale)); ctx.stroke();
+                    ctx.beginPath(); ctx.arc(cx+(1.8*scale), cy-(0.6*scale), 8, 0, Math.PI*2); ctx.fillStyle='#e53935'; ctx.fill();
+                    ctx.fillText('(1.8, 0.6)', cx+(1.8*scale)+15, cy-(0.6*scale)-15);
+                }
+            } else if (q.type === 'draw_q45') {
+                // First Quadrant Specific
+                let ox = 100, oy = h - 100, cw = w - 150, ch = h - 150;
+                let sx = cw/80, sy = ch/60; // Max Time 80, Max Cost 60
+                ctx.strokeStyle = '#e0e0e0'; ctx.lineWidth = 2;
+                for(let i=0; i<=80; i+=10) { ctx.beginPath(); ctx.moveTo(ox+(i*sx), oy); ctx.lineTo(ox+(i*sx), oy-ch); ctx.stroke(); ctx.fillStyle = '#666'; ctx.font='16px Arial'; ctx.textAlign='center'; ctx.fillText(i, ox+(i*sx), oy+25); }
+                for(let i=0; i<=60; i+=10) { ctx.beginPath(); ctx.moveTo(ox, oy-(i*sy)); ctx.lineTo(ox+cw, oy-(i*sy)); ctx.stroke(); ctx.textAlign='right'; ctx.fillText(i, ox-15, oy-(i*sy)+6); }
+                ctx.strokeStyle = '#000'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox+cw+20, oy); ctx.stroke(); ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox, oy-ch-20); ctx.stroke();
+                ctx.fillStyle = '#000'; ctx.font='bold 20px Arial'; ctx.textAlign='center'; ctx.fillText('Time (minutes)', ox+(cw/2), oy+60);
+                ctx.save(); ctx.translate(ox-60, oy-(ch/2)); ctx.rotate(-Math.PI/2); ctx.fillText('Charges ($)', 0, 0); ctx.restore();
+                
+                ctx.strokeStyle='#083378'; ctx.lineWidth=5; ctx.beginPath(); ctx.moveTo(ox, oy-(15*sy)); ctx.lineTo(ox+(67.5*sx), oy-(60*sy)); ctx.stroke(); // line
+                
+                if(step >= 1) { ctx.strokeStyle='#e53935'; ctx.lineWidth=3; ctx.setLineDash([8,8]); ctx.beginPath(); ctx.moveTo(ox+(45*sx), oy); ctx.lineTo(ox+(45*sx), oy-(45*sy)); ctx.lineTo(ox, oy-(45*sy)); ctx.stroke(); ctx.setLineDash([]); ctx.beginPath(); ctx.arc(ox+(45*sx), oy-(45*sy), 8, 0, Math.PI*2); ctx.fillStyle='#e53935'; ctx.fill(); ctx.textAlign='left'; ctx.fillText('$45', ox+10, oy-(45*sy)-10); }
+                if(step >= 2) { ctx.strokeStyle='#4CAF50'; ctx.lineWidth=3; ctx.setLineDash([8,8]); ctx.beginPath(); ctx.moveTo(ox+(60*sx), oy); ctx.lineTo(ox+(60*sx), oy-(55*sy)); ctx.lineTo(ox, oy-(55*sy)); ctx.stroke(); ctx.setLineDash([]); ctx.beginPath(); ctx.arc(ox+(60*sx), oy-(55*sy), 8, 0, Math.PI*2); ctx.fillStyle='#4CAF50'; ctx.fill(); ctx.fillText('$55', ox+10, oy-(55*sy)-10); }
+                if(step >= 3) { ctx.strokeStyle='#B8860B'; ctx.lineWidth=3; ctx.setLineDash([8,8]); ctx.beginPath(); ctx.moveTo(ox, oy-(29*sy)); ctx.lineTo(ox+(21*sx), oy-(29*sy)); ctx.lineTo(ox+(21*sx), oy); ctx.stroke(); ctx.setLineDash([]); ctx.beginPath(); ctx.arc(ox+(21*sx), oy-(29*sy), 8, 0, Math.PI*2); ctx.fillStyle='#B8860B'; ctx.fill(); ctx.fillText('21 mins', ox+(21*sx)+10, oy-10); }
+            }
+        }
+        render();
+    </script>
+</body>
+</html>

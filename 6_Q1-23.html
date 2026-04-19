@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial 6 - Part 1: Coordinates & Equations (Complete)</title>
+</head>
+<body style="margin:0; font-family:sans-serif; background-color:#FFFDF5;">
+    <div id="app"></div>
+
+    <script>
+        const BLUE = 'background:#0D47A1; color:#FFFFFF; border:3px solid #083378; padding:12px 18px; font-size:18px; cursor:pointer; border-radius:5px; margin:5px; font-weight:bold;';
+        const BLUE_DIS = 'background:#888; color:#fff; border:3px solid #666; padding:12px 18px; font-size:18px; cursor:not-allowed; border-radius:5px; margin:5px; font-weight:bold;';
+        const GREY = 'background:#fff; color:#000; border:2px solid #333; padding:12px 18px; font-size:18px; cursor:pointer; border-radius:5px; margin:5px; font-weight:bold;';
+        const NAV = 'background:#B8860B; color:#fff; border:2px solid #8B6508; padding:10px 15px; font-size:16px; cursor:pointer; border-radius:4px; margin:5px; font-weight:bold;';
+        const NAV_DIS = 'background:#D4C890; color:#888; border:2px solid #D4C890; padding:10px 15px; font-size:16px; cursor:not-allowed; border-radius:4px; margin:5px; font-weight:bold;';
+
+        const data = [
+            {
+                t: "Question 1 — Plotting Points",
+                qs: [
+                    {
+                        label: "Plot points A through J on the Cartesian plane.",
+                        type: "plot_points",
+                        pts: [
+                            {x:6, y:3, l:'A'}, {x:-4, y:0, l:'B'}, {x:6, y:-6, l:'C'}, {x:-3, y:2, l:'D'}, {x:0, y:-2, l:'E'},
+                            {x:2, y:9, l:'F'}, {x:-1, y:-5, l:'G'}, {x:0, y:5, l:'H'}, {x:3, y:0, l:'I'}, {x:-5, y:-7, l:'J'}
+                        ],
+                        steps: [
+                            { w: ["Plot A(6, 3), B(-4, 0), C(6, -6)"], a: "Watch the grid", e: "Notice how B lies exactly on the x-axis because its y-coordinate is 0." },
+                            { w: ["Plot D(-3, 2), E(0, -2), F(2, 9)"], a: "Positive and Negative", e: "E lies exactly on the y-axis because its x-coordinate is 0." },
+                            { w: ["Plot G(-1, -5), H(0, 5), I(3, 0), J(-5, -7)"], a: "Fill the plane", e: "All points are now mapped to their physical locations." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 2 — Reading Coordinates",
+                qs: [
+                    {
+                        label: "Write down the coordinates of the given points.",
+                        type: "read_points",
+                        pts: [
+                            {x:4, y:3, l:'A'}, {x:6, y:-5, l:'B'}, {x:-1, y:2, l:'C'}, {x:-4, y:-2, l:'D'},
+                            {x:0, y:-3, l:'E'}, {x:2, y:6, l:'F'}, {x:5, y:0, l:'G'}, {x:0, y:8, l:'H'},
+                            {x:-5, y:5, l:'I'}, {x:-2, y:0, l:'J'}, {x:-3, y:-5, l:'K'}, {x:2, y:-2, l:'L'}
+                        ],
+                        steps: [
+                            { w: ["A(4, 3)", "B(6, -5)", "C(-1, 2)"], a: "Read x first, then y", e: "Travel to the x-axis, then across to the y-axis." },
+                            { w: ["D(-4, -2)", "E(0, -3)", "F(2, 6)"], a: "Intercepts", e: "E is on the y-axis, so its x-value is 0." },
+                            { w: ["G(5, 0)", "H(0, 8)", "I(-5, 5)"], a: "Intercepts", e: "G is on the x-axis, so its y-value is 0." },
+                            { w: ["J(-2, 0)", "K(-3, -5)", "L(2, -2)"], a: "Complete the table", e: "All coordinates successfully extracted from the visual plane." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 3 — Geometrical Shapes",
+                qs: [
+                    {
+                        label: "3(a): Plot A(-2,4), B(0,1), C(6,5), D(4,8)",
+                        type: "shape",
+                        pts: [{x:-2, y:4, l:'A'}, {x:0, y:1, l:'B'}, {x:6, y:5, l:'C'}, {x:4, y:8, l:'D'}],
+                        steps: [
+                            { w: ["Plot A(-2, 4) and B(0, 1)"], a: "Plot vertices", e: "Start by plotting the first two points." },
+                            { w: ["Plot C(6, 5) and D(4, 8)"], a: "Plot vertices", e: "Add the remaining two points." },
+                            { w: ["Join A ➔ B ➔ C ➔ D ➔ A"], a: "Draw the perimeter", e: "The shape is a Parallelogram (opposite sides are parallel)." }
+                        ]
+                    },
+                    {
+                        label: "3(b): Plot E(4,3), F(2,0), G(4,-3), H(6,0)",
+                        type: "shape",
+                        pts: [{x:4, y:3, l:'E'}, {x:2, y:0, l:'F'}, {x:4, y:-3, l:'G'}, {x:6, y:0, l:'H'}],
+                        steps: [
+                            { w: ["Plot E, F, G, H"], a: "Plot vertices", e: "Map out the four coordinate pairs." },
+                            { w: ["Join the points"], a: "Draw the perimeter", e: "The shape is a Rhombus (all four sides are equal length)." }
+                        ]
+                    },
+                    {
+                        label: "3(c): Plot P(-4,9), Q(-6,4), R(-4,2), S(-2,7)",
+                        type: "shape",
+                        pts: [{x:-4, y:9, l:'P'}, {x:-6, y:4, l:'Q'}, {x:-4, y:2, l:'R'}, {x:-2, y:7, l:'S'}],
+                        steps: [
+                            { w: ["Plot P, Q, R, S"], a: "Plot vertices", e: "Map out the four coordinate pairs." },
+                            { w: ["Join the points"], a: "Draw the perimeter", e: "The shape is a Parallelogram (opposite sides are parallel)." }
+                        ]
+                    },
+                    {
+                        label: "3(d): Plot T(-2,1), U(-6,-2), V(-4,-5), W(2,-5)",
+                        type: "shape",
+                        pts: [{x:-2, y:1, l:'T'}, {x:-6, y:-2, l:'U'}, {x:-4, y:-5, l:'V'}, {x:2, y:-5, l:'W'}],
+                        steps: [
+                            { w: ["Plot T, U, V, W"], a: "Plot vertices", e: "Notice that V and W both have a y-coordinate of -5." },
+                            { w: ["Join the points"], a: "Draw the perimeter", e: "The shape is a Trapezium (Line UV is parallel to Line TW)." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 6 — Area of a Triangle",
+                qs: [
+                    {
+                        label: "Vertices: A(0,2), B(4,-1), C(4,8)",
+                        type: "shape_area",
+                        pts: [{x:0, y:2, l:'A'}, {x:4, y:-1, l:'B'}, {x:4, y:8, l:'C'}],
+                        steps: [
+                            { w: ["Plot A(0,2), B(4,-1), C(4,8)"], a: "Draw the triangle", e: "Notice that points B and C share the same x-coordinate (4). This makes BC a perfectly vertical line!" },
+                            { w: ["Identify the Base (BC)"], a: "Length = 9 units", e: "From y = 8 down to y = -1 is a total distance of 9 units." },
+                            { w: ["Identify the Height (h)"], a: "Perpendicular to base", e: "The horizontal distance from A(x=0) to the line BC(x=4) is exactly 4 units." },
+                            { w: ["Area = 1/2 × Base × Height", "= 1/2 × 9 × 4 = 18 units²"], a: "Calculate Area", e: "The area of ∆ABC is 18 square units." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 8 — Evaluating Linear Equations",
+                qs: [
+                    {
+                        label: "Given y = 3x + 7, find y when x = 2, -4, 0.",
+                        type: "text",
+                        steps: [
+                            { w: ["(a) When x = 2:", "y = 3(2) + 7 = 6 + 7 = 13"], a: "Substitute x = 2", e: "Coordinate point is (2, 13)." },
+                            { w: ["(b) When x = -4:", "y = 3(-4) + 7 = -12 + 7 = -5"], a: "Substitute x = -4", e: "Coordinate point is (-4, -5)." },
+                            { w: ["(c) When x = 0:", "y = 3(0) + 7 = 0 + 7 = 7"], a: "Substitute x = 0", e: "Finding the output when x is zero gives you the y-intercept (0, 7)." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 10 — Do Points Lie on the Line?",
+                qs: [
+                    {
+                        label: "Determine if the points satisfy the equations.",
+                        type: "text",
+                        steps: [
+                            { w: ["(a) (0, 4), y = 3x + 4", "4 = 3(0) + 4 ➔ 4 = 4. Yes!"], a: "LHS = RHS", e: "The point satisfies the equation." },
+                            { w: ["(b) (-2, -1), 2x - 5y - 1 = 0", "2(-2) - 5(-1) - 1 = -4 + 5 - 1 = 0. Yes!"], a: "LHS = RHS", e: "The point is on the line." },
+                            { w: ["(c) (6, 9), 4x - 3y = 0", "4(6) - 3(9) = 24 - 27 = -3. No!"], a: "LHS ≠ RHS", e: "-3 does not equal 0. The point is NOT on the line." },
+                            { w: ["(d) (1/4, 1/3), (2/3)x - (1/2)y = 1", "(2/3)(1/4) - (1/2)(1/3) = 2/12 - 1/6 = 0. No!"], a: "LHS ≠ RHS", e: "0 does not equal 1." },
+                            { w: ["(e) (6, -6), (5x + y)/8 = 3", "(30 - 6)/8 = 24/8 = 3. Yes!"], a: "LHS = RHS", e: "The point is on the line." },
+                            { w: ["(f) (-1, -1), x - (y-1)/2 = 0", "-1 - (-1-1)/2 = -1 - (-2)/2 = -1 + 1 = 0. Yes!"], a: "LHS = RHS", e: "The point is on the line." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 13 — Finding Unknown Constants",
+                qs: [
+                    {
+                        label: "Line y + 2x = h passes through (-3, -8). Find h.",
+                        type: "text",
+                        steps: [
+                            { w: ["y + 2x = h", "Point: x = -3, y = -8"], a: "Substitute knowns", e: "Since the point lies on the line, its coordinates must satisfy the equation." },
+                            { w: ["(-8) + 2(-3) = h"], a: "Plug in values", e: "Replace y with -8 and x with -3." },
+                            { w: ["-8 - 6 = h", "h = -14"], a: "Solve for h", e: "The constant h is -14. The full equation is y + 2x = -14." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 17 — Reading Gradients and Intercepts",
+                qs: [
+                    {
+                        label: "State gradient (m) and y-intercept (c).",
+                        type: "text",
+                        steps: [
+                            { w: ["(a) y = 3x - 7", "m = 3, c = -7"], a: "Format: y = mx + c", e: "Standard form." },
+                            { w: ["(b) y = -1/2x + 5", "m = -1/2, c = 5"], a: "Format: y = mx + c", e: "Standard form." },
+                            { w: ["(c) y = 2.5 - x", "m = -1, c = 2.5"], a: "Watch the order!", e: "The gradient is the number attached to x." },
+                            { w: ["(d) y = 4x", "m = 4, c = 0"], a: "Where is c?", e: "There is no constant added, which means it crosses at the origin." },
+                            { w: ["(e) y = -11 - 2/3x", "m = -2/3, c = -11"], a: "Watch the order!", e: "Identify the coefficient of x." },
+                            { w: ["(f) y = 10", "m = 0, c = 10"], a: "Where is x?", e: "This is a flat horizontal line." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 18 — Writing Equations from m and c",
+                qs: [
+                    {
+                        label: "Write the equation given gradient and y-intercept.",
+                        type: "text",
+                        steps: [
+                            { w: ["(a) m = 2, c = 9 ➔ y = 2x + 9", "(b) m = -5, c = 1/2 ➔ y = -5x + 1/2"], a: "Substitute", e: "Plug directly into y = mx + c." },
+                            { w: ["(c) m = -1, c = -7 ➔ y = -x - 7", "(d) m = -3, c = 0 ➔ y = -3x"], a: "Simplify", e: "We don't need to write '1x' or '+ 0'." },
+                            { w: ["(e) m = 4/5, c = 1 ➔ y = 4/5x + 1", "(f) m = 0, c = -1/3 ➔ y = -1/3"], a: "Simplify", e: "A gradient of 0 means the x term disappears entirely." }
+                        ]
+                    }
+                ]
+            },
+            {
+                t: "Question 23 — Drawing Graphs from Tables",
+                qs: [
+                    {
+                        label: "23(a): Draw y = x",
+                        type: "graph_table",
+                        pts: [{x:-3, y:-3}, {x:0, y:0}, {x:3, y:3}],
+                        steps: [
+                            { w: ["Table:", "x = -3 ➔ y = -3", "x = 0 ➔ y = 0", "x = 3 ➔ y = 3"], a: "Calculate coordinates", e: "y is simply equal to x." },
+                            { w: ["Plot the points"], a: "Mark the grid", e: "Plot (-3, -3), (0, 0), and (3, 3)." },
+                            { w: ["Draw the line"], a: "Extend line", e: "Connect them to form y = x." }
+                        ]
+                    },
+                    {
+                        label: "23(b): Draw y = -1/3x",
+                        type: "graph_table",
+                        pts: [{x:-3, y:1}, {x:0, y:0}, {x:3, y:-1}],
+                        steps: [
+                            { w: ["Table:", "x = -3 ➔ y = 1", "x = 0 ➔ y = 0", "x = 3 ➔ y = -1"], a: "Calculate coordinates", e: "Multiply x by negative 1/3." },
+                            { w: ["Plot the points"], a: "Mark the grid", e: "Plot (-3, 1), (0, 0), and (3, -1)." },
+                            { w: ["Draw the line"], a: "Extend line", e: "Connect them to form y = -1/3x." }
+                        ]
+                    },
+                    {
+                        label: "23(c): Draw y = 2x - 1",
+                        type: "graph_table",
+                        pts: [{x:-1, y:-3}, {x:0, y:-1}, {x:1, y:1}],
+                        steps: [
+                            { w: ["Table:", "x = -1 ➔ y = -3", "x = 0 ➔ y = -1", "x = 1 ➔ y = 1"], a: "Calculate coordinates", e: "Multiply x by 2, then subtract 1." },
+                            { w: ["Plot the points"], a: "Mark the grid", e: "Plot (-1, -3), (0, -1), and (1, 1)." },
+                            { w: ["Draw the line"], a: "Extend line", e: "Connect them to form y = 2x - 1." }
+                        ]
+                    },
+                    {
+                        label: "23(d): Draw y = 3 - 1/2x",
+                        type: "graph_table",
+                        pts: [{x:0, y:3}, {x:2, y:2}, {x:4, y:1}],
+                        steps: [
+                            { w: ["Table:", "x = 0 ➔ y = 3", "x = 2 ➔ y = 2", "x = 4 ➔ y = 1"], a: "Calculate coordinates", e: "Divide x by 2, then subtract from 3." },
+                            { w: ["Plot the points"], a: "Mark the grid", e: "Plot (0, 3), (2, 2), and (4, 1)." },
+                            { w: ["Draw the line"], a: "Extend line", e: "Connect them to form y = 3 - 1/2x." }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        function createEl(tag, style, text) { let e = document.createElement(tag); if(style) e.setAttribute('style', style); if(text) e.innerHTML = text; return e; }
+        let selectedEx = null, currentQ = 0, currentStep = 0;
+
+        function render() {
+            let app = document.getElementById('app'); app.innerHTML = '';
+            app.setAttribute('style', 'max-width:1400px; margin:0 auto; padding:20px; min-height:100vh; position:relative; padding-bottom:100px;');
+            app.appendChild(createEl('div', 'position:sticky; top:0; background:#fff; border-bottom:4px solid #B8860B; padding:15px; z-index:100; margin-bottom:20px; font-size:20px;', `<strong>Part 1:</strong> Coordinates & Equations (Q1 - Q23)`));
+
+            data.forEach((ex, idx) => {
+                if (selectedEx === idx) {
+                    let backBtn = createEl('button', 'display:block; width:100%; text-align:left; background:#eee; border:2px solid #bbb; padding:15px; font-size:20px; font-weight:bold; cursor:pointer; margin-bottom:20px; border-radius:6px;', ex.t + ' ▲ (Click to close)');
+                    backBtn.onclick = () => { selectedEx = null; render(); }; app.appendChild(backBtn);
+
+                    let contentDiv = createEl('div', 'margin-bottom: 40px;', '');
+                    let q = ex.qs[currentQ];
+                    contentDiv.appendChild(createEl('div', 'border:4px solid #B8860B; padding:20px; text-align:center; font-family:monospace; font-size:28px; font-weight:bold; background:#fff; margin-bottom:20px; border-radius:8px;', q.label));
+
+                    if (ex.qs.length > 1) {
+                        let nav = createEl('div', 'text-align:center; margin-bottom:20px;', '');
+                        let prevBtn = createEl('button', currentQ > 0 ? NAV : NAV_DIS, '◀ Prev Part');
+                        let nextBtn = createEl('button', currentQ < ex.qs.length - 1 ? NAV : NAV_DIS, 'Next Part ▶');
+                        if (currentQ > 0) prevBtn.onclick = () => { currentQ--; currentStep=0; render(); };
+                        if (currentQ < ex.qs.length - 1) nextBtn.onclick = () => { currentQ++; currentStep=0; render(); };
+                        nav.appendChild(prevBtn); nav.appendChild(nextBtn); contentDiv.appendChild(nav);
+                    }
+
+                    let splitLayout = createEl('div', 'display:flex; flex-wrap:wrap; gap:30px;', '');
+                    let stepsDiv = createEl('div', 'flex:1; min-width:350px;', '');
+                    for (let i = 0; i < currentStep; i++) {
+                        let s = q.steps[i];
+                        let w = createEl('div', 'margin-bottom:15px; border-left:6px solid #0D47A1; padding-left:15px; background:#fff; padding:15px;', '');
+                        w.appendChild(createEl('div', 'font-family:monospace; font-size:22px; font-weight:bold; margin-bottom:10px;', s.w.join('<br>')));
+                        if (s.a) w.appendChild(createEl('div', 'background:#FFF9C4; border:2px solid #FBC02D; padding:10px; display:inline-block; margin-bottom:8px; font-size:18px; border-radius:4px; font-weight:bold;', `💡 ${s.a}`));
+                        if (s.e) w.appendChild(createEl('div', 'background:#E8F5E9; border:2px solid #4CAF50; padding:10px; display:inline-block; font-size:18px; border-radius:4px;', `💬 ${s.e}`));
+                        stepsDiv.appendChild(w);
+                    }
+                    splitLayout.appendChild(stepsDiv);
+
+                    // Render canvas only for graphical types
+                    if(['plot_points', 'read_points', 'shape', 'shape_area', 'graph_table'].includes(q.type)) {
+                        let canvasContainer = createEl('div', 'flex:2; min-width:500px; text-align:center; background:#fff; border:3px solid #ccc; border-radius:8px; padding:15px;', '');
+                        let canvas = document.createElement('canvas'); canvas.width = 800; canvas.height = 800; 
+                        canvas.setAttribute('style', 'max-width:100%; height:auto; background:#fafafa;');
+                        canvasContainer.appendChild(canvas); splitLayout.appendChild(canvasContainer);
+                        setTimeout(() => drawGraph(canvas, q, currentStep), 0);
+                    }
+
+                    contentDiv.appendChild(splitLayout);
+
+                    let controlsDiv = createEl('div', 'text-align:center; margin-top:30px;', '');
+                    let isDone = currentStep >= q.steps.length;
+                    let stepBtn = createEl('button', isDone ? BLUE_DIS : BLUE, `Show next step (${currentStep}/${q.steps.length})`);
+                    if (!isDone) stepBtn.onclick = () => { currentStep++; render(); };
+                    let resetBtn = createEl('button', GREY, 'Reset'); resetBtn.onclick = () => { currentStep = 0; render(); };
+                    controlsDiv.appendChild(stepBtn); controlsDiv.appendChild(resetBtn); contentDiv.appendChild(controlsDiv); app.appendChild(contentDiv);
+                } else {
+                    let btn = createEl('button', 'display:block; width:100%; text-align:left; background:#fff; border:2px solid #ccc; padding:15px; font-size:20px; font-weight:bold; cursor:pointer; margin-bottom:10px; border-radius:6px;', ex.t + ' ▼');
+                    btn.onclick = () => { selectedEx = idx; currentQ = 0; currentStep = 0; render(); }; app.appendChild(btn);
+                }
+            });
+        }
+
+        function drawGraph(canvas, q, step) {
+            let ctx = canvas.getContext('2d'); let w = canvas.width, h = canvas.height; let cx = w / 2, cy = h / 2; let scale = 35; 
+            ctx.clearRect(0, 0, w, h);
+            ctx.strokeStyle = '#ddd'; ctx.lineWidth = 2;
+            for(let i=0; i<w; i+=scale) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, h); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(w, i); ctx.stroke(); }
+            ctx.strokeStyle = '#000'; ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.stroke(); ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.stroke(); 
+            ctx.fillStyle = '#000'; ctx.font = '18px Arial'; ctx.fillText('x', w - 20, cy - 15); ctx.fillText('y', cx + 15, 20); ctx.fillText('0', cx - 20, cy + 20);
+            
+            // Add axis numbers
+            for(let i=-10; i<=10; i++) {
+                if(i!==0 && i%2===0) { 
+                    ctx.fillText(i, cx + (i*scale) - 8, cy + 20); 
+                    ctx.fillText(-i, cx - 28, cy + (i*scale) + 6); 
+                }
+            }
+            
+            if (q.type === 'plot_points') {
+                let count = step === 1 ? 3 : (step === 2 ? 6 : (step >= 3 ? 10 : 0));
+                for(let i=0; i<count; i++) {
+                    let p = q.pts[i]; let px = cx + (p.x*scale), py = cy - (p.y*scale);
+                    ctx.beginPath(); ctx.arc(px, py, 7, 0, Math.PI*2); ctx.fillStyle = '#0D47A1'; ctx.fill();
+                    ctx.font = 'bold 20px monospace'; ctx.fillText(p.l, px + 10, py - 10);
+                }
+            } else if (q.type === 'read_points') {
+                // Draw all points initially as per PDF
+                q.pts.forEach(p => {
+                    let px = cx + (p.x*scale), py = cy - (p.y*scale);
+                    ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI*2); ctx.fillStyle = '#000'; ctx.fill();
+                    ctx.font = 'bold 20px monospace'; ctx.fillText(p.l, px + 10, py - 10);
+                });
+                
+                // Highlight groups based on steps
+                let start = 0, end = 0;
+                if(step === 1) { start=0; end=3; }
+                else if(step === 2) { start=3; end=6; }
+                else if(step === 3) { start=6; end=9; }
+                else if(step >= 4) { start=9; end=12; }
+                
+                for(let i=start; i<end; i++) {
+                    let p = q.pts[i]; let px = cx + (p.x*scale), py = cy - (p.y*scale);
+                    ctx.beginPath(); ctx.arc(px, py, 9, 0, Math.PI*2); ctx.fillStyle = '#e53935'; ctx.fill();
+                    ctx.fillStyle = '#e53935'; ctx.font = 'bold 20px monospace'; ctx.fillText(`${p.l}(${p.x}, ${p.y})`, px + 10, py - 10);
+                }
+            } else if (q.type === 'shape') {
+                if (step >= 1) {
+                    [q.pts[0], q.pts[1]].forEach(pt => {
+                        let px = cx + (pt.x * scale), py = cy - (pt.y * scale);
+                        ctx.beginPath(); ctx.arc(px, py, 8, 0, Math.PI*2); ctx.fillStyle = '#0D47A1'; ctx.fill();
+                        ctx.font = 'bold 22px monospace'; ctx.fillText(pt.l, px + 10, py - 10);
+                    });
+                }
+                if (step >= 2) {
+                    [q.pts[2], q.pts[3]].forEach(pt => {
+                        let px = cx + (pt.x * scale), py = cy - (pt.y * scale);
+                        ctx.beginPath(); ctx.arc(px, py, 8, 0, Math.PI*2); ctx.fillStyle = '#0D47A1'; ctx.fill();
+                        ctx.font = 'bold 22px monospace'; ctx.fillText(pt.l, px + 10, py - 10);
+                    });
+                }
+                if (step >= 3) {
+                    ctx.strokeStyle = '#083378'; ctx.lineWidth = 4; ctx.beginPath();
+                    ctx.moveTo(cx + (q.pts[0].x * scale), cy - (q.pts[0].y * scale));
+                    for(let i=1; i<q.pts.length; i++) ctx.lineTo(cx + (q.pts[i].x * scale), cy - (q.pts[i].y * scale));
+                    ctx.closePath(); ctx.fillStyle = 'rgba(13, 71, 161, 0.1)'; ctx.fill(); ctx.stroke();
+                }
+            } else if (q.type === 'shape_area') {
+                if(step >= 1) {
+                    ctx.strokeStyle = '#083378'; ctx.lineWidth = 4; ctx.beginPath();
+                    ctx.moveTo(cx + (q.pts[0].x * scale), cy - (q.pts[0].y * scale));
+                    for(let i=1; i<q.pts.length; i++) ctx.lineTo(cx + (q.pts[i].x * scale), cy - (q.pts[i].y * scale));
+                    ctx.closePath(); ctx.fillStyle = 'rgba(13, 71, 161, 0.1)'; ctx.fill(); ctx.stroke();
+                    q.pts.forEach(pt => {
+                        let px = cx + (pt.x * scale), py = cy - (pt.y * scale);
+                        ctx.beginPath(); ctx.arc(px, py, 8, 0, Math.PI*2); ctx.fillStyle = '#0D47A1'; ctx.fill();
+                        ctx.font = 'bold 22px monospace'; ctx.fillText(pt.l, px + 10, py - 10);
+                    });
+                }
+                if(step >= 2) {
+                    ctx.strokeStyle = '#e53935'; ctx.lineWidth = 6; ctx.beginPath();
+                    ctx.moveTo(cx + (4*scale), cy - (-1*scale)); ctx.lineTo(cx + (4*scale), cy - (8*scale)); ctx.stroke();
+                    ctx.fillStyle = '#e53935'; ctx.fillText('Base=9', cx + (4.2*scale), cy - (3.5*scale));
+                }
+                if(step >= 3) {
+                    ctx.strokeStyle = '#4CAF50'; ctx.lineWidth = 4; ctx.setLineDash([8,8]); ctx.beginPath();
+                    ctx.moveTo(cx, cy - (2*scale)); ctx.lineTo(cx + (4*scale), cy - (2*scale)); ctx.stroke(); ctx.setLineDash([]);
+                    ctx.fillStyle = '#4CAF50'; ctx.fillText('Height=4', cx + (1.5*scale), cy - (2.5*scale));
+                }
+            } else if (q.type === 'graph_table') {
+                if (step >= 1) {
+                    q.pts.forEach(pt => {
+                        let px = cx + (pt.x * scale), py = cy - (pt.y * scale);
+                        ctx.beginPath(); ctx.arc(px, py, 8, 0, Math.PI*2); ctx.fillStyle = '#0D47A1'; ctx.fill();
+                    });
+                }
+                if (step >= 2) {
+                    let p1 = q.pts[0], p2 = q.pts[q.pts.length-1];
+                    let m = (p2.y - p1.y) / (p2.x - p1.x);
+                    let c = p1.y - m*p1.x;
+                    
+                    ctx.strokeStyle = '#083378'; ctx.lineWidth = 4; ctx.beginPath();
+                    ctx.moveTo(cx + (-10*scale), cy - ((-10*m+c)*scale)); 
+                    ctx.lineTo(cx + (10*scale), cy - ((10*m+c)*scale)); 
+                    ctx.stroke();
+                }
+            }
+        }
+        render();
+    </script>
+</body>
+</html>
