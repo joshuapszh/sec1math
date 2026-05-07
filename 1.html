@@ -8,15 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
-    <!-- Chosen Palette: Warm Neutrals with Educational Accents (Slate Base, Indigo/Emerald/Blue/Amber accents) -->
-    <!-- Application Structure Plan: A linear, scrolling masterclass. It flows from basic building blocks (Prime Factorization) -> Comparing Numbers (HCF/LCM) -> Advanced Manipulations (Squares/Cubes). This structure is chosen because students must grasp prime factorization before they can apply it to HCF/LCM or Roots. Each section begins with pedagogical text and analogies, followed by an interactive tool to solidify the concept dynamically. -->
-    <!-- Visualization & Content Choices: 
-         1. Prime Anatomy -> Goal: Show composition of a number -> Method: Textual factor tree + Chart.js Donut Chart (visualizing the weight of each prime component) -> Interaction: Dynamic number input -> Justification: Breaks down abstract numbers into visual parts.
-         2. HCF/LCM Comparison -> Goal: Explain lowest/highest power rules -> Method: HTML Grid with math formatting -> Interaction: Two number inputs, visual strike-throughs and highlighting -> Justification: Directly translates the "Bouncer/Collector" analogy into a visual algorithm. NO SVG used.
-         3. Roots -> Goal: Show division of indices -> Method: HTML math formatting with fractional exponents -> Interaction: Number input snapping to perfect squares/cubes -> Justification: Demystifies root calculations without a calculator. 
-         Confirming NO SVG/Mermaid. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
@@ -185,8 +176,8 @@
                 </p>
                 <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl text-amber-900 mb-8">
                     <strong>💡 The "Equal Groups" Rule:</strong><br>
-                    • <strong>Square Root:</strong> Split the prime factors into <strong>2 equal groups</strong> (halve the powers).<br>
-                    • <strong>Cube Root:</strong> Split the prime factors into <strong>3 equal groups</strong> (divide the powers by 3).
+                    • <strong>Square Root:</strong> Split the prime factors into <strong>2 equal groups</strong>.<br>
+                    • <strong>Cube Root:</strong> Split the prime factors into <strong>3 equal groups</strong>.
                 </div>
             </div>
 
@@ -233,6 +224,7 @@
     <script>
         let factorChartInstance = null;
 
+        // Math Logic
         function getPrimeFactors(n) {
             if (n < 2) return {};
             let factors = {};
@@ -267,8 +259,10 @@
             return `<span class="${classes}">${base}<sup class="text-[0.6em] relative -top-2 ml-0.5">${power}</sup></span>`;
         }
 
-        function formatFractionPower(base, power, divisor) {
-            return `<span class="mx-1">${base}<sup class="text-[0.6em] relative -top-2 ml-0.5">${power}/${divisor}</sup></span>`;
+        // Helper function to turn numbers into proper math indices for chart labels
+        function toSuperscript(num) {
+            const superscripts = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+            return num.toString().split('').map(c => superscripts[c] || c).join('');
         }
 
         function updateAnatomy() {
@@ -291,8 +285,17 @@
                 let power = factors[base];
                 factStr.push(formatPower(base, power));
                 
-                chartLabels.push(`${base}^${power} (${Math.pow(base, power)})`);
-                chartData.push(Math.pow(base, power));
+                let value = Math.pow(base, power);
+                
+                // First Principles breakdown for the chart labels
+                if (power === 1) {
+                    chartLabels.push(`Prime Base ${base}`);
+                } else {
+                    let expanded = Array(power).fill(base).join(' × ');
+                    chartLabels.push(`${base}${toSuperscript(power)}  (${expanded})`);
+                }
+                
+                chartData.push(value);
             });
 
             document.getElementById('anatomy-factors').innerHTML = factStr.join(' <span class="text-indigo-300 mx-1">&times;</span> ');
@@ -318,7 +321,8 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return ` Component Value: ${context.raw}`;
+                                    // Make the tooltip sound like a teacher, not a machine
+                                    return ` Total value of this block: ${context.raw}`;
                                 }
                             }
                         }
