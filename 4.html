@@ -161,7 +161,7 @@
                 <span class="text-3xl">🍎</span> 2. The "Fruit Salad" Sorter
             </h2>
             <p class="text-slate-300 mt-3 leading-relaxed text-sm md:text-base">
-                <strong>Purpose:</strong> You can ONLY add or subtract <strong>Like Terms</strong>. Imagine $x$ is an Apple, $y$ is a Banana, and $x^2$ is a Pineapple. Click on matching pairs of terms below to combine them into a single simplified term. Clear the board!
+                <strong>Purpose:</strong> You can ONLY add or subtract <strong>Like Terms</strong>. Imagine <span class="math-font font-bold text-violet-400 text-lg">x</span> is an Apple, <span class="math-font font-bold text-violet-400 text-lg">y</span> is a Banana, and <span class="math-font font-bold text-violet-400 text-lg">x&sup2;</span> is a Pineapple. Click on matching pairs of terms below to combine them into a single simplified term. Clear the board!
             </p>
         </div>
 
@@ -536,7 +536,11 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return ` If x = ${context.parsed.x}, result = ${context.parsed.y}`;
+                                    let currentM = document.getElementById('graph-m').value;
+                                    let currentC = document.getElementById('graph-c').value;
+                                    let sign = currentC >= 0 ? '+' : '-';
+                                    let absC = Math.abs(currentC);
+                                    return ` If x = ${context.parsed.x}, then y = ${currentM}(${context.parsed.x}) ${sign} ${absC} = ${context.parsed.y}`;
                                 }
                             },
                             bodyFont: { family: "'Outfit', sans-serif" }
