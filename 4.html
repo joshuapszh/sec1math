@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sec 1 Math: Basic Algebra Explorer</title>
+    
+    <!-- Chosen Palette: Slate (Backgrounds/Text), Violet/Fuchsia (Algebraic Theme), Emerald/Teal (Success/Combining), Amber/Orange (Warnings/Negatives) -->
+    
+    <!-- Application Structure Plan: 
+    This SPA translates the abstract rules of Algebra into a highly interactive, tactile dashboard. 
+    1. 'Decoding the Matrix' serves as a visual glossary, breaking down terms, variables, and coefficients.
+    2. 'The Fruit Salad Sorter' gamifies the concept of Like vs. Unlike terms, allowing students to physically click and combine matching terms while rejecting invalid combinations.
+    3. 'The Mailman Expansion Engine' provides a dynamic sandbox for the Distributive Law, visually tracking the multiplier and explicitly warning students about the "Negative Sign Trap".
+    4. 'The Evaluator & Graph' connects the abstract idea of "plugging in numbers" to visual geometry using Chart.js, proving that evaluating linear expressions creates straight lines.
+    5. 'Quick Reference Guides' handle Algebraic Fractions and Factorisation for easy review.
+    -->
+    
+    <!-- Visualization & Content Choices: 
+    - Matrix Decoder -> Goal: Inform -> HTML Text & Flexbox -> Interaction: Hover to highlight parts of the expression -> Justification: Breaks down complex vocabulary into bite-sized visual pieces. Method: HTML/CSS.
+    - Fruit Salad Sorter -> Goal: Organize/Classify -> Clickable HTML Grid -> Interaction: Click matching terms to combine them -> Justification: Directly reinforces the rule that x and x^2 cannot be combined. Method: Vanilla JS.
+    - Mailman Engine -> Goal: Change/Process -> Dynamic Step-by-Step Text -> Interaction: Input numbers to expand brackets -> Justification: Visually demonstrates the distributive arrows and highlights negative sign flips. Method: JS.
+    - Evaluator Graph -> Goal: Relationships/Inform -> Chart.js Line Chart -> Interaction: Change coefficients to see the line slope/y-intercept change -> Justification: Elevates "evaluation" from rote arithmetic to understanding linear relationships. Method: JS + Chart.js (NO SVG).
+    -->
+    
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+        
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: #f8fafc; 
+        }
+        
+        .math-font { 
+            font-family: 'Space Mono', monospace; 
+        }
+
+        /* STRICT Chart Container Styling */
+        .chart-container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 600px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 35vh; 
+            max-height: 350px; 
+            min-height: 250px;
+        }
+
+        .fade-in { 
+            animation: fadeIn 0.6s ease-out forwards; 
+        }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .animate-bounce-subtle {
+            animation: bounce-subtle 2s infinite ease-in-out;
+        }
+
+        /* Hide number input spinners */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .term-btn.selected {
+            background-color: #d8b4fe; /* purple-200 */
+            border-color: #9333ea; /* purple-600 */
+            color: #4c1d95; /* purple-900 */
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="text-slate-800 p-4 md:p-8 min-h-screen flex flex-col items-center">
+
+<div class="max-w-6xl w-full space-y-10 fade-in">
+    
+    <!-- Header -->
+    <header class="text-center py-8 space-y-4 border-b border-slate-200 pb-10">
+        <div class="inline-block px-4 py-1.5 bg-violet-100 text-violet-800 font-bold rounded-full text-xs uppercase tracking-widest mb-2 border border-violet-200">
+            Chapter 4 Revision
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight">Basic Algebra</h1>
+        <p class="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed mt-4">
+            Welcome to the secret code of Mathematics! Algebra is just arithmetic with letters instead of numbers. Discover how to decode expressions, combine terms, and expand brackets without falling into common traps.
+        </p>
+    </header>
+
+    <!-- Section 1: Vocabulary -->
+    <section class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-10 relative overflow-hidden">
+        <div class="absolute -right-10 -top-10 text-[150px] opacity-5">📖</div>
+        <div class="mb-8 border-b border-slate-100 pb-6 relative z-10">
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
+                <span class="text-3xl">🧩</span> 1. Decoding the Matrix
+            </h2>
+            <p class="text-slate-600 mt-3 leading-relaxed text-sm md:text-base">
+                <strong>Purpose:</strong> To survive Algebra, you need the vocabulary. This section breaks down a standard algebraic expression into its core components. Hover over or tap the definitions below to see exactly which part of the expression they describe.
+            </p>
+        </div>
+
+        <div class="flex flex-col items-center justify-center space-y-10 relative z-10">
+            <!-- The Expression -->
+            <div class="text-5xl md:text-7xl font-extrabold math-font tracking-widest flex items-center gap-4 bg-slate-50 px-8 py-6 rounded-3xl border-2 border-slate-100 shadow-inner">
+                <div class="group relative cursor-pointer">
+                    <span class="text-violet-600 transition-colors group-hover:text-violet-400">5</span><span class="text-slate-800 transition-colors group-hover:text-slate-500">x</span>
+                    <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-bold bg-violet-100 text-violet-800 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Term 1</div>
+                </div>
+                <span class="text-slate-300">-</span>
+                <div class="group relative cursor-pointer">
+                    <span class="text-violet-600 transition-colors group-hover:text-violet-400">4</span><span class="text-slate-800 transition-colors group-hover:text-slate-500">y</span>
+                    <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-bold bg-violet-100 text-violet-800 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Term 2</div>
+                </div>
+                <span class="text-slate-300">+</span>
+                <div class="group relative cursor-pointer">
+                    <span class="text-emerald-600 transition-colors group-hover:text-emerald-400">7</span>
+                    <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-bold bg-emerald-100 text-emerald-800 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Term 3</div>
+                </div>
+            </div>
+
+            <!-- Vocabulary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+                <div class="bg-violet-50 p-6 rounded-2xl border border-violet-100 hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-violet-900 text-lg mb-2 border-b border-violet-200 pb-2">Variables</h3>
+                    <p class="text-sm text-violet-800">The letters used to represent unknown numbers. Here, <strong class="math-font text-base">x</strong> and <strong class="math-font text-base">y</strong> are variables.</p>
+                </div>
+                <div class="bg-fuchsia-50 p-6 rounded-2xl border border-fuchsia-100 hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-fuchsia-900 text-lg mb-2 border-b border-fuchsia-200 pb-2">Coefficients</h3>
+                    <p class="text-sm text-fuchsia-800">The number "glued" to the front of a variable. The coefficient of x is <strong class="math-font text-base">5</strong>. The coefficient of y is <strong class="math-font text-base">-4</strong>.</p>
+                </div>
+                <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-emerald-900 text-lg mb-2 border-b border-emerald-200 pb-2">Constant Term</h3>
+                    <p class="text-sm text-emerald-800">The lonely number with no variable attached. It never changes. Here, the constant is <strong class="math-font text-base">7</strong>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Fruit Salad Sorter (Like Terms) -->
+    <section class="bg-slate-900 rounded-3xl shadow-xl border border-slate-800 p-6 md:p-10 text-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-64 h-64 bg-violet-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
+        
+        <div class="mb-8 border-b border-slate-700 pb-6 relative z-10">
+            <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3">
+                <span class="text-3xl">🍎</span> 2. The "Fruit Salad" Sorter
+            </h2>
+            <p class="text-slate-300 mt-3 leading-relaxed text-sm md:text-base">
+                <strong>Purpose:</strong> You can ONLY add or subtract <strong>Like Terms</strong>. Imagine $x$ is an Apple, $y$ is a Banana, and $x^2$ is a Pineapple. Click on matching pairs of terms below to combine them into a single simplified term. Clear the board!
+            </p>
+        </div>
+
+        <div class="flex flex-col items-center relative z-10">
+            <div class="text-center mb-6">
+                <div id="sorter-message" class="text-amber-400 font-bold h-6 animate-pulse">Select two like terms to combine!</div>
+            </div>
+            
+            <div id="term-grid" class="flex flex-wrap justify-center gap-4 max-w-3xl mb-8 min-h-[120px]">
+                <!-- JS will inject buttons here -->
+            </div>
+
+            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 w-full max-w-2xl text-center">
+                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Simplified Expression</h3>
+                <div id="simplified-result" class="text-3xl md:text-4xl font-bold math-font text-emerald-400 min-h-[50px] flex flex-wrap justify-center gap-2 items-center">
+                    <!-- JS will inject result -->
+                </div>
+            </div>
+            
+            <button id="reset-sorter" class="mt-6 text-sm font-bold bg-slate-800 hover:bg-slate-700 text-white px-6 py-2 rounded-full border border-slate-600 transition-colors">
+                &#8635; Reset Board
+            </button>
+        </div>
+    </section>
+
+    <!-- Section 3 & 4 Container -->
+    <div class="flex flex-col gap-10">
+        
+        <!-- Section 3: The Mailman Expansion -->
+        <section class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-8 flex flex-col">
+            <div class="mb-6 border-b border-slate-100 pb-4">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <span class="text-2xl">📬</span> 3. The Mailman (Expansion)
+                </h2>
+                <p class="text-slate-600 mt-2 text-sm leading-relaxed">
+                    <strong>Purpose:</strong> Expansion is removing brackets using the Distributive Law. The number outside is the "Mailman" who MUST deliver (multiply) to EVERYONE inside. Watch out for negative mailmen!
+                </p>
+            </div>
+            
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 flex-grow flex flex-col">
+                <div class="flex items-center justify-center gap-2 mb-8 text-2xl md:text-3xl font-bold math-font">
+                    <input type="number" id="exp-out" value="-3" class="w-16 text-center border-b-2 border-slate-300 bg-transparent focus:outline-none focus:border-violet-500 text-violet-600 transition-colors">
+                    <span class="text-slate-400">(</span>
+                    <input type="number" id="exp-in1" value="2" class="w-12 text-center border-b-2 border-slate-300 bg-transparent focus:outline-none focus:border-violet-500 text-slate-700 transition-colors">
+                    <span class="text-slate-800 text-xl">x</span>
+                    <span class="text-slate-400">+</span>
+                    <input type="number" id="exp-in2" value="-5" class="w-16 text-center border-b-2 border-slate-300 bg-transparent focus:outline-none focus:border-violet-500 text-slate-700 transition-colors">
+                    <span class="text-slate-400">)</span>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm flex-grow flex flex-col justify-center space-y-4">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest text-center">Step-by-Step Delivery</div>
+                    
+                    <div id="exp-step1" class="text-lg math-font text-slate-600 text-center bg-slate-50 py-2 rounded">
+                        -3(2x) + -3(-5)
+                    </div>
+                    
+                    <div id="exp-warning" class="text-center text-sm font-bold text-amber-600 bg-amber-50 p-2 rounded border border-amber-200 hidden">
+                        🚨 The Negative Sign Trap: A negative multiplied by a negative becomes POSITIVE!
+                    </div>
+
+                    <div class="text-center pt-2">
+                        <div class="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-1">Expanded Result</div>
+                        <div id="exp-result" class="text-3xl font-extrabold text-emerald-600 math-font">-6x + 15</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Evaluation & Graphing -->
+        <section class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-8 flex flex-col">
+            <div class="mb-6 border-b border-slate-100 pb-4">
+                <h2 class="text-3xl font-bold text-slate-800 flex items-center gap-2">
+                    <span class="text-3xl">📈</span> 4. Evaluation Visualized
+                </h2>
+                <p class="text-slate-600 mt-3 text-base leading-relaxed">
+                    <strong>Purpose:</strong> "Evaluating" an expression means substituting <span class="math-font font-bold text-violet-600 text-xl">x</span> with a number to get a result (<span class="math-font font-bold text-violet-600 text-xl">y</span>). If we evaluate an expression for many different values of <span class="math-font font-bold text-violet-600 text-xl">x</span>, it draws a straight line!
+                </p>
+            </div>
+            
+            <div class="flex flex-col flex-grow">
+                
+                <div class="flex items-center justify-center gap-4 bg-violet-50 p-5 rounded-xl border border-violet-100 mb-4">
+                    <span class="font-bold text-violet-900 text-lg">Expression:</span>
+                    <div class="math-font text-2xl font-bold text-violet-700 flex items-center gap-3">
+                        <input type="number" id="graph-m" value="2" class="w-16 text-center bg-white border border-violet-200 rounded py-1">
+                        <span>x +</span>
+                        <input type="number" id="graph-c" value="3" class="w-16 text-center bg-white border border-violet-200 rounded py-1">
+                    </div>
+                </div>
+
+                <div class="chart-container flex-grow">
+                    <canvas id="evalChart"></canvas>
+                </div>
+                
+                <div class="mt-5 text-center text-sm text-slate-500 font-medium">
+                    The chart evaluates the expression for <span class="math-font font-bold text-slate-700">x</span> values from -5 to 5. Change the numbers above to see the line slope and intercept shift!
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Section 5: Quick Reference -->
+    <section class="bg-slate-100 rounded-3xl p-6 md:p-10 border border-slate-200">
+        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-6">
+            <span class="text-2xl">📚</span> 5. Quick Reference Guides
+        </h2>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <h3 class="font-bold text-xl text-slate-800 mb-3 border-b border-slate-100 pb-2">➗ Algebraic Fractions</h3>
+            <p class="text-base text-slate-600 mb-4">Treat them exactly like primary school fractions.</p>
+            <ul class="text-base space-y-3 text-slate-700">
+                <li><strong class="text-violet-600">Rule 1:</strong> To Add/Subtract, you MUST find a <strong>Common Denominator (LCM)</strong> first.</li>
+                <li><strong class="text-violet-600">Rule 2:</strong> Expand the top numerators carefully once combined.</li>
+                <li class="bg-slate-50 p-3 rounded-lg border border-slate-100 math-font text-sm mt-3 text-center">
+                    (2x)/3 + (x)/5 &rarr; (10x)/15 + (3x)/15 &rarr; 13x/15
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Section 6: Factorisation -->
+    <section class="bg-slate-100 rounded-3xl p-6 md:p-10 border border-slate-200">
+        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-6">
+            <span class="text-2xl">⬅️</span> 6. Factorisation
+        </h2>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <p class="text-base text-slate-600 mb-4">The "Reverse Expansion". Putting brackets back in by finding the Highest Common Factor (HCF).</p>
+            <ul class="text-base space-y-3 text-slate-700">
+                <li><strong class="text-emerald-600">Rule 1:</strong> Find the largest number AND letter that divides into all terms.</li>
+                <li><strong class="text-emerald-600">Rule 2:</strong> Pull the HCF outside, write what's left inside the brackets.</li>
+                <li class="bg-slate-50 p-3 rounded-lg border border-slate-100 math-font text-sm mt-3 text-center">
+                    4ax - 16ay &rarr; HCF is 4a &rarr; 4a(x - 4y)
+                </li>
+            </ul>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    // --- 2. Fruit Salad Sorter Logic ---
+    const rawTerms = [
+        { id: 1, type: 'x', coeff: 3, raw: '3x' },
+        { id: 2, type: 'y', coeff: 4, raw: '4y' },
+        { id: 3, type: 'x', coeff: 5, raw: '+ 5x' },
+        { id: 4, type: 'const', coeff: -2, raw: '- 2' },
+        { id: 5, type: 'y', coeff: -1, raw: '- y' },
+        { id: 6, type: 'const', coeff: 7, raw: '+ 7' },
+        { id: 7, type: 'x2', coeff: 2, raw: '+ 2x²' }
+    ];
+
+    let activeTerms = [];
+    let selectedIds = [];
+    let simplifiedGroups = { 'x2': 0, 'x': 0, 'y': 0, 'const': 0 };
+
+    const gridEl = document.getElementById('term-grid');
+    const msgEl = document.getElementById('sorter-message');
+    const resEl = document.getElementById('simplified-result');
+
+    function initSorter() {
+        activeTerms = JSON.parse(JSON.stringify(rawTerms));
+        selectedIds = [];
+        simplifiedGroups = { 'x2': 2, 'x': 8, 'y': 3, 'const': 5 }; // Final state tracking if needed
+        renderTerms();
+        updateSimplifiedDisplay();
+        msgEl.innerText = "Select two like terms to combine!";
+        msgEl.className = "text-amber-400 font-bold h-6 animate-pulse";
+    }
+
+    function renderTerms() {
+        gridEl.innerHTML = '';
+        activeTerms.forEach(term => {
+            const btn = document.createElement('button');
+            btn.className = `term-btn text-xl font-bold math-font bg-white text-slate-700 px-6 py-4 rounded-2xl border-2 border-slate-300 shadow-sm transition-all hover:border-violet-400 hover:text-violet-600 ${selectedIds.includes(term.id) ? 'selected' : ''}`;
+            btn.innerText = term.raw.replace('+ ', '').replace('- ', term.coeff < 0 ? '-' : '');
+            btn.onclick = () => handleTermClick(term.id);
+            gridEl.appendChild(btn);
+        });
+        
+        if(activeTerms.length === 0) {
+            gridEl.innerHTML = '<div class="text-emerald-400 font-bold text-2xl animate-bounce-subtle">🎉 All combined!</div>';
+        }
+    }
+
+    function handleTermClick(id) {
+        if (selectedIds.includes(id)) {
+            selectedIds = selectedIds.filter(selId => selId !== id);
+        } else {
+            selectedIds.push(id);
+        }
+
+        renderTerms();
+
+        if (selectedIds.length === 2) {
+            checkCombination();
+        } else if (selectedIds.length > 2) {
+            selectedIds.shift(); // keep only 2 selected
+            renderTerms();
+            checkCombination();
+        }
+    }
+
+    function formatTerm(type, coeff, isFirst) {
+        if (coeff === 0) return '';
+        let sign = coeff > 0 ? (isFirst ? '' : '+ ') : '- ';
+        let num = Math.abs(coeff);
+        let numStr = (num === 1 && type !== 'const') ? '' : num;
+        
+        let typeStr = type === 'const' ? '' : type === 'x2' ? 'x²' : type;
+        return `${sign}${numStr}${typeStr}`;
+    }
+
+    function checkCombination() {
+        const t1 = activeTerms.find(t => t.id === selectedIds[0]);
+        const t2 = activeTerms.find(t => t.id === selectedIds[1]);
+
+        if (t1.type === t2.type) {
+            // Success
+            let newCoeff = t1.coeff + t2.coeff;
+            msgEl.innerText = "Nice! Like terms combined.";
+            msgEl.className = "text-emerald-400 font-bold h-6";
+            
+            // Remove old, add new
+            activeTerms = activeTerms.filter(t => !selectedIds.includes(t.id));
+            if (newCoeff !== 0) {
+                let newTerm = {
+                    id: Date.now(),
+                    type: t1.type,
+                    coeff: newCoeff,
+                    raw: formatTerm(t1.type, newCoeff, true)
+                };
+                activeTerms.push(newTerm);
+            }
+            selectedIds = [];
+            
+            setTimeout(() => {
+                renderTerms();
+                updateSimplifiedDisplay();
+            }, 300);
+
+        } else {
+            // Fail
+            msgEl.innerText = "Oops! Unlike terms (Apples & Bananas). Cannot combine!";
+            msgEl.className = "text-rose-400 font-bold h-6";
+            setTimeout(() => {
+                selectedIds = [];
+                renderTerms();
+                msgEl.innerText = "Select two like terms to combine!";
+                msgEl.className = "text-amber-400 font-bold h-6";
+            }, 1500);
+        }
+    }
+
+    function updateSimplifiedDisplay() {
+        // Group remaining active terms logically
+        let groups = { 'x2': 0, 'x': 0, 'y': 0, 'const': 0 };
+        activeTerms.forEach(t => { groups[t.type] += t.coeff; });
+        
+        let resArr = [];
+        if(groups['x2'] !== 0) resArr.push(formatTerm('x2', groups['x2'], resArr.length===0));
+        if(groups['x'] !== 0) resArr.push(formatTerm('x', groups['x'], resArr.length===0));
+        if(groups['y'] !== 0) resArr.push(formatTerm('y', groups['y'], resArr.length===0));
+        if(groups['const'] !== 0) resArr.push(formatTerm('const', groups['const'], resArr.length===0));
+
+        if (resArr.length === 0) {
+            resEl.innerHTML = "0";
+        } else {
+            resEl.innerHTML = resArr.map(s => `<span class="bg-slate-800 px-2 rounded">${s}</span>`).join('');
+        }
+    }
+
+    document.getElementById('reset-sorter').addEventListener('click', initSorter);
+    initSorter();
+
+
+    // --- 3. Mailman Expansion Logic ---
+    const expOut = document.getElementById('exp-out');
+    const expIn1 = document.getElementById('exp-in1');
+    const expIn2 = document.getElementById('exp-in2');
+    const expStep1 = document.getElementById('exp-step1');
+    const expWarning = document.getElementById('exp-warning');
+    const expResult = document.getElementById('exp-result');
+
+    function updateExpansion() {
+        let o = parseInt(expOut.value) || 0;
+        let i1 = parseInt(expIn1.value) || 0;
+        let i2 = parseInt(expIn2.value) || 0;
+
+        // Formatting strings
+        let s_o = o.toString();
+        let s_i1 = i1 === 1 ? 'x' : i1 === -1 ? '-x' : `${i1}x`;
+        let s_i2 = i2 < 0 ? `(${i2})` : i2.toString();
+
+        expStep1.innerHTML = `<span class="${o<0?'text-rose-500 font-bold':''}">${s_o}</span>(${s_i1}) &nbsp;+&nbsp; <span class="${o<0?'text-rose-500 font-bold':''}">${s_o}</span>${s_i2}`;
+
+        if (o < 0 && i2 < 0) {
+            expWarning.classList.remove('hidden');
+        } else {
+            expWarning.classList.add('hidden');
+        }
+
+        let res1 = o * i1;
+        let res2 = o * i2;
+
+        let r_s1 = res1 === 1 ? 'x' : res1 === -1 ? '-x' : `${res1}x`;
+        let r_s2 = res2 < 0 ? `- ${Math.abs(res2)}` : `+ ${res2}`;
+        
+        if (res1 === 0 && res2 === 0) expResult.innerText = "0";
+        else if (res1 === 0) expResult.innerText = res2.toString();
+        else if (res2 === 0) expResult.innerText = r_s1;
+        else expResult.innerText = `${r_s1} ${r_s2}`;
+    }
+
+    expOut.addEventListener('input', updateExpansion);
+    expIn1.addEventListener('input', updateExpansion);
+    expIn2.addEventListener('input', updateExpansion);
+    updateExpansion();
+
+
+    // --- 4. Evaluator Graph Logic ---
+    const graphM = document.getElementById('graph-m');
+    const graphC = document.getElementById('graph-c');
+    let evalChartInstance = null;
+
+    function updateGraph() {
+        let m = parseFloat(graphM.value) || 0;
+        let c = parseFloat(graphC.value) || 0;
+
+        let xValues = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
+        let yValues = xValues.map(x => m * x + c);
+
+        if (evalChartInstance) {
+            evalChartInstance.data.datasets[0].data = yValues;
+            evalChartInstance.data.datasets[0].label = `y = ${m}x ${c >= 0 ? '+' : '-'} ${Math.abs(c)}`;
+            evalChartInstance.update();
+        } else {
+            const ctx = document.getElementById('evalChart').getContext('2d');
+            evalChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        label: `y = ${m}x ${c >= 0 ? '+' : '-'} ${Math.abs(c)}`,
+                        data: yValues,
+                        borderColor: '#8b5cf6', // violet-500
+                        backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#8b5cf6',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        fill: true,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            grid: { color: '#f1f5f9' },
+                            title: { display: true, text: 'Evaluation Result (y)', font: {family: "'Outfit', sans-serif"} }
+                        },
+                        x: {
+                            grid: { color: '#f1f5f9' },
+                            title: { display: true, text: 'Input Value (x)', font: {family: "'Outfit', sans-serif"} }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { font: { family: "'Space Mono', monospace", size: 14 } } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` If x = ${context.parsed.x}, result = ${context.parsed.y}`;
+                                }
+                            },
+                            bodyFont: { family: "'Outfit', sans-serif" }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    graphM.addEventListener('input', updateGraph);
+    graphC.addEventListener('input', updateGraph);
+    updateGraph();
+
+</script>
+</body>
+</html>

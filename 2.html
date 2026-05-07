@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sec 1 Math: Chapter 2 Interactive Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Chosen Palette: Slate (Backgrounds/Text), Indigo (Number Line), Emerald/Teal (Rules/Calculations), Amber (Family Tree/Charts) -->
+    
+    <!-- Application Structure Plan: The SPA is structured as a multi-module interactive dashboard. It breaks down Chapter 2 into distinct, task-oriented sections. 
+    1. 'Number Line Explorer' allows visual experimentation with >/< and absolute values, anchoring abstract numbers to physical space. 
+    2. 'The Integer Calculator' provides a dynamic playground for the "Money" and "Matching" analogies, explaining arithmetic rules in real-time based on user input. 
+    3. 'The Number Family Tree' uses an interactive Chart.js visualization and clickable definition cards to clearly separate rational and irrational numbers. 
+    4. 'Quick Reference Guides' offer beautifully formatted, easily scannable cards for fraction/decimal rules and the Order of Operations. This non-linear, interactive structure encourages exploration over passive reading. -->
+    
+    <!-- Visualization & Content Choices: 
+    - Number Line -> Goal: Compare -> Interactive HTML Flexbox line -> Interaction: User inputs numbers to see them plotted and compared -> Justification: Translates the 'Golden Rule' into a visual left/right format seamlessly. Method: HTML/CSS/Vanilla JS. 
+    - Calculator -> Goal: Inform/Change -> Dynamic Text Blocks -> Interaction: Select inputs and operators -> Justification: Connects abstract rules to the textbook's 'Money/Owing' analogy dynamically. Method: Vanilla JS. 
+    - Family Tree -> Goal: Organize/Relationships -> Chart.js Doughnut & Clickable HTML Grid -> Interaction: Hover on chart, click category buttons -> Justification: Reinforces the hierarchy of real numbers visually. Method: HTML/JS & Chart.js (NO SVG). -->
+    
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #f8fafc; 
+        }
+        
+        .math-font { 
+            font-family: 'JetBrains Mono', monospace; 
+        }
+
+        /* Essential Chart Container Styling */
+        .chart-container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 500px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 40vh;
+            max-height: 350px; 
+            min-height: 250px;
+        }
+
+        .fade-in { 
+            animation: fadeIn 0.6s ease-out forwards; 
+        }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* Hide number input spinners for cleaner UI */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="text-slate-800 p-4 md:p-8 min-h-screen flex flex-col items-center">
+
+<div class="max-w-6xl w-full space-y-10 fade-in">
+    
+    <!-- Header -->
+    <header class="text-center py-8 space-y-4">
+        <div class="inline-block px-4 py-1 bg-indigo-100 text-indigo-800 font-bold rounded-full text-sm uppercase tracking-wider mb-2 border border-indigo-200">
+            Chapter 2 Revision
+        </div>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">Integers, Rational & Real Numbers</h1>
+        <p class="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+            Expand your mathematical universe. Explore numbers below zero, numbers in between whole numbers, and learn how to classify every number on the continuous spectrum.
+        </p>
+    </header>
+
+    <!-- Section 1: Number Line -->
+    <section class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-10">
+        <div class="mb-8 border-b border-slate-100 pb-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
+                <span class="text-3xl">📏</span> 1. The Number Line Explorer
+            </h2>
+            <p class="text-slate-600 mt-3 leading-relaxed">
+                <strong>Purpose:</strong> This section visualizes the fundamental rule of integers. By inputting two different numbers, you can interactively see how their placement on the number line dictates which is larger (the Golden Rule) and discover their absolute values (their total distance from zero, regardless of direction).
+            </p>
+        </div>
+        
+        <div class="flex flex-col md:flex-row gap-6 items-center justify-center bg-slate-50 p-6 rounded-2xl mb-10 border border-slate-200 shadow-inner">
+            <div class="flex flex-col items-center gap-2">
+                <label class="font-bold text-slate-400 uppercase text-xs tracking-widest">Num A</label>
+                <input type="number" id="nl-a" value="-4" min="-10" max="10" class="w-24 px-3 py-3 text-2xl font-bold text-center border-2 border-indigo-200 rounded-xl focus:outline-none focus:border-indigo-500 text-indigo-700 bg-white shadow-sm math-font transition-colors">
+            </div>
+            <div class="text-slate-300 font-bold text-2xl px-4">VS</div>
+            <div class="flex flex-col items-center gap-2">
+                <label class="font-bold text-slate-400 uppercase text-xs tracking-widest">Num B</label>
+                <input type="number" id="nl-b" value="3" min="-10" max="10" class="w-24 px-3 py-3 text-2xl font-bold text-center border-2 border-rose-200 rounded-xl focus:outline-none focus:border-rose-500 text-rose-700 bg-white shadow-sm math-font transition-colors">
+            </div>
+        </div>
+
+        <div class="relative w-full overflow-x-auto pb-6">
+            <div class="min-w-[700px] flex justify-between items-center relative py-10 px-4" id="number-line-container">
+                <!-- Javascript will inject the number line here -->
+                <div class="absolute left-0 right-0 h-1.5 bg-slate-200 top-1/2 -translate-y-1/2 z-0 rounded-full"></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+            <div class="bg-indigo-50/50 p-6 rounded-2xl border border-indigo-100 relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 text-6xl opacity-10">⚖️</div>
+                <div class="text-xs font-bold text-indigo-500 uppercase tracking-widest mb-2">The Golden Rule</div>
+                <div id="nl-comparison" class="text-2xl font-bold text-slate-800 math-font mb-2">...</div>
+                <div id="nl-reasoning" class="text-indigo-800 text-sm font-medium">...</div>
+            </div>
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 text-6xl opacity-10">📏</div>
+                <div class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Absolute Value (Distance)</div>
+                <div class="space-y-3 text-slate-700">
+                    <div class="flex items-center gap-2">
+                        <span class="math-font font-bold text-lg w-12 text-center bg-white border border-slate-200 rounded px-1">|<span id="abs-a-val">-4</span>|</span>
+                        <span>=</span>
+                        <span id="abs-a-res" class="math-font font-bold text-lg text-indigo-600 w-8">4</span>
+                        <span class="text-sm text-slate-500 ml-2">units from zero</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="math-font font-bold text-lg w-12 text-center bg-white border border-slate-200 rounded px-1">|<span id="abs-b-val">3</span>|</span>
+                        <span>=</span>
+                        <span id="abs-b-res" class="math-font font-bold text-lg text-rose-600 w-8">3</span>
+                        <span class="text-sm text-slate-500 ml-2">units from zero</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Calculating Negatives -->
+    <section class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-10">
+        <div class="mb-8 border-b border-slate-100 pb-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
+                <span class="text-3xl">💰</span> 2. Rules of the Game: Calculations
+            </h2>
+            <p class="text-slate-600 mt-3 leading-relaxed">
+                <strong>Purpose:</strong> Memorizing rules can be tough. This section lets you experiment with integer arithmetic to see the underlying logic. It automatically applies the "Money" analogy for addition/subtraction, and the "Matching" rule for multiplication/division, explaining the steps based on your inputs.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-stretch">
+            
+            <!-- Calculator UI -->
+            <div class="lg:col-span-2 flex flex-col gap-6 bg-slate-800 p-8 rounded-3xl text-white shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-teal-500"></div>
+                
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-widest ml-2">Number 1</label>
+                    <input type="number" id="calc-a" value="-8" class="w-full bg-slate-900/50 border border-slate-600 text-white px-4 py-4 rounded-2xl text-3xl font-bold text-center focus:outline-none focus:border-emerald-400 math-font transition-colors">
+                </div>
+                
+                <div class="flex justify-center relative my-2">
+                    <div class="absolute top-1/2 left-0 right-0 h-px bg-slate-700 -z-10"></div>
+                    <select id="calc-op" class="bg-emerald-500 text-emerald-950 font-extrabold text-2xl w-16 h-16 rounded-full appearance-none cursor-pointer hover:bg-emerald-400 transition-colors text-center math-font border-4 border-slate-800 outline-none shadow-lg text-center pl-5">
+                        <option value="+">+</option>
+                        <option value="-">-</option>
+                        <option value="*">&times;</option>
+                        <option value="/">&divide;</option>
+                    </select>
+                </div>
+                
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-widest ml-2">Number 2</label>
+                    <input type="number" id="calc-b" value="-3" class="w-full bg-slate-900/50 border border-slate-600 text-white px-4 py-4 rounded-2xl text-3xl font-bold text-center focus:outline-none focus:border-emerald-400 math-font transition-colors">
+                </div>
+                
+                <div class="mt-4 pt-6 border-t border-slate-700 text-center bg-slate-900/30 rounded-2xl pb-4">
+                    <div class="text-xs text-slate-500 uppercase tracking-widest mb-2 font-bold">Result</div>
+                    <div id="calc-result" class="text-6xl font-extrabold text-emerald-400 math-font drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]">-11</div>
+                </div>
+            </div>
+
+            <!-- Explanation Panel -->
+            <div class="lg:col-span-3 bg-emerald-50/50 rounded-3xl p-8 flex flex-col justify-center border border-emerald-100 relative overflow-hidden">
+                <div class="absolute -right-8 -bottom-8 opacity-[0.03] text-[200px] leading-none">💡</div>
+                
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="bg-emerald-200 text-emerald-800 p-2 rounded-lg">
+                        <span class="text-xl">🧠</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-900">How it works</h3>
+                </div>
+                
+                <div id="calc-explanation" class="text-2xl text-slate-700 leading-relaxed font-medium mb-8">
+                    You owe $8, then you owe $3 more. Now you owe $11 in total.
+                </div>
+                
+                <div class="bg-white border-l-4 border-emerald-500 p-4 rounded-r-xl shadow-sm">
+                    <div class="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-1">Applied Rule</div>
+                    <div id="calc-rule" class="text-emerald-900 font-bold math-font text-lg">
+                        Same Signs (Combine them)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: The Number Family Tree & Roots -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        
+        <section class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-8 flex flex-col">
+            <div class="mb-6 border-b border-slate-100 pb-4">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <span class="text-2xl">🌳</span> 3. Number Family Tree
+                </h2>
+                <p class="text-slate-600 mt-2 text-sm leading-relaxed">
+                    <strong>Purpose:</strong> Every number belongs to the Real Numbers family, split into two clans. Click the categories below to interact with the chart and learn how to identify Rational numbers versus Irrational "rebels".
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <button id="btn-rational" class="p-4 rounded-2xl text-left transition-all border-2 border-emerald-500 bg-emerald-50 shadow-[0_4px_0_0_rgb(16,185,129)] active:translate-y-1 active:shadow-none group">
+                    <div class="text-3xl mb-2 group-hover:scale-110 transition-transform origin-left">🟢</div>
+                    <div class="font-bold text-emerald-900 text-lg">Rational</div>
+                    <div class="text-xs text-emerald-700 mt-1 font-medium">The "Fractions"</div>
+                </button>
+                <button id="btn-irrational" class="p-4 rounded-2xl text-left transition-all border-2 border-slate-200 bg-white hover:bg-rose-50 hover:border-rose-200 group">
+                    <div class="text-3xl mb-2 group-hover:scale-110 transition-transform origin-left">🔴</div>
+                    <div class="font-bold text-slate-600 group-hover:text-rose-900 text-lg transition-colors">Irrational</div>
+                    <div class="text-xs text-slate-400 group-hover:text-rose-700 mt-1 font-medium transition-colors">The "Rebels"</div>
+                </button>
+            </div>
+
+            <div id="family-details" class="bg-emerald-50 p-6 rounded-2xl flex-grow border border-emerald-100 mb-8 min-h-[220px]">
+                <h4 class="font-bold text-emerald-900 text-xl mb-3">Rational Numbers</h4>
+                <p class="text-emerald-800 text-sm mb-5 leading-relaxed">Any number that CAN be written as a fraction a/b (where a and b are integers, and b &ne; 0).</p>
+                <ul class="space-y-3 text-sm text-emerald-900">
+                    <li class="flex items-center gap-3">
+                        <div class="bg-white px-2 py-1 rounded-md border border-emerald-200 font-bold math-font w-16 text-center shadow-sm">-6</div> 
+                        <span>Integers (can be written as -6/1)</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <div class="bg-white px-2 py-1 rounded-md border border-emerald-200 font-bold math-font w-16 text-center shadow-sm">0.5</div> 
+                        <span>Terminating Decimals (is 1/2)</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <div class="bg-white px-2 py-1 rounded-md border border-emerald-200 font-bold math-font w-16 text-center shadow-sm">0.33&hellip;</div> 
+                        <span>Recurring Decimals (is 1/3)</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="mt-auto pt-6 border-t border-slate-100">
+                <h4 class="text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Real Numbers Composition</h4>
+                <!-- Chart Container with strict limits -->
+                <div class="chart-container">
+                    <canvas id="realNumbersChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Fractions, Decimals, & Order of Operations -->
+        <div class="space-y-10 flex flex-col">
+            
+            <section class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <div class="mb-6 border-b border-slate-100 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                        <span class="text-2xl">➗</span> 4. The In-Betweeners
+                    </h2>
+                    <p class="text-slate-600 mt-2 text-sm leading-relaxed">
+                        <strong>Purpose:</strong> A quick-reference guide for handling fractions and decimals. These rules are crucial for maintaining accuracy during complex multi-step problems.
+                    </p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-sky-50 p-5 rounded-2xl border border-sky-100 transition-colors hover:bg-sky-100/50">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xl">🍕</span>
+                            <h4 class="font-bold text-sky-900 text-lg">Fractions</h4>
+                        </div>
+                        <ul class="text-sm text-sky-800 space-y-3">
+                            <li class="flex gap-2">
+                                <span class="font-bold text-sky-600">&bull;</span>
+                                <span><strong>Add/Sub:</strong> You MUST find a common denominator (LCM) first.</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="font-bold text-sky-600">&bull;</span>
+                                <span><strong>Mult/Div:</strong> Convert mixed numbers to improper. To divide, use <strong class="bg-white px-1.5 py-0.5 rounded text-sky-700 border border-sky-200">Keep-Change-Flip</strong>.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 transition-colors hover:bg-indigo-100/50">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xl">🎯</span>
+                            <h4 class="font-bold text-indigo-900 text-lg">Decimals</h4>
+                        </div>
+                        <ul class="text-sm text-indigo-800 space-y-3">
+                            <li class="flex gap-2">
+                                <span class="font-bold text-indigo-600">&bull;</span>
+                                <span><strong>Add/Sub:</strong> ALWAYS align the decimal points vertically. Pad with zeroes.</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="font-bold text-indigo-600">&bull;</span>
+                                <span><strong>Multiply:</strong> Multiply normally first, then count total decimal places to put back.</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="font-bold text-indigo-600">&bull;</span>
+                                <span><strong>Divide:</strong> Shift the decimal point in BOTH until the divisor is a whole number.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-slate-900 rounded-3xl shadow-xl border border-slate-800 p-6 md:p-8 text-white flex-grow relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-rose-500 rounded-full blur-[80px] opacity-20"></div>
+                
+                <div class="mb-6 border-b border-slate-700 pb-4 relative z-10">
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <span class="text-2xl">⚔️</span> 5. Order of Operations
+                    </h2>
+                    <p class="text-slate-400 mt-2 text-sm leading-relaxed">
+                        <strong>Purpose:</strong> The Ultimate Boss strategy. When facing a monster equation, follow these steps strictly from top to bottom to ensure the correct answer.
+                    </p>
+                </div>
+                
+                <div class="space-y-3 relative z-10">
+                    <div class="flex items-center gap-4 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700/50 hover:border-rose-500/50 transition-colors">
+                        <div class="w-8 h-8 rounded-full bg-rose-500 flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(244,63,94,0.4)] flex-shrink-0">1</div>
+                        <div class="font-bold tracking-widest text-slate-200">( ) [ ] { } Brackets</div>
+                    </div>
+                    <div class="flex items-center gap-4 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700/50 hover:border-amber-500/50 transition-colors">
+                        <div class="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(245,158,11,0.4)] flex-shrink-0">2</div>
+                        <div class="font-bold tracking-widest text-slate-200">Powers & Roots</div>
+                    </div>
+                    <div class="flex items-center gap-4 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700/50 hover:border-emerald-500/50 transition-colors">
+                        <div class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(16,185,129,0.4)] flex-shrink-0">3</div>
+                        <div class="font-bold tracking-widest text-slate-200">Multiply & Divide <span class="text-emerald-400 ml-2">&rarr;</span></div>
+                    </div>
+                    <div class="flex items-center gap-4 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700/50 hover:border-blue-500/50 transition-colors">
+                        <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(59,130,246,0.4)] flex-shrink-0">4</div>
+                        <div class="font-bold tracking-widest text-slate-200">Add & Subtract <span class="text-blue-400 ml-2">&rarr;</span></div>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-slate-800 p-5 rounded-2xl border border-amber-500/30 relative z-10">
+                    <div class="flex items-center gap-2 text-amber-400 font-bold text-xs mb-2 uppercase tracking-widest">
+                        <span>🌟</span> Pro-Tip for Exams
+                    </div>
+                    <div class="text-sm text-slate-300 leading-relaxed">
+                        Finding the number halfway between two fractions? Just add them together and divide by 2!<br>
+                        <span class="inline-block mt-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-700 math-font text-amber-200">
+                            (5/9 + 8/9) &divide; 2 = 13/18
+                        </span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- Section 1: Number Line Logic ---
+    const elNumA = document.getElementById('nl-a');
+    const elNumB = document.getElementById('nl-b');
+    const nlContainer = document.getElementById('number-line-container');
+    const nlComp = document.getElementById('nl-comparison');
+    const nlReason = document.getElementById('nl-reasoning');
+    
+    function drawNumberLine() {
+        let a = parseInt(elNumA.value) || 0;
+        let b = parseInt(elNumB.value) || 0;
+        
+        // Constrain for visual purposes
+        if(a < -10) a = -10; if(a > 10) a = 10;
+        if(b < -10) b = -10; if(b > 10) b = 10;
+
+        let html = '<div class="absolute left-0 right-0 h-1.5 bg-slate-200 top-1/2 -translate-y-1/2 z-0 rounded-full"></div>';
+        
+        for(let i = -10; i <= 10; i++) {
+            let isA = i === a;
+            let isB = i === b;
+            let isActive = isA || isB;
+            
+            let circleClass = 'w-3 h-3 bg-slate-300 rounded-full';
+            let labelClass = 'text-slate-400 font-medium text-xs mt-5';
+            let zIndex = 'z-10';
+            
+            if (isActive) {
+                circleClass = isA && isB ? 'w-5 h-5 bg-purple-500 rounded-full ring-4 ring-purple-100' : 
+                              isA ? 'w-5 h-5 bg-indigo-500 rounded-full ring-4 ring-indigo-100' : 
+                              'w-5 h-5 bg-rose-500 rounded-full ring-4 ring-rose-100';
+                labelClass = isA && isB ? 'text-purple-700 font-bold text-base mt-4' : 
+                             isA ? 'text-indigo-700 font-bold text-base mt-4' : 
+                             'text-rose-700 font-bold text-base mt-4';
+                zIndex = 'z-20';
+            }
+
+            html += `<div class="flex flex-col items-center relative ${zIndex}" style="width: 40px;">
+                        <div class="absolute -top-7 text-xs font-bold px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 ${isA && !isB ? '' : 'hidden'}">A</div>
+                        <div class="absolute -top-7 text-xs font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 ${isB && !isA ? '' : 'hidden'}">B</div>
+                        <div class="absolute -top-7 text-xs font-bold px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 ${isB && isA ? '' : 'hidden'}">A=B</div>
+                        <div class="${circleClass} transition-all duration-300 shadow-sm relative"></div>
+                        <div class="${labelClass} transition-all duration-300 math-font">${i}</div>
+                     </div>`;
+        }
+        nlContainer.innerHTML = html;
+
+        // Update Text Logic
+        if (a > b) {
+            nlComp.innerHTML = `<span class="text-indigo-600">A(${a})</span> &gt; <span class="text-rose-600">B(${b})</span>`;
+            nlReason.innerHTML = `A is greater because ${a} is to the right of ${b}.`;
+        } else if (a < b) {
+            nlComp.innerHTML = `<span class="text-indigo-600">A(${a})</span> &lt; <span class="text-rose-600">B(${b})</span>`;
+            nlReason.innerHTML = `A is smaller because ${a} is to the left of ${b}.`;
+        } else {
+            nlComp.innerHTML = `<span class="text-purple-600">A(${a})</span> = <span class="text-purple-600">B(${b})</span>`;
+            nlReason.innerHTML = `They are the exact same number.`;
+        }
+
+        document.getElementById('abs-a-val').innerText = a;
+        document.getElementById('abs-a-res').innerText = Math.abs(a);
+        document.getElementById('abs-b-val').innerText = b;
+        document.getElementById('abs-b-res').innerText = Math.abs(b);
+    }
+
+    elNumA.addEventListener('input', drawNumberLine);
+    elNumB.addEventListener('input', drawNumberLine);
+    drawNumberLine(); // Init
+
+    // --- Section 2: Calculator Logic ---
+    const calcA = document.getElementById('calc-a');
+    const calcB = document.getElementById('calc-b');
+    const calcOp = document.getElementById('calc-op');
+    const calcRes = document.getElementById('calc-result');
+    const calcExp = document.getElementById('calc-explanation');
+    const calcRule = document.getElementById('calc-rule');
+
+    function updateCalculator() {
+        let a = parseFloat(calcA.value) || 0;
+        let b = parseFloat(calcB.value) || 0;
+        let op = calcOp.value;
+        let res = 0;
+        let exp = '';
+        let rule = '';
+
+        if (op === '+') {
+            res = a + b;
+            if (a >= 0 && b >= 0) {
+                exp = `You have <span class="text-emerald-600 font-bold">$${a}</span>, and you get <span class="text-emerald-600 font-bold">$${b}</span> more. Now you have <span class="text-emerald-600 font-bold">$${res}</span>.`;
+                rule = "(+) + (+) = (+)";
+            } else if (a < 0 && b < 0) {
+                exp = `You owe <span class="text-rose-600 font-bold">$${Math.abs(a)}</span>, then you owe <span class="text-rose-600 font-bold">$${Math.abs(b)}</span> more. Now you owe <span class="text-rose-600 font-bold">$${Math.abs(res)}</span> in total.`;
+                rule = "Same Signs (Combine them)";
+            } else {
+                let have = a >= 0 ? a : b;
+                let owe = a < 0 ? Math.abs(a) : Math.abs(b);
+                if (have > owe) {
+                    exp = `You have <span class="text-emerald-600 font-bold">$${have}</span>, but owe <span class="text-rose-600 font-bold">$${owe}</span>. You pay it off and have <span class="text-emerald-600 font-bold">$${res}</span> left.`;
+                } else if (owe > have) {
+                    exp = `You owe <span class="text-rose-600 font-bold">$${owe}</span>, but you only have <span class="text-emerald-600 font-bold">$${have}</span>. You still owe <span class="text-rose-600 font-bold">$${Math.abs(res)}</span>.`;
+                } else {
+                    exp = `You owe exactly what you have. You break even at 0.`;
+                }
+                rule = "Different Signs (Subtract & keep sign of bigger number)";
+            }
+        } else if (op === '-') {
+            res = a - b;
+            if (b < 0) {
+                exp = `Subtracting a negative is like taking away a debt. Two negatives side-by-side become a positive! (<span class="math-font">${a} + ${Math.abs(b)}</span>)`;
+                rule = "Subtracting a Negative (The Double Dash)";
+            } else {
+                exp = `You have <span class="font-bold">${a}</span> and someone takes away <span class="font-bold">${b}</span>. The result is <span class="font-bold">${res}</span>.`;
+                rule = "Standard Subtraction";
+            }
+        } else if (op === '*') {
+            res = a * b;
+            if ((a >= 0 && b >= 0) || (a < 0 && b < 0)) {
+                exp = `Multiplying numbers with the <strong>SAME</strong> signs always results in a <span class="text-emerald-600 font-bold">POSITIVE</span> number.`;
+                rule = "(+) &times; (+) = (+)  OR  (-) &times; (-) = (+)";
+            } else {
+                exp = `Multiplying numbers with <strong>DIFFERENT</strong> signs always results in a <span class="text-rose-600 font-bold">NEGATIVE</span> number.`;
+                rule = "(+) &times; (-) = (-)  OR  (-) &times; (+) = (-)";
+            }
+        } else if (op === '/') {
+            if (b === 0) { 
+                res = "Err"; 
+                exp = "Cannot divide by zero! The universe would implode."; 
+                rule = "Undefined"; 
+            } else {
+                res = Number.isInteger(a / b) ? (a / b) : parseFloat((a / b).toFixed(3));
+                if ((a > 0 && b > 0) || (a < 0 && b < 0)) {
+                    exp = `Dividing numbers with the <strong>SAME</strong> signs always results in a <span class="text-emerald-600 font-bold">POSITIVE</span> number.`;
+                    rule = "(+) &divide; (+) = (+)  OR  (-) &divide; (-) = (+)";
+                } else if (a === 0) {
+                    exp = `Zero divided by anything is still zero.`;
+                    rule = "Zero Property";
+                } else {
+                    exp = `Dividing numbers with <strong>DIFFERENT</strong> signs always results in a <span class="text-rose-600 font-bold">NEGATIVE</span> number.`;
+                    rule = "(+) &divide; (-) = (-)  OR  (-) &divide; (+) = (-)";
+                }
+            }
+        }
+
+        calcRes.innerText = res;
+        calcExp.innerHTML = exp;
+        calcRule.innerHTML = rule;
+    }
+
+    calcA.addEventListener('input', updateCalculator);
+    calcB.addEventListener('input', updateCalculator);
+    calcOp.addEventListener('change', updateCalculator);
+    updateCalculator(); // Init
+
+    // --- Section 3: Family Tree Logic ---
+    const btnRat = document.getElementById('btn-rational');
+    const btnIrrat = document.getElementById('btn-irrational');
+    const famDetails = document.getElementById('family-details');
+
+    const ratContent = `
+        <h4 class="font-bold text-emerald-900 text-xl mb-3">Rational Numbers</h4>
+        <p class="text-emerald-800 text-sm mb-5 leading-relaxed">Any number that CAN be written as a fraction a/b (where a and b are integers, and b &ne; 0).</p>
+        <ul class="space-y-3 text-sm text-emerald-900">
+            <li class="flex items-center gap-3">
+                <div class="bg-white px-2 py-1 rounded-md border border-emerald-200 font-bold math-font w-16 text-center shadow-sm">-6</div> 
+                <span>Integers (can be written as -6/1)</span>
+            </li>
+            <li class="flex items-center gap-3">
+                <div class="bg-white px-2 py-1 rounded-md border border-emerald-200 font-bold math-font w-16 text-center shadow-sm">0.5</div> 
+                <span>Terminating Decimals (is 1/2)</span>
+            </li>
+            <li class="flex items-center gap-3">
+                <div class="bg-white px-2 py-1 rounded-md border border-emerald-200 font-bold math-font w-16 text-center shadow-sm">0.33&hellip;</div> 
+                <span>Recurring Decimals (is 1/3)</span>
+            </li>
+        </ul>
+    `;
+
+    const irratContent = `
+        <h4 class="font-bold text-rose-900 text-xl mb-3">Irrational Numbers</h4>
+        <p class="text-rose-800 text-sm mb-5 leading-relaxed">These are numbers that CANNOT be written as a simple fraction. They are decimals that never end AND never repeat.</p>
+        <ul class="space-y-3 text-sm text-rose-900">
+            <li class="flex items-center gap-3">
+                <div class="bg-white px-2 py-1 rounded-md border border-rose-200 font-bold math-font w-16 text-center shadow-sm">&pi;</div> 
+                <span>Pi (3.14159...)</span>
+            </li>
+            <li class="flex items-center gap-3">
+                <div class="bg-white px-2 py-1 rounded-md border border-rose-200 font-bold math-font w-16 text-center shadow-sm">&radic;2</div> 
+                <span>Square roots of non-perfect squares</span>
+            </li>
+            <li class="flex items-center gap-3">
+                <div class="bg-white px-2 py-1 rounded-md border border-rose-200 font-bold text-[0.7rem] math-font w-16 text-center pt-1.5 pb-0.5 shadow-sm">3&radic;5</div> 
+                <span>Cube roots of non-perfect cubes</span>
+            </li>
+        </ul>
+        <div class="mt-4 text-xs font-bold bg-rose-200 text-rose-900 p-2.5 rounded-lg border border-rose-300">
+            Note: 22/7 and 3.142 are just rational approximations of &pi;!
+        </div>
+    `;
+
+    btnRat.addEventListener('click', () => {
+        // Active styling for Rational
+        btnRat.className = "p-4 rounded-2xl text-left transition-all border-2 border-emerald-500 bg-emerald-50 shadow-[0_4px_0_0_rgb(16,185,129)] active:translate-y-1 active:shadow-none group";
+        btnRat.querySelector('div.text-3xl').className = "text-3xl mb-2 group-hover:scale-110 transition-transform origin-left";
+        btnRat.querySelector('div.font-bold').className = "font-bold text-emerald-900 text-lg";
+        btnRat.querySelector('div.text-xs').className = "text-xs text-emerald-700 mt-1 font-medium";
+
+        // Inactive styling for Irrational
+        btnIrrat.className = "p-4 rounded-2xl text-left transition-all border-2 border-slate-200 bg-white hover:bg-rose-50 hover:border-rose-200 group";
+        btnIrrat.querySelector('div.font-bold').className = "font-bold text-slate-600 group-hover:text-rose-900 text-lg transition-colors";
+        btnIrrat.querySelector('div.text-xs').className = "text-xs text-slate-400 group-hover:text-rose-700 mt-1 font-medium transition-colors";
+
+        // Content swap
+        famDetails.className = "bg-emerald-50 p-6 rounded-2xl flex-grow border border-emerald-100 mb-8 min-h-[220px] fade-in";
+        famDetails.innerHTML = ratContent;
+    });
+
+    btnIrrat.addEventListener('click', () => {
+        // Active styling for Irrational
+        btnIrrat.className = "p-4 rounded-2xl text-left transition-all border-2 border-rose-500 bg-rose-50 shadow-[0_4px_0_0_rgb(225,29,72)] active:translate-y-1 active:shadow-none group";
+        btnIrrat.querySelector('div.font-bold').className = "font-bold text-rose-900 text-lg";
+        btnIrrat.querySelector('div.text-xs').className = "text-xs text-rose-700 mt-1 font-medium";
+
+        // Inactive styling for Rational
+        btnRat.className = "p-4 rounded-2xl text-left transition-all border-2 border-slate-200 bg-white hover:bg-emerald-50 hover:border-emerald-200 group";
+        btnRat.querySelector('div.font-bold').className = "font-bold text-slate-600 group-hover:text-emerald-900 text-lg transition-colors";
+        btnRat.querySelector('div.text-xs').className = "text-xs text-slate-400 group-hover:text-emerald-700 mt-1 font-medium transition-colors";
+
+        // Content swap
+        famDetails.className = "bg-rose-50 p-6 rounded-2xl flex-grow border border-rose-100 mb-8 min-h-[220px] fade-in";
+        famDetails.innerHTML = irratContent;
+    });
+
+    // Chart.js implementation
+    const ctx = document.getElementById('realNumbersChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Integers (Rational)', 'Fractions/Decimals (Rational)', 'Irrational Numbers'],
+            datasets: [{
+                data: [45, 35, 20],
+                backgroundColor: [
+                    '#4f46e5', // indigo-600
+                    '#10b981', // emerald-500
+                    '#e11d48'  // rose-600
+                ],
+                borderWidth: 2,
+                borderColor: '#ffffff',
+                hoverOffset: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { 
+                        font: { family: "'Plus Jakarta Sans', sans-serif", size: 12 }, 
+                        usePointStyle: true,
+                        padding: 20
+                    }
+                },
+                tooltip: {
+                    bodyFont: { family: "'Plus Jakarta Sans', sans-serif" },
+                    callbacks: {
+                        label: function(context) {
+                            return ' ' + context.label + ': Example Concept'; // Generic representation since percentages vary infinitely
+                        }
+                    }
+                }
+            },
+            cutout: '70%',
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
