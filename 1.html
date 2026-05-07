@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1: Primes, HCF, LCM & Roots</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Warm Neutrals with Educational Accents (Slate Base, Indigo/Emerald/Blue/Amber accents) -->
+    <!-- Application Structure Plan: A linear, scrolling masterclass. It flows from basic building blocks (Prime Factorization) -> Comparing Numbers (HCF/LCM) -> Advanced Manipulations (Squares/Cubes). This structure is chosen because students must grasp prime factorization before they can apply it to HCF/LCM or Roots. Each section begins with pedagogical text and analogies, followed by an interactive tool to solidify the concept dynamically. -->
+    <!-- Visualization & Content Choices: 
+         1. Prime Anatomy -> Goal: Show composition of a number -> Method: Textual factor tree + Chart.js Donut Chart (visualizing the weight of each prime component) -> Interaction: Dynamic number input -> Justification: Breaks down abstract numbers into visual parts.
+         2. HCF/LCM Comparison -> Goal: Explain lowest/highest power rules -> Method: HTML Grid with math formatting -> Interaction: Two number inputs, visual strike-throughs and highlighting -> Justification: Directly translates the "Bouncer/Collector" analogy into a visual algorithm. NO SVG used.
+         3. Roots -> Goal: Show division of indices -> Method: HTML math formatting with fractional exponents -> Interaction: Number input snapping to perfect squares/cubes -> Justification: Demystifies root calculations without a calculator. 
+         Confirming NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; 
+            color: #1e293b;
+        }
+        .math-font { 
+            font-family: 'Lora', serif; 
+            letter-spacing: 0.02em;
+        }
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 350px; max-height: 350px; }
+        }
+        .strike {
+            text-decoration: line-through;
+            opacity: 0.4;
+        }
+        .highlight-min {
+            color: #059669;
+            font-weight: bold;
+            transform: scale(1.1);
+            display: inline-block;
+        }
+        .highlight-max {
+            color: #2563eb;
+            font-weight: bold;
+            transform: scale(1.1);
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex flex-col items-center">
+
+    <div class="max-w-4xl w-full space-y-12">
+
+        <header class="text-center py-12 border-b border-slate-200">
+            <div class="text-5xl mb-4">🧭</div>
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4">Sec 1 Math: Number Properties</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Master Primes, Highest Common Factors, Lowest Common Multiples, and Roots by understanding the "DNA" of numbers.</p>
+        </header>
+
+        <section class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-10">
+            <div class="mb-8">
+                <span class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2 block">Module 1</span>
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">The Building Blocks: Prime Factorization</h2>
+                <p class="text-slate-600 leading-relaxed text-lg mb-4">
+                    Before we can compare numbers, we must understand how they are built. Every whole number greater than 1 is either a <strong>Prime Number</strong> (an unbreakable block with only factors 1 and itself) or a <strong>Composite Number</strong> (a structure built by multiplying primes together). The process of breaking a composite number down into its prime blocks is called <em>Prime Factorization</em>. We write this using <strong>index notation</strong> (powers) to group identical blocks together.
+                </p>
+                <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r-xl text-indigo-900 mb-8">
+                    <strong>💡 Concept:</strong> Think of Prime Factorization as finding the unique recipe or "DNA" of a number.
+                </div>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 flex flex-col md:flex-row gap-8 items-center">
+                <div class="flex-1 space-y-6 w-full">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">Enter a Number</label>
+                        <input type="number" id="input-anatomy" value="180" min="2" max="100000" class="w-full text-3xl p-4 border border-slate-300 rounded-xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all">
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="text-sm text-slate-500 uppercase tracking-wider mb-2 font-semibold">Classification</div>
+                        <div id="anatomy-class" class="text-2xl font-bold text-slate-800 mb-4"></div>
+                        <div class="text-sm text-slate-500 uppercase tracking-wider mb-2 font-semibold">Prime Factorization</div>
+                        <div id="anatomy-factors" class="text-3xl math-font text-indigo-600 bg-indigo-50/50 inline-block px-4 py-2 rounded-lg border border-indigo-100"></div>
+                    </div>
+                </div>
+                <div class="flex-1 w-full">
+                    <div class="chart-container">
+                        <canvas id="factorChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs text-slate-400 mt-2">Visualization of the prime components</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-10">
+            <div class="mb-8">
+                <span class="text-sm font-bold uppercase tracking-widest text-emerald-500 mb-2 block">Module 2</span>
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">Comparing Numbers: HCF & LCM</h2>
+                <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                    Now that we can break numbers down, we can compare them to find their Highest Common Factor (HCF) and Lowest Common Multiple (LCM). Instead of listing out all factors and multiples, we use their prime factorization "DNA" to quickly find the answers.
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
+                        <div class="text-3xl mb-3">🛑</div>
+                        <h3 class="font-bold text-emerald-900 text-lg mb-2">HCF: The Strict Bouncer</h3>
+                        <p class="text-emerald-800 text-sm">The HCF only looks at prime factors that <strong>BOTH</strong> numbers share. For those shared bases, it takes the <strong>LOWEST</strong> power. Why? Because that is the maximum amount both numbers can afford to "give".</p>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                        <div class="text-3xl mb-3">🧲</div>
+                        <h3 class="font-bold text-blue-900 text-lg mb-2">LCM: The Greedy Collector</h3>
+                        <p class="text-blue-800 text-sm">The LCM wants to encompass both numbers entirely. It looks at <strong>ALL</strong> unique prime factors present. For each base, it takes the <strong>HIGHEST</strong> power available to guarantee both original numbers can fit inside it perfectly.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800 rounded-3xl p-6 md:p-10 text-white relative overflow-hidden">
+                <div class="flex flex-col md:flex-row gap-6 justify-center items-center mb-10">
+                    <div class="text-center">
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Number A</label>
+                        <input type="number" id="input-hcf-a" value="225" min="2" max="10000" class="w-32 text-center text-3xl p-3 bg-slate-700 border border-slate-600 text-white rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                    <div class="text-slate-500 text-4xl font-light">&</div>
+                    <div class="text-center">
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Number B</label>
+                        <input type="number" id="input-hcf-b" value="270" min="2" max="10000" class="w-32 text-center text-3xl p-3 bg-slate-700 border border-slate-600 text-white rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    
+                    <div class="bg-slate-700/50 rounded-2xl p-6 border border-slate-600">
+                        <h4 class="text-emerald-400 font-bold uppercase tracking-wider text-sm mb-6 flex items-center gap-2"><span>🛑</span> HCF Calculation</h4>
+                        <div id="hcf-logic" class="space-y-4 text-lg"></div>
+                        <div class="mt-6 pt-6 border-t border-slate-600 flex justify-between items-end">
+                            <span class="text-slate-400 font-bold">Final HCF:</span>
+                            <div class="text-right">
+                                <div id="hcf-formula" class="math-font text-emerald-300 text-sm mb-1"></div>
+                                <div id="hcf-result" class="text-4xl font-bold text-emerald-400 math-font"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-700/50 rounded-2xl p-6 border border-slate-600">
+                        <h4 class="text-blue-400 font-bold uppercase tracking-wider text-sm mb-6 flex items-center gap-2"><span>🧲</span> LCM Calculation</h4>
+                        <div id="lcm-logic" class="space-y-4 text-lg"></div>
+                        <div class="mt-6 pt-6 border-t border-slate-600 flex justify-between items-end">
+                            <span class="text-slate-400 font-bold">Final LCM:</span>
+                            <div class="text-right">
+                                <div id="lcm-formula" class="math-font text-blue-300 text-sm mb-1"></div>
+                                <div id="lcm-result" class="text-4xl font-bold text-blue-400 math-font"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-10">
+            <div class="mb-8">
+                <span class="text-sm font-bold uppercase tracking-widest text-amber-500 mb-2 block">Module 3</span>
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">Roots & Powers: Squares and Cubes</h2>
+                <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                    Prime factorization makes finding square roots and cube roots incredibly easy without a calculator. 
+                    If a number is a <strong>Perfect Square</strong>, all the powers in its prime factorization will be even (multiples of 2). To find the square root, simply halve the powers. 
+                    If it's a <strong>Perfect Cube</strong>, all powers will be multiples of 3. To find the cube root, divide the powers by 3.
+                </p>
+                <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl text-amber-900 mb-8">
+                    <strong>💡 The "Equal Groups" Rule:</strong><br>
+                    • <strong>Square Root:</strong> Split the prime factors into <strong>2 equal groups</strong> (halve the powers).<br>
+                    • <strong>Cube Root:</strong> Split the prime factors into <strong>3 equal groups</strong> (divide the powers by 3).
+                </div>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-6 md:p-10 border border-slate-100">
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    
+                    <div class="flex-1 w-full space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">Base Number Generator</label>
+                            <input type="number" id="input-roots" value="72" min="2" max="1000" class="w-full text-2xl p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none">
+                            <p class="text-xs text-slate-500 mt-2">We will square and cube this number to demonstrate the rule backwards.</p>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Base Prime Factorization</div>
+                            <div id="base-fact" class="math-font text-xl text-slate-700"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 w-full space-y-6">
+                        <div class="bg-white p-5 rounded-xl border-2 border-amber-100 shadow-sm relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-bl-lg">Square Root</div>
+                            <div class="text-sm font-semibold text-slate-500 mb-2 mt-2">Perfect Square: <span id="sq-val" class="text-slate-800"></span></div>
+                            <div id="sq-fact" class="math-font text-lg text-slate-600 mb-4 border-b border-slate-100 pb-4"></div>
+                            <div class="text-sm font-semibold text-slate-500 mb-1">Applying the Root (2 Equal Groups):</div>
+                            <div id="sq-root-logic" class="math-font text-xl text-amber-600 font-bold"></div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-xl border-2 border-orange-100 shadow-sm relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1 rounded-bl-lg">Cube Root</div>
+                            <div class="text-sm font-semibold text-slate-500 mb-2 mt-2">Perfect Cube: <span id="cb-val" class="text-slate-800"></span></div>
+                            <div id="cb-fact" class="math-font text-lg text-slate-600 mb-4 border-b border-slate-100 pb-4"></div>
+                            <div class="text-sm font-semibold text-slate-500 mb-1">Applying the Root (3 Equal Groups):</div>
+                            <div id="cb-root-logic" class="math-font text-xl text-orange-600 font-bold"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        let factorChartInstance = null;
+
+        function getPrimeFactors(n) {
+            if (n < 2) return {};
+            let factors = {};
+            let d = 2;
+            while (n >= d * d) {
+                while (n % d === 0) {
+                    factors[d] = (factors[d] || 0) + 1;
+                    n /= d;
+                }
+                d++;
+            }
+            if (n > 1) factors[n] = (factors[n] || 0) + 1;
+            return factors;
+        }
+
+        function isPrime(n) {
+            if (n < 2) return false;
+            for(let i = 2; i <= Math.sqrt(n); i++) {
+                if(n % i === 0) return false;
+            }
+            return true;
+        }
+
+        function formatPower(base, power, highlight = false, strike = false) {
+            let classes = "mx-1 inline-block transition-all ";
+            if (strike) classes += "strike ";
+            if (highlight === 'min') classes += "highlight-min ";
+            if (highlight === 'max') classes += "highlight-max ";
+            
+            if (power === 0) return `<span class="${classes} text-slate-500">1</span>`;
+            if (power === 1) return `<span class="${classes}">${base}</span>`;
+            return `<span class="${classes}">${base}<sup class="text-[0.6em] relative -top-2 ml-0.5">${power}</sup></span>`;
+        }
+
+        function formatFractionPower(base, power, divisor) {
+            return `<span class="mx-1">${base}<sup class="text-[0.6em] relative -top-2 ml-0.5">${power}/${divisor}</sup></span>`;
+        }
+
+        function updateAnatomy() {
+            let val = parseInt(document.getElementById('input-anatomy').value);
+            if (isNaN(val) || val < 2) val = 2;
+
+            let factors = getPrimeFactors(val);
+            let isP = isPrime(val);
+
+            document.getElementById('anatomy-class').innerHTML = isP ? 
+                '<span class="text-indigo-600 flex items-center gap-2"><span>🛡️</span> Prime Number</span>' : 
+                '<span class="text-slate-600 flex items-center gap-2"><span>🧱</span> Composite Number</span>';
+
+            let factStr = [];
+            let chartLabels = [];
+            let chartData = [];
+            let chartBg = ['#6366f1', '#8b5cf6', '#3b82f6', '#14b8a6', '#f59e0b', '#ef4444'];
+
+            Object.keys(factors).sort((a,b)=>a-b).forEach((base, index) => {
+                let power = factors[base];
+                factStr.push(formatPower(base, power));
+                
+                chartLabels.push(`${base}^${power} (${Math.pow(base, power)})`);
+                chartData.push(Math.pow(base, power));
+            });
+
+            document.getElementById('anatomy-factors').innerHTML = factStr.join(' <span class="text-indigo-300 mx-1">&times;</span> ');
+
+            const ctx = document.getElementById('factorChart').getContext('2d');
+            if(factorChartInstance) factorChartInstance.destroy();
+
+            factorChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        data: chartData,
+                        backgroundColor: chartBg,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { font: { family: 'Inter' } } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` Component Value: ${context.raw}`;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+
+        function updateHCFLCM() {
+            let numA = parseInt(document.getElementById('input-hcf-a').value);
+            let numB = parseInt(document.getElementById('input-hcf-b').value);
+            if (isNaN(numA) || numA < 2) numA = 2;
+            if (isNaN(numB) || numB < 2) numB = 2;
+
+            let fA = getPrimeFactors(numA);
+            let fB = getPrimeFactors(numB);
+            let allBases = Array.from(new Set([...Object.keys(fA), ...Object.keys(fB)])).map(Number).sort((a,b)=>a-b);
+
+            let hcfLogicHTML = '';
+            let lcmLogicHTML = '';
+            let hcfResParts = [];
+            let lcmResParts = [];
+            let hcfVal = 1;
+            let lcmVal = 1;
+
+            allBases.forEach(b => {
+                let pA = fA[b] || 0;
+                let pB = fB[b] || 0;
+                let minP = Math.min(pA, pB);
+                let maxP = Math.max(pA, pB);
+
+                hcfVal *= Math.pow(b, minP);
+                lcmVal *= Math.pow(b, maxP);
+
+                let isCommon = pA > 0 && pB > 0;
+
+                let rowHcfA = formatPower(b, pA, isCommon && pA === minP ? 'min' : false, !isCommon || (isCommon && pA > minP));
+                let rowHcfB = formatPower(b, pB, isCommon && pB === minP ? 'min' : false, !isCommon || (isCommon && pB > minP));
+                
+                hcfLogicHTML += `
+                    <div class="flex justify-between items-center bg-slate-800 p-2 rounded math-font border border-slate-700">
+                        <span class="text-slate-400 w-8">Base ${b}:</span>
+                        <div class="flex gap-4">
+                            <span class="w-16 text-right">${rowHcfA}</span>
+                            <span class="text-slate-600">|</span>
+                            <span class="w-16 text-left">${rowHcfB}</span>
+                        </div>
+                    </div>`;
+                
+                if (minP > 0) hcfResParts.push(formatPower(b, minP));
+
+                let rowLcmA = formatPower(b, pA, pA === maxP && pA > 0 ? 'max' : false, false);
+                let rowLcmB = formatPower(b, pB, pB === maxP && pB > 0 ? 'max' : false, false);
+
+                lcmLogicHTML += `
+                    <div class="flex justify-between items-center bg-slate-800 p-2 rounded math-font border border-slate-700">
+                        <span class="text-slate-400 w-8">Base ${b}:</span>
+                        <div class="flex gap-4">
+                            <span class="w-16 text-right">${rowLcmA}</span>
+                            <span class="text-slate-600">|</span>
+                            <span class="w-16 text-left">${rowLcmB}</span>
+                        </div>
+                    </div>`;
+
+                if (maxP > 0) lcmResParts.push(formatPower(b, maxP));
+            });
+
+            document.getElementById('hcf-logic').innerHTML = hcfLogicHTML;
+            document.getElementById('hcf-formula').innerHTML = hcfResParts.length > 0 ? hcfResParts.join(' &times; ') : '1';
+            document.getElementById('hcf-result').innerText = hcfVal;
+
+            document.getElementById('lcm-logic').innerHTML = lcmLogicHTML;
+            document.getElementById('lcm-formula').innerHTML = lcmResParts.join(' &times; ');
+            document.getElementById('lcm-result').innerText = lcmVal;
+        }
+
+        function updateRoots() {
+            let val = parseInt(document.getElementById('input-roots').value);
+            if (isNaN(val) || val < 2) val = 2;
+
+            let f = getPrimeFactors(val);
+            let baseStrParts = [];
+            Object.keys(f).sort((a,b)=>a-b).forEach(b => {
+                baseStrParts.push(formatPower(b, f[b]));
+            });
+            document.getElementById('base-fact').innerHTML = `${val} = ` + baseStrParts.join(' &times; ');
+
+            let sqVal = val * val;
+            let cbVal = val * val * val;
+            document.getElementById('sq-val').innerText = sqVal;
+            document.getElementById('cb-val').innerText = cbVal;
+
+            let sqFactParts = [];
+            let sqRootParts = [];
+            let sqRootAnsParts = [];
+            
+            let cbFactParts = [];
+            let cbRootParts = [];
+            let cbRootAnsParts = [];
+
+            Object.keys(f).sort((a,b)=>a-b).forEach(b => {
+                let base = Number(b);
+                let power = f[b];
+                
+                let p2 = power * 2;
+                sqFactParts.push(formatPower(base, p2));
+                sqRootAnsParts.push(formatPower(base, power));
+
+                let p3 = power * 3;
+                cbFactParts.push(formatPower(base, p3));
+                cbRootAnsParts.push(formatPower(base, power));
+            });
+
+            document.getElementById('sq-fact').innerHTML = `${sqVal} = ` + sqFactParts.join(' &times; ');
+            document.getElementById('sq-root-logic').innerHTML = `&radic;(${sqFactParts.join(' &times; ')})<br>= &radic;(<span class="text-amber-700">(${sqRootAnsParts.join(' &times; ')})<sup class="text-[0.6em] relative -top-3 ml-0.5">2</sup></span>)<br>= ${sqRootAnsParts.join(' &times; ')}<br>= ${val}`;
+
+            document.getElementById('cb-fact').innerHTML = `${cbVal} = ` + cbFactParts.join(' &times; ');
+            document.getElementById('cb-root-logic').innerHTML = `&#8731;(${cbFactParts.join(' &times; ')})<br>= &#8731;(<span class="text-orange-700">(${cbRootAnsParts.join(' &times; ')})<sup class="text-[0.6em] relative -top-3 ml-0.5">3</sup></span>)<br>= ${cbRootAnsParts.join(' &times; ')}<br>= ${val}`;
+        }
+
+        document.getElementById('input-anatomy').addEventListener('input', updateAnatomy);
+        document.getElementById('input-hcf-a').addEventListener('input', updateHCFLCM);
+        document.getElementById('input-hcf-b').addEventListener('input', updateHCFLCM);
+        document.getElementById('input-roots').addEventListener('input', updateRoots);
+
+        updateAnatomy();
+        updateHCFLCM();
+        updateRoots();
+    </script>
+</body>
+</html>
