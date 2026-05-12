@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sec 1 Math: Number Patterns Exam Revision</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .step-box { border-left: 4px solid #8b5cf6; padding-left: 1rem; margin-bottom: 1rem; }
+        .concept-btn.active { background-color: #7c3aed; color: white; }
+        .concept-btn { transition: all 0.2s ease; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+<div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
+    
+    <!-- Sidebar Navigation -->
+    <div class="w-full md:w-1/4 flex flex-col gap-2 relative">
+        <div class="sticky top-8 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+            <h1 class="text-2xl font-bold text-slate-900 mb-6">Chapter 7<br><span class="text-violet-600 text-lg">Number Patterns</span></h1>
+            <p class="text-sm text-slate-500 mb-4">Select a topic to review concepts, steps, and examples.</p>
+            
+            <nav class="flex flex-col gap-2" id="nav-menu">
+                <button onclick="showSection('sequences')" class="concept-btn active text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">1. Basic Sequences</button>
+                <button onclick="showSection('special')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">2. Special Sequences</button>
+                <button onclick="showSection('general-term')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">3. The General Term ($n$th Term)</button>
+                <button onclick="showSection('checking-terms')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">4. Checking for a Term</button>
+                <button onclick="showSection('sums')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">5. Sum of Number Patterns</button>
+                <button onclick="showSection('real-world')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">6. Real-World Contexts</button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="w-full md:w-3/4 bg-white p-8 rounded-xl shadow-sm border border-slate-200 min-h-[80vh]">
+        
+        <!-- Section 1: Basic Sequences -->
+        <div id="sequences" class="section-content">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-violet-100 text-violet-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">1</span>
+                Basic Sequences & Rules
+            </h2>
+            <p class="text-lg mb-6">A sequence is an ordered list of numbers. To find the next terms, you must find the <strong>rule</strong>. Rules usually involve adding, subtracting, multiplying, or dividing a constant amount.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-violet-50 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold mb-4 text-violet-900">Example A (Addition)</h3>
+                    <p class="text-xl tracking-widest font-mono text-center mb-2">2, 5, 8, 11, ...</p>
+                    <p class="text-center text-slate-600 mb-4">$\underbrace{\quad}_{+3}\underbrace{\quad}_{+3}\underbrace{\quad}_{+3}$</p>
+                    <p class="text-slate-700"><strong>Rule:</strong> Add 3 to get the next term.</p>
+                    <p class="text-slate-700 font-semibold mt-2">Next two terms: 14, 17</p>
+                </div>
+                
+                <div class="bg-violet-50 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold mb-4 text-violet-900">Example B (Multiplication)</h3>
+                    <p class="text-xl tracking-widest font-mono text-center mb-2">3, 6, 12, 24, ...</p>
+                    <p class="text-center text-slate-600 mb-4">$\underbrace{\quad}_{\times2}\underbrace{\quad}_{\times2}\underbrace{\quad}_{\times2}$</p>
+                    <p class="text-slate-700"><strong>Rule:</strong> Multiply by 2 to get the next term.</p>
+                    <p class="text-slate-700 font-semibold mt-2">Next two terms: 48, 96</p>
+                </div>
+            </div>
+
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded text-amber-900">
+                <strong>⚠️ Complex Rules:</strong> Some rules have two steps! For example: $1, 4, 13, 40...$ The rule is <strong>Multiply by 3 and add 1</strong> ($\times 3 + 1$). Always test your rule on the 3rd and 4th numbers to be sure it works!
+            </div>
+        </div>
+
+        <!-- Section 2: Special Sequences -->
+        <div id="special" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-violet-100 text-violet-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">2</span>
+                Special Sequences
+            </h2>
+            <p class="text-lg mb-6">You are expected to recognize these famous sequences on sight. Memorize their first few terms!</p>
+            
+            <div class="space-y-4 mb-8">
+                <div class="p-4 border border-slate-200 rounded-lg flex items-center gap-4">
+                    <div class="bg-slate-100 p-3 rounded font-mono font-bold text-lg w-48 text-center">1, 4, 9, 16, 25...</div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Perfect Squares</h4>
+                        <p class="text-sm text-slate-600">Generated by $1^2, 2^2, 3^2, 4^2, 5^2...$</p>
+                    </div>
+                </div>
+
+                <div class="p-4 border border-slate-200 rounded-lg flex items-center gap-4">
+                    <div class="bg-slate-100 p-3 rounded font-mono font-bold text-lg w-48 text-center">1, 8, 27, 64...</div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Perfect Cubes</h4>
+                        <p class="text-sm text-slate-600">Generated by $1^3, 2^3, 3^3, 4^3...$</p>
+                    </div>
+                </div>
+
+                <div class="p-4 border border-slate-200 rounded-lg flex items-center gap-4">
+                    <div class="bg-slate-100 p-3 rounded font-mono font-bold text-lg w-48 text-center">2, 3, 5, 7, 11, 13...</div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Prime Numbers</h4>
+                        <p class="text-sm text-slate-600">Numbers divisible only by 1 and themselves.</p>
+                    </div>
+                </div>
+
+                <div class="p-4 border border-slate-200 rounded-lg flex items-center gap-4">
+                    <div class="bg-slate-100 p-3 rounded font-mono font-bold text-lg w-48 text-center">1, 1, 2, 3, 5, 8, 13...</div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Fibonacci Sequence</h4>
+                        <p class="text-sm text-slate-600">Rule: Add the two previous terms to get the next term ($1+1=2, 1+2=3, 2+3=5$).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: General Term -->
+        <div id="general-term" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-violet-100 text-violet-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">3</span>
+                The General Term ($n$th Term)
+            </h2>
+            <p class="text-lg mb-4">Instead of listing 100 numbers to find the 100th term, we find an algebraic formula for the $n$th term (called $T_n$).</p>
+            
+            <div class="bg-violet-600 text-white p-4 rounded-lg mb-6 shadow-md">
+                <p class="font-bold text-center text-xl">Formula: $T_n = a + (n - 1)d$</p>
+                <p class="text-center text-violet-100 mt-2">Use this <strong>only</strong> when the sequence adds or subtracts the same constant difference every time.</p>
+                <ul class="flex justify-center gap-8 mt-2 text-sm">
+                    <li><strong>$a$</strong> = The First Term</li>
+                    <li><strong>$d$</strong> = The Common Difference</li>
+                </ul>
+            </div>
+            
+            <div class="bg-violet-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-violet-900">Example from Tutorial (Q1a)</h3>
+                <p class="text-lg font-mono mb-4 bg-white p-3 rounded shadow-sm text-center">7, 9, 11, 13, 15...</p>
+                
+                <div class="step-box border-violet-500">
+                    <p class="font-semibold text-slate-700">Step 1: Identify $a$ and $d$.</p>
+                    <p class="text-slate-600">The first term $a = 7$.</p>
+                    <p class="text-slate-600">The common difference $d = 2$ (since $9-7=2$ and $11-9=2$).</p>
+                </div>
+                <div class="step-box border-violet-500">
+                    <p class="font-semibold text-slate-700">Step 2: Plug into the formula and simplify.</p>
+                    <p class="font-mono">$$T_n = 7 + (n - 1)(2)$$</p>
+                    <p class="font-mono">$$T_n = 7 + 2n - 2$$</p>
+                    <p class="font-mono font-bold text-violet-700">$$T_n = 2n + 5$$</p>
+                </div>
+                <div class="step-box border-violet-500">
+                    <p class="font-semibold text-slate-700">Step 3: Use it to find the 50th term.</p>
+                    <p class="text-slate-600">Substitute $n = 50$ into your new formula.</p>
+                    <p class="font-mono">$$T_{50} = 2(50) + 5 = 100 + 5 = \mathbf{105}$$</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Checking Terms -->
+        <div id="checking-terms" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-violet-100 text-violet-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">4</span>
+                Checking if a Number is in a Sequence
+            </h2>
+            <p class="text-lg mb-6">Sometimes you are given the formula and asked if a specific number belongs in that sequence. Because $n$ represents a position (1st, 2nd, 3rd...), <strong>$n$ must be a positive whole number (integer).</strong></p>
+            
+            <div class="bg-violet-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-violet-900">Example from Tutorial (Q3c)</h3>
+                <p class="italic text-slate-700 mb-4 bg-white p-4 rounded">"The $n$th term of a sequence is $21 - 4n$. Explain why $-121$ is not a term of this sequence."</p>
+                
+                <div class="step-box border-violet-500">
+                    <p class="font-semibold text-slate-700">Step 1: Set the formula equal to the number.</p>
+                    <p class="font-mono">$$-121 = 21 - 4n$$</p>
+                </div>
+                <div class="step-box border-violet-500">
+                    <p class="font-semibold text-slate-700">Step 2: Solve for $n$.</p>
+                    <p class="font-mono">$$4n = 21 + 121$$</p>
+                    <p class="font-mono">$$4n = 142$$</p>
+                    <p class="font-mono">$$n = \frac{142}{4} = 35.5$$</p>
+                </div>
+                <div class="step-box border-violet-500">
+                    <p class="font-semibold text-slate-700">Step 3: Conclude based on the result.</p>
+                    <p class="text-slate-600">Because $n$ is $35.5$ (which is not an integer), $-121$ cannot be a term in the sequence. You cannot have a "35.5th" term!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Sums -->
+        <div id="sums" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-violet-100 text-violet-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">5</span>
+                Sum of Number Patterns
+            </h2>
+            <p class="text-lg mb-6">To find the sum of a long sequence of numbers (like $1+2+3...+100$), you don't need a calculator. You can pair them up!</p>
+            
+            <div class="bg-violet-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-violet-900">Gauss's Trick</h3>
+                
+                <div class="step-box border-violet-500">
+                    <p class="font-semibold text-slate-700">How to find: $1 + 2 + 3 + ... + 100$</p>
+                    <p class="text-slate-600 mb-2">Look at the pairs from the outside in:</p>
+                    <ul class="list-disc pl-5 font-mono mb-2">
+                        <li>$1 + 100 = 101$</li>
+                        <li>$2 + 99 = 101$</li>
+                        <li>$3 + 98 = 101$</li>
+                    </ul>
+                    <p class="text-slate-600">Since there are 100 numbers, there are exactly <strong>50 pairs</strong>. Every pair adds up to 101.</p>
+                    <p class="font-mono mt-2 font-bold text-violet-700">Sum = $50 \times 101 = 5050$</p>
+                </div>
+
+                <div class="bg-white p-4 rounded border border-violet-200 mt-6">
+                    <h4 class="font-bold text-slate-800 mb-2">The Shortcut Formula:</h4>
+                    <p class="font-mono text-center text-lg">$$\text{Sum of } 1+2+...+n = \frac{n(n+1)}{2}$$</p>
+                    <p class="text-sm text-slate-500 text-center mt-2">Example: For $1$ to $50$, just calculate $(50 \times 51) / 2 = 1275$.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Real-World Contexts -->
+        <div id="real-world" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-violet-100 text-violet-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">6</span>
+                Real-World Contexts (Figures & Shapes)
+            </h2>
+            <p class="text-lg mb-6">Patterns often appear visually as matchsticks, tiles, or tables. Treat the "Figure Number" as $n$, and count the objects to find the sequence terms.</p>
+            
+            <div class="bg-violet-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-violet-900">Example: Banquet Tables</h3>
+                <p class="italic text-slate-700 mb-4 bg-white p-4 rounded">"A banquet room has tables. 1 table sits 6 people. 2 tables joined together sit 10 people. 3 tables joined together sit 14 people. Find a formula for $p$ people at $n$ tables."</p>
+                
+                <div class="step-box border-violet-500">
+                    <p class="font-semibold text-slate-700">Step 1: Write out the sequence.</p>
+                    <p class="text-slate-600">Number of tables ($n$): 1, 2, 3...</p>
+                    <p class="text-slate-600">Number of people ($p$): 6, 10, 14...</p>
+                </div>
+                <div class="step-box border-violet-500">
+                    <p class="font-semibold text-slate-700">Step 2: Identify $a$ and $d$.</p>
+                    <p class="text-slate-600">First term $a = 6$. Common difference $d = 4$ (adding a table adds 4 people).</p>
+                </div>
+                <div class="step-box border-violet-500">
+                    <p class="font-semibold text-slate-700">Step 3: Create the formula.</p>
+                    <p class="font-mono">$$p = 6 + (n - 1)(4)$$</p>
+                    <p class="font-mono">$$p = 6 + 4n - 4$$</p>
+                    <p class="font-mono font-bold text-violet-700">$$p = 4n + 2$$</p>
+                </div>
+                
+                <div class="bg-white p-4 rounded border border-violet-200 mt-6">
+                    <p class="font-bold text-slate-800 mb-2">Follow-up: How many tables for 50 people?</p>
+                    <p class="font-mono text-sm">$$50 = 4n + 2$$</p>
+                    <p class="font-mono text-sm">$$48 = 4n$$</p>
+                    <p class="font-mono text-sm">$$n = 12 \text{ tables}$$</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function showSection(sectionId) {
+        // Hide all sections
+        const sections = document.querySelectorAll('.section-content');
+        sections.forEach(sec => sec.classList.add('hidden'));
+        
+        // Remove active class from all buttons
+        const buttons = document.querySelectorAll('.concept-btn');
+        buttons.forEach(btn => {
+            btn.classList.remove('active');
+            btn.classList.remove('bg-violet-600');
+            btn.classList.remove('text-white');
+            btn.classList.add('bg-slate-100');
+        });
+
+        // Show selected section
+        document.getElementById(sectionId).classList.remove('hidden');
+        
+        // Add active class to clicked button
+        const activeBtn = event.currentTarget;
+        activeBtn.classList.add('active');
+        activeBtn.classList.remove('bg-slate-100');
+        activeBtn.classList.add('bg-violet-600');
+        activeBtn.classList.add('text-white');
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sec 1 Math: Linear Functions and Graphs Exam Revision</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .step-box { border-left: 4px solid #10b981; padding-left: 1rem; margin-bottom: 1rem; }
+        .concept-btn.active { background-color: #059669; color: white; }
+        .concept-btn { transition: all 0.2s ease; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+<div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
+    
+    <!-- Sidebar Navigation -->
+    <div class="w-full md:w-1/4 flex flex-col gap-2 relative">
+        <div class="sticky top-8 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+            <h1 class="text-2xl font-bold text-slate-900 mb-6">Chapter 6<br><span class="text-emerald-600 text-lg">Linear Functions & Graphs</span></h1>
+            <p class="text-sm text-slate-500 mb-4">Select a topic to review concepts, steps, and examples.</p>
+            
+            <nav class="flex flex-col gap-2" id="nav-menu">
+                <button onclick="showSection('coordinates')" class="concept-btn active text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">1. Coordinates & Plane</button>
+                <button onclick="showSection('functions')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">2. Linear Functions</button>
+                <button onclick="showSection('graphing')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">3. Graphing $y = mx + c$</button>
+                <button onclick="showSection('gradients')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">4. Finding Gradients</button>
+                <button onclick="showSection('horizontal-vertical')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">5. Horizontal & Vertical</button>
+                <button onclick="showSection('conversion')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">6. Conversion Graphs</button>
+                <button onclick="showSection('distance-time')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">7. Distance-Time Graphs</button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="w-full md:w-3/4 bg-white p-8 rounded-xl shadow-sm border border-slate-200 min-h-[80vh]">
+        
+        <!-- Section 1: Coordinates -->
+        <div id="coordinates" class="section-content">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-emerald-100 text-emerald-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">1</span>
+                The Cartesian Coordinate System
+            </h2>
+            <p class="text-lg mb-6">The Cartesian plane is formed by two perpendicular lines that intersect at the <strong>Origin $(0,0)$</strong>. The horizontal line is the $x$-axis and the vertical line is the $y$-axis.</p>
+            
+            <div class="bg-emerald-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-emerald-900">Ordered Pairs $(x, y)$</h3>
+                <p class="mb-4">The order is strictly <strong>(horizontal distance, vertical distance)</strong>.</p>
+                <div class="step-box border-emerald-500">
+                    <p class="font-semibold text-slate-700">Plotting $A(2, 3)$</p>
+                    <p class="text-slate-600">Start at the origin. Move <strong>2 units right</strong> (the x-coordinate), then <strong>3 units up</strong> (the y-coordinate).</p>
+                </div>
+                <div class="step-box border-emerald-500">
+                    <p class="font-semibold text-slate-700">Plotting $C(-4, -2)$</p>
+                    <p class="text-slate-600">Start at the origin. Move <strong>4 units left</strong>, then <strong>2 units down</strong>.</p>
+                </div>
+            </div>
+
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded text-amber-900">
+                <strong>⚠️ Exam Fact:</strong> The equation of the $x$-axis itself is $y = 0$, and the equation of the $y$-axis is $x = 0$.
+            </div>
+        </div>
+
+        <!-- Section 2: Functions -->
+        <div id="functions" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-emerald-100 text-emerald-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">2</span>
+                Linear Functions (Inputs & Outputs)
+            </h2>
+            <p class="text-lg mb-6">A function is a relationship where every input ($x$) gives exactly one output ($y$). Evaluating a function just means substituting a number into the equation.</p>
+            
+            <div class="bg-emerald-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-emerald-900">Textbook Example: $y = 3x - 2$</h3>
+                
+                <div class="step-box border-emerald-500">
+                    <p class="font-semibold text-slate-700">(a) Find $y$ when $x = 4$</p>
+                    <p class="font-mono">$$y = 3(4) - 2$$</p>
+                    <p class="font-mono">$$y = 12 - 2 = \mathbf{10}$$</p>
+                </div>
+                <div class="step-box border-emerald-500">
+                    <p class="font-semibold text-slate-700">(b) Find $x$ when $y = -1$</p>
+                    <p class="text-slate-600">Substitute $-1$ for $y$ and use algebra to solve for $x$:</p>
+                    <p class="font-mono">$$-1 = 3x - 2$$</p>
+                    <p class="font-mono">$$-1 + 2 = 3x$$</p>
+                    <p class="font-mono">$$1 = 3x \implies x = \mathbf{\frac{1}{3}}$$</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Graphing y=mx+c -->
+        <div id="graphing" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-emerald-100 text-emerald-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">3</span>
+                Graphing $y = mx + c$
+            </h2>
+            <p class="text-lg mb-6">Every straight line can be written as <strong>$y = mx + c$</strong>, where <strong>$m$</strong> is the gradient and <strong>$c$</strong> is the $y$-intercept.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                    <h3 class="text-lg font-bold text-blue-900 mb-2">The Intercepts</h3>
+                    <ul class="list-disc pl-5 text-slate-700 space-y-2">
+                        <li><strong>$y$-intercept ($c$):</strong> Where the line crosses the $y$-axis. The $x$-coordinate is always $0$.</li>
+                        <li><strong>$x$-intercept:</strong> Where the line crosses the $x$-axis. The $y$-coordinate is always $0$.</li>
+                    </ul>
+                </div>
+                <div class="bg-emerald-50 p-6 rounded-lg border border-emerald-200">
+                    <h3 class="text-lg font-bold text-emerald-900 mb-2">Drawing the Line</h3>
+                    <p class="text-slate-700 text-sm">To draw a straight line accurately, you need a minimum of <strong>3 points</strong>. Create a table of values (e.g., choose $x = 0, 2, 4$), calculate the corresponding $y$ values, plot the coordinates, and connect them with a ruler.</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg mb-8 border border-gray-200">
+                <h3 class="font-bold mb-2">Identify $m$ and $c$:</h3>
+                <p class="font-mono">For $y = -\frac{1}{2}x - 10$ :</p>
+                <p>Gradient ($m$) = $-\frac{1}{2}$, $y$-intercept ($c$) = $-10$</p>
+            </div>
+        </div>
+
+        <!-- Section 4: Gradients -->
+        <div id="gradients" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-emerald-100 text-emerald-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">4</span>
+                Finding the Gradient (Slope)
+            </h2>
+            <p class="text-lg mb-6">Gradient measures steepness. The formula is: <strong>Gradient = $\frac{\text{Vertical Change (Rise)}}{\text{Horizontal Change (Run)}}$</strong></p>
+            
+            <div class="flex flex-wrap gap-4 mb-8">
+                <div class="flex-1 min-w-[200px] bg-green-50 p-4 rounded border border-green-200 text-center">
+                    <div class="text-2xl mb-2">↗️</div>
+                    <h4 class="font-bold text-green-800">Positive Gradient</h4>
+                    <p class="text-sm text-green-700">Slopes upwards to the right. ($m > 0$)</p>
+                </div>
+                <div class="flex-1 min-w-[200px] bg-red-50 p-4 rounded border border-red-200 text-center">
+                    <div class="text-2xl mb-2">↘️</div>
+                    <h4 class="font-bold text-red-800">Negative Gradient</h4>
+                    <p class="text-sm text-red-700">Slopes downwards to the right. ($m < 0$)</p>
+                </div>
+            </div>
+
+            <div class="bg-emerald-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-emerald-900">Textbook Example: Points $(0,0)$ and $(3,-4)$</h3>
+                <div class="step-box border-emerald-500">
+                    <p class="font-semibold text-slate-700">Step 1: Find the Run (horizontal)</p>
+                    <p class="text-slate-600">From $x=0$ to $x=3$, the run is <strong>$3$ units</strong>.</p>
+                </div>
+                <div class="step-box border-emerald-500">
+                    <p class="font-semibold text-slate-700">Step 2: Find the Rise (vertical)</p>
+                    <p class="text-slate-600">From $y=0$ to $y=-4$, the rise is <strong>$-4$ units</strong> (it went down!).</p>
+                </div>
+                <div class="step-box border-emerald-500">
+                    <p class="font-semibold text-slate-700">Step 3: Calculate</p>
+                    <p class="font-mono">$$\text{Gradient} = \frac{-4}{3} = -1\frac{1}{3}$$</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Horizontal & Vertical -->
+        <div id="horizontal-vertical" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-emerald-100 text-emerald-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">5</span>
+                Horizontal and Vertical Lines
+            </h2>
+            <p class="text-lg mb-6">Lines that are perfectly straight up-and-down or left-to-right have very simple equations and unique gradients.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                    <h3 class="text-lg font-bold text-blue-900 mb-2">Horizontal Lines (Left & Right)</h3>
+                    <p class="text-slate-700 mb-2">Equation format: <strong>$y = c$</strong></p>
+                    <p class="text-sm text-slate-600 mb-2">Passes through the y-axis at $c$.</p>
+                    <div class="bg-white p-2 rounded text-center font-bold text-blue-800">Gradient = 0</div>
+                    <p class="text-xs mt-2 text-slate-500 text-center">(Because rise is 0, and 0 / run = 0)</p>
+                </div>
+                <div class="bg-purple-50 p-6 rounded-lg border border-purple-200">
+                    <h3 class="text-lg font-bold text-purple-900 mb-2">Vertical Lines (Up & Down)</h3>
+                    <p class="text-slate-700 mb-2">Equation format: <strong>$x = c$</strong></p>
+                    <p class="text-sm text-slate-600 mb-2">Passes through the x-axis at $c$.</p>
+                    <div class="bg-white p-2 rounded text-center font-bold text-purple-800">Gradient = Undefined</div>
+                    <p class="text-xs mt-2 text-slate-500 text-center">(Because run is 0, and you cannot divide by 0)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Conversion Graphs -->
+        <div id="conversion" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-emerald-100 text-emerald-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">6</span>
+                Conversion Graphs
+            </h2>
+            <p class="text-lg mb-6">Conversion graphs are linear graphs used to convert one unit or quantity into another (like currencies or distances). The axes represent the two different units.</p>
+            
+            <div class="bg-emerald-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-emerald-900">Textbook Example: Miles to Kilometres</h3>
+                <p class="text-slate-700 mb-4">Imagine a graph where the x-axis is <strong>Miles</strong> and the y-axis is <strong>Kilometres</strong>.</p>
+                
+                <div class="step-box border-emerald-500">
+                    <p class="font-semibold text-slate-700">Converting 8 miles to km:</p>
+                    <p class="text-slate-600">Find $8$ on the Miles (x) axis. Draw a straight line UP until you hit the graph line. Then draw a straight line LEFT to read the Kilometres (y) axis. The reading is approx <strong>$13\text{ km}$</strong>.</p>
+                </div>
+                <div class="step-box border-emerald-500">
+                    <p class="font-semibold text-slate-700">Converting 24 kilometres to miles:</p>
+                    <p class="text-slate-600">Find $24$ on the Kilometres (y) axis. Draw a straight line RIGHT until you hit the graph. Then draw a straight line DOWN to read the Miles (x) axis. The reading is exactly <strong>$15\text{ miles}$</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Distance-Time -->
+        <div id="distance-time" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-emerald-100 text-emerald-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">7</span>
+                Distance-Time Graphs
+            </h2>
+            <p class="text-lg mb-6">These graphs show a journey. Distance from the start is on the vertical axis ($y$), and Time is on the horizontal axis ($x$).</p>
+            
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded text-amber-900 mb-6">
+                <strong>🌟 THE GOLDEN RULE:</strong> In a distance-time graph, the <strong>gradient of the line represents the SPEED</strong> of the object.
+            </div>
+
+            <div class="bg-emerald-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-emerald-900">Mrs Lee's Journey to the Bank</h3>
+                
+                <div class="step-box border-emerald-500">
+                    <p class="font-semibold text-slate-700">Line segment sloping up (e.g., $O$ to $A$):</p>
+                    <p class="text-slate-600">She is travelling away from home. Gradient = Speed. She traveled $9\text{ km}$ in $10\text{ mins}$ ($\frac{1}{6}\text{ hour}$).<br> Speed = $\frac{9}{(1/6)} = \mathbf{54\text{ km/h}}$.</p>
+                </div>
+                <div class="step-box border-emerald-500">
+                    <p class="font-semibold text-slate-700">Horizontal line segment (e.g., $A$ to $B$):</p>
+                    <p class="text-slate-600">The distance isn't changing as time passes. She is <strong>stationary</strong> (at the bank). The gradient is $0$, meaning speed is $0\text{ km/h}$. She stayed there from $t=10$ to $t=30$ ($20\text{ minutes}$).</p>
+                </div>
+                <div class="step-box border-emerald-500">
+                    <p class="font-semibold text-slate-700">Line segment sloping down (e.g., $D$ to $E$):</p>
+                    <p class="text-slate-600">She is travelling back towards home (distance is decreasing back to $0$).</p>
+                </div>
+                
+                <div class="mt-6 bg-white p-4 rounded border border-emerald-200">
+                    <p class="font-bold text-slate-800 mb-2">Calculating Average Speed for the Whole Journey:</p>
+                    <p class="font-mono bg-slate-100 p-2 rounded text-center mb-2">$$\text{Average Speed} = \frac{\text{Total Distance Travelled}}{\text{Total Time Taken}}$$</p>
+                    <p class="text-sm text-slate-600">Note: Total distance includes the trip *there* and the trip *back*. If she went $9\text{km}$ to the bank and $9\text{km}$ back, total distance is $18\text{km}$!</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function showSection(sectionId) {
+        // Hide all sections
+        const sections = document.querySelectorAll('.section-content');
+        sections.forEach(sec => sec.classList.add('hidden'));
+        
+        // Remove active class from all buttons
+        const buttons = document.querySelectorAll('.concept-btn');
+        buttons.forEach(btn => {
+            btn.classList.remove('active');
+            btn.classList.remove('bg-emerald-600');
+            btn.classList.remove('text-white');
+            btn.classList.add('bg-slate-100');
+        });
+
+        // Show selected section
+        document.getElementById(sectionId).classList.remove('hidden');
+        
+        // Add active class to clicked button
+        const activeBtn = event.currentTarget;
+        activeBtn.classList.add('active');
+        activeBtn.classList.remove('bg-slate-100');
+        activeBtn.classList.add('bg-emerald-600');
+        activeBtn.classList.add('text-white');
+    }
+</script>
+
+</body>
+</html>

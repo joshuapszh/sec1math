@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sec 1 Math: Linear Equations Exam Revision</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .step-box { border-left: 4px solid #3b82f6; padding-left: 1rem; margin-bottom: 1rem; }
+        .concept-btn.active { background-color: #2563eb; color: white; }
+        .concept-btn { transition: all 0.2s ease; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+<div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
+    
+    <!-- Sidebar Navigation -->
+    <div class="w-full md:w-1/4 flex flex-col gap-2 relative">
+        <div class="sticky top-8 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+            <h1 class="text-2xl font-bold text-slate-900 mb-6">Chapter 5<br><span class="text-blue-600 text-lg">Linear Equations</span></h1>
+            <p class="text-sm text-slate-500 mb-4">Select a topic to review concepts, steps, and examples.</p>
+            
+            <nav class="flex flex-col gap-2" id="nav-menu">
+                <button onclick="showSection('intro')" class="concept-btn active text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">1. The Basics</button>
+                <button onclick="showSection('brackets')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">2. Expanding Brackets</button>
+                <button onclick="showSection('fractions')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">3. Fractional Equations</button>
+                <button onclick="showSection('substitution')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">4. Substitution</button>
+                <button onclick="showSection('word-problems')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">5. Word Problems</button>
+                <button onclick="showSection('geometry')" class="concept-btn text-left px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 font-medium">6. Geometry Applications</button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="w-full md:w-3/4 bg-white p-8 rounded-xl shadow-sm border border-slate-200 min-h-[80vh]">
+        
+        <!-- Section 1: Intro -->
+        <div id="intro" class="section-content">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-blue-100 text-blue-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">1</span>
+                The Basics & Unknowns on Both Sides
+            </h2>
+            <p class="text-lg mb-6">The golden rule of algebra: <strong>Whatever you do to one side, you must do to the other.</strong> The goal is to isolate $x$ on one side of the equal sign.</p>
+            
+            <div class="bg-blue-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-900">Example from Tutorial (Q1g)</h3>
+                <p class="text-lg font-mono mb-4 text-center bg-white p-3 rounded shadow-sm">$$15x - 8 = 4 + 9x$$</p>
+                
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 1: Group the $x$ terms together.</p>
+                    <p class="text-slate-600">Subtract $9x$ from both sides to move it to the left.</p>
+                    <p class="font-mono">$$15x - 9x - 8 = 4$$</p>
+                    <p class="font-mono">$$6x - 8 = 4$$</p>
+                </div>
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 2: Group the numbers together.</p>
+                    <p class="text-slate-600">Add $8$ to both sides to move the constant to the right.</p>
+                    <p class="font-mono">$$6x = 4 + 8$$</p>
+                    <p class="font-mono">$$6x = 12$$</p>
+                </div>
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 3: Isolate $x$.</p>
+                    <p class="text-slate-600">Divide both sides by 6.</p>
+                    <p class="font-mono">$$x = 2$$</p>
+                </div>
+            </div>
+
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded text-amber-900">
+                <strong>⚠️ Exam Tip:</strong> When moving terms across the equal sign, always remember to change their sign (positive becomes negative, negative becomes positive).
+            </div>
+        </div>
+
+        <!-- Section 2: Brackets -->
+        <div id="brackets" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-blue-100 text-blue-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">2</span>
+                Expanding Brackets
+            </h2>
+            <p class="text-lg mb-6">Before you can move terms around, you must "unlock" them from their brackets using the <strong>distributive property</strong>.</p>
+            
+            <div class="bg-blue-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-900">Example from Tutorial (Q3a)</h3>
+                <p class="text-lg font-mono mb-4 text-center bg-white p-3 rounded shadow-sm">$$5(x + 2) - 3(x - 1) = 12$$</p>
+                
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 1: Expand the brackets carefully.</p>
+                    <p class="text-slate-600">Multiply the number outside by <em>everything</em> inside. Watch the negative signs!</p>
+                    <p class="font-mono text-red-600">$$5(x) + 5(2) - 3(x) - 3(-1) = 12$$</p>
+                    <p class="font-mono">$$5x + 10 - 3x + 3 = 12$$</p>
+                </div>
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 2: Simplify by combining like terms.</p>
+                    <p class="font-mono">$$(5x - 3x) + (10 + 3) = 12$$</p>
+                    <p class="font-mono">$$2x + 13 = 12$$</p>
+                </div>
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 3: Solve for $x$.</p>
+                    <p class="font-mono">$$2x = 12 - 13$$</p>
+                    <p class="font-mono">$$2x = -1$$</p>
+                    <p class="font-mono">$$x = -\frac{1}{2} \text{ or } -0.5$$</p>
+                </div>
+            </div>
+
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded text-red-900">
+                <strong>🚨 THE MOST COMMON EXAM MISTAKE:</strong> In the expression $-3(x - 1)$, many students write $-3x - 3$. It MUST be $-3x + 3$ because a negative times a negative is a positive. Double-check this in your exams!
+            </div>
+        </div>
+
+        <!-- Section 3: Fractions -->
+        <div id="fractions" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-blue-100 text-blue-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">3</span>
+                Equations with Fractions
+            </h2>
+            <p class="text-lg mb-6">Fractions look intimidating, but you can destroy them immediately by multiplying the entire equation by the <strong>Lowest Common Multiple (LCM)</strong> of all denominators.</p>
+            
+            <div class="bg-blue-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-900">Example from Tutorial (Q6a)</h3>
+                <p class="text-lg font-mono mb-4 text-center bg-white p-3 rounded shadow-sm">$$\frac{x}{4} + \frac{x-2}{8} = 5$$</p>
+                
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 1: Find the LCM of the denominators.</p>
+                    <p class="text-slate-600">The denominators are 4 and 8. The LCM is <strong>8</strong>.</p>
+                </div>
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 2: Multiply EVERY term by the LCM to clear fractions.</p>
+                    <p class="font-mono">$$8 \cdot \left(\frac{x}{4}\right) + 8 \cdot \left(\frac{x-2}{8}\right) = 8 \cdot (5)$$</p>
+                    <p class="text-slate-600 mt-2">Simplify the fractions:</p>
+                    <p class="font-mono">$$2(x) + 1(x - 2) = 40$$</p>
+                </div>
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 3: Expand and solve.</p>
+                    <p class="font-mono">$$2x + x - 2 = 40$$</p>
+                    <p class="font-mono">$$3x - 2 = 40$$</p>
+                    <p class="font-mono">$$3x = 42$$</p>
+                    <p class="font-mono">$$x = 14$$</p>
+                </div>
+            </div>
+
+            <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded text-green-900">
+                <strong>💡 Pro-Tip for Single Fractions (Cross-Multiplication):</strong> If you have one fraction equal to another fraction like $\frac{2x-1}{3} = \frac{x+2}{4}$ (Q4d), you can skip the LCM and just cross-multiply! $4(2x-1) = 3(x+2)$.
+            </div>
+        </div>
+
+        <!-- Section 4: Substitution -->
+        <div id="substitution" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-blue-100 text-blue-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">4</span>
+                Formulas and Substitution
+            </h2>
+            <p class="text-lg mb-6">Sometimes you aren't solving for $x$, but substituting known values into a physical or mathematical formula to find an unknown.</p>
+            
+            <div class="bg-blue-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-900">Example from Tutorial (Q8b)</h3>
+                <p class="text-lg font-mono mb-4 text-center bg-white p-3 rounded shadow-sm">$$E = \frac{W}{W+X}$$</p>
+                <p class="text-slate-700 mb-4 font-semibold">Find the value of $X$ when $E = \frac{5}{8}$ and $W = 25$.</p>
+                
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 1: Substitute the given numbers into the formula.</p>
+                    <p class="font-mono">$$\frac{5}{8} = \frac{25}{25+X}$$</p>
+                </div>
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 2: Cross-multiply to remove fractions.</p>
+                    <p class="font-mono">$$5(25 + X) = 8 \cdot 25$$</p>
+                    <p class="font-mono">$$125 + 5X = 200$$</p>
+                </div>
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 3: Solve for $X$.</p>
+                    <p class="font-mono">$$5X = 200 - 125$$</p>
+                    <p class="font-mono">$$5X = 75$$</p>
+                    <p class="font-mono">$$X = 15$$</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Word Problems -->
+        <div id="word-problems" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-blue-100 text-blue-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">5</span>
+                Real-World Word Problems
+            </h2>
+            <p class="text-lg mb-6">Word problems test your ability to translate English into Algebra. Define your unknown variable clearly first!</p>
+            
+            <div class="bg-blue-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-900">Example from Tutorial (Q41a) - Age Problem</h3>
+                <p class="italic text-slate-700 mb-4 bg-white p-4 rounded">"Jonathan is 15 years older than his brother Jeremy. Six years ago, Jonathan was six times as old as Jeremy. Find their present ages."</p>
+                
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 1: Define variables for the present day.</p>
+                    <p class="text-slate-600">Let Jeremy's current age be $x$.</p>
+                    <p class="text-slate-600">Therefore, Jonathan's current age is $x + 15$.</p>
+                </div>
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 2: Express their ages "Six years ago".</p>
+                    <p class="text-slate-600">Jeremy's age then: $x - 6$</p>
+                    <p class="text-slate-600">Jonathan's age then: $(x + 15) - 6 = x + 9$</p>
+                </div>
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 3: Form the equation using the clue.</p>
+                    <p class="text-slate-600">"Jonathan was six times as old as Jeremy."</p>
+                    <p class="font-mono">$$x + 9 = 6(x - 6)$$</p>
+                </div>
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 4: Solve.</p>
+                    <p class="font-mono">$$x + 9 = 6x - 36$$</p>
+                    <p class="font-mono">$$9 + 36 = 6x - x$$</p>
+                    <p class="font-mono">$$45 = 5x$$</p>
+                    <p class="font-mono">$$x = 9$$</p>
+                    <p class="text-slate-700 font-bold mt-2">Jeremy is 9 years old. Jonathan is 24 years old.</p>
+                </div>
+            </div>
+
+            <div class="bg-purple-50 border-l-4 border-purple-500 p-4 rounded text-purple-900">
+                <strong>📝 Vocab Cheatsheet:</strong><br>
+                • <em>Consecutive integers:</em> $x, x+1, x+2$<br>
+                • <em>Consecutive even/odd integers:</em> $x, x+2, x+4$<br>
+                • <em>Exceeds by 5:</em> $x + 5$
+            </div>
+        </div>
+
+        <!-- Section 6: Geometry -->
+        <div id="geometry" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                <span class="bg-blue-100 text-blue-700 w-10 h-10 flex items-center justify-center rounded-full text-xl">6</span>
+                Geometry Applications
+            </h2>
+            <p class="text-lg mb-6">Algebra is frequently mixed with geometry. You must know formulas for Perimeter (sum of all outer sides) and Area.</p>
+            
+            <div class="bg-blue-50 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-900">Example from Tutorial (Q60)</h3>
+                <p class="italic text-slate-700 mb-4 bg-white p-4 rounded">"Rectangle A has sides $(x-6)$ and $(x+1)$. Rectangle B has sides $(x-2)$ and $(x-1)$. The perimeter of Rectangle A is $\frac{9}{11}$ of the perimeter of Rectangle B. Form an equation and solve for $x$."</p>
+                
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 1: Write expressions for the perimeters.</p>
+                    <p class="text-slate-600">Perimeter = 2(length) + 2(width)</p>
+                    <p class="text-slate-600">Perimeter A = $2(x-6) + 2(x+1) = 2x - 12 + 2x + 2 = \mathbf{4x - 10}$</p>
+                    <p class="text-slate-600">Perimeter B = $2(x-2) + 2(x-1) = 2x - 4 + 2x - 2 = \mathbf{4x - 6}$</p>
+                </div>
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 2: Form the equation.</p>
+                    <p class="font-mono">$$4x - 10 = \frac{9}{11}(4x - 6)$$</p>
+                </div>
+                <div class="step-box">
+                    <p class="font-semibold text-slate-700">Step 3: Clear fractions and solve.</p>
+                    <p class="text-slate-600">Multiply both sides by 11:</p>
+                    <p class="font-mono">$$11(4x - 10) = 9(4x - 6)$$</p>
+                    <p class="font-mono">$$44x - 110 = 36x - 54$$</p>
+                    <p class="font-mono">$$44x - 36x = 110 - 54$$</p>
+                    <p class="font-mono">$$8x = 56$$</p>
+                    <p class="font-mono">$$x = 7$$</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function showSection(sectionId) {
+        // Hide all sections
+        const sections = document.querySelectorAll('.section-content');
+        sections.forEach(sec => sec.classList.add('hidden'));
+        
+        // Remove active class from all buttons
+        const buttons = document.querySelectorAll('.concept-btn');
+        buttons.forEach(btn => {
+            btn.classList.remove('active');
+            btn.classList.remove('bg-blue-600');
+            btn.classList.remove('text-white');
+            btn.classList.add('bg-slate-100');
+        });
+
+        // Show selected section
+        document.getElementById(sectionId).classList.remove('hidden');
+        
+        // Add active class to clicked button
+        const activeBtn = event.currentTarget;
+        activeBtn.classList.add('active');
+        activeBtn.classList.remove('bg-slate-100');
+        activeBtn.classList.add('bg-blue-600');
+        activeBtn.classList.add('text-white');
+    }
+</script>
+
+</body>
+</html>
