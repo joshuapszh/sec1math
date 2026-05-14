@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sec 1 Math Mock Exam - Advanced</title>
+  
+  <!-- Tailwind CSS for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React and ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- Babel for parsing JSX directly in the browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // --- Inline SVG Icons ---
+    const CheckCircle2 = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+    );
+    const XCircle = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+    );
+    const Lightbulb = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>
+    );
+    const RefreshCcw = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 21v-5h5"></path></svg>
+    );
+    const Play = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+    );
+    const ChevronLeft = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m15 18-6-6 6-6"></path></svg>
+    );
+    const ChevronRight = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m9 18 6-6-6-6"></path></svg>
+    );
+
+    // --- Custom component to render inline math enclosed in $ $ ---
+    const FormattedText = ({ text }) => {
+      if (!text) return null;
+      const parts = text.split(/\$(.*?)\$/g);
+      return (
+        <span>
+          {parts.map((part, index) => {
+            if (index % 2 === 1) {
+              let html = part
+                .replace(/\\times/g, ' &times; ')
+                .replace(/\\div/g, ' &divide; ')
+                .replace(/\\Rightarrow/g, ' &rArr; ')
+                .replace(/\\le/g, ' &le; ')
+                .replace(/\\ge/g, ' &ge; ')
+                .replace(/\\pm/g, ' &plusmn; ')
+                .replace(/\\pi/g, '&pi;')
+                .replace(/\^\\circ/g, '&deg;')
+                .replace(/\\approx/g, '&asymp;')
+                .replace(/\\text\{([^}]+)\}/g, '<span class="font-sans text-[0.9em]">$1</span>')
+                .replace(/\\sqrt\{([^}]+)\}/g, '<span class="whitespace-nowrap">&radic;<span class="border-t border-slate-700 ml-[1px] pt-[1px]">$1</span></span>')
+                .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '<span class="inline-flex flex-col align-middle text-center mx-1" style="font-size: 0.85em; line-height: 1.2;"><span class="border-b border-slate-700 px-0.5">$1</span><span class="px-0.5">$2</span></span>')
+                .replace(/\^\{([^}]+)\}/g, '<sup class="text-[0.75em]">$1</sup>')
+                .replace(/\^([a-zA-Z0-9])/g, '<sup class="text-[0.75em]">$1</sup>');
+
+              return (
+                <span
+                  key={index}
+                  className="font-serif text-[1.1em] text-slate-800 tracking-wide mx-0.5"
+                  dangerouslySetInnerHTML={{ __html: html }}
+                />
+              );
+            }
+            return <span key={index}>{part}</span>;
+          })}
+        </span>
+      );
+    };
+
+    // --- Main App Component ---
+    function App() {
+      const [view, setView] = useState('start'); 
+      const [currentIndex, setCurrentIndex] = useState(0);
+      const [answers, setAnswers] = useState({});
+      const [showFeedback, setShowFeedback] = useState({});
+      const [showHint, setShowHint] = useState({});
+
+      const question = quizData[currentIndex];
+      const totalQuestions = quizData.length;
+
+      // Scroll to top when question changes
+      useEffect(() => {
+        window.scrollTo(0, 0);
+      }, [currentIndex, view]);
+
+      const handleSelectOption = (optionIndex) => {
+        if (showFeedback[currentIndex]) return;
+        setAnswers({ ...answers, [currentIndex]: optionIndex });
+      };
+
+      const handleCheckAnswer = () => {
+        if (answers[currentIndex] !== undefined) {
+          setShowFeedback({ ...showFeedback, [currentIndex]: true });
+        }
+      };
+
+      const handleNext = () => {
+        if (currentIndex < totalQuestions - 1) setCurrentIndex(currentIndex + 1);
+      };
+
+      const handlePrev = () => {
+        if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
+      };
+
+      const toggleHint = () => {
+        setShowHint({ ...showHint, [currentIndex]: !showHint[currentIndex] });
+      };
+
+      const calculateScore = () => {
+        let score = 0;
+        Object.keys(showFeedback).forEach((key) => {
+          const qIndex = parseInt(key, 10);
+          const selectedOption = answers[qIndex];
+          if (selectedOption !== undefined && quizData[qIndex].answerOptions[selectedOption].isCorrect) {
+            score++;
+          }
+        });
+        return score;
+      };
+
+      const restartQuiz = () => {
+        setAnswers({});
+        setShowFeedback({});
+        setShowHint({});
+        setCurrentIndex(0);
+        setView('start');
+      };
+
+      const getQuestionStatusColor = (index) => {
+        if (!showFeedback[index]) return 'bg-slate-100 text-slate-600 hover:bg-slate-200 border-slate-200';
+        const isCorrect = quizData[index].answerOptions[answers[index]].isCorrect;
+        return isCorrect 
+          ? 'bg-emerald-100 text-emerald-700 border-emerald-300' 
+          : 'bg-rose-100 text-rose-700 border-rose-300';
+      };
+
+      if (view === 'start') {
+        return (
+          <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6">
+            <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl p-8 text-center space-y-6">
+              <div className="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="w-10 h-10 text-indigo-600" />
+              </div>
+              <h1 className="text-4xl font-bold text-slate-800">Sec 1 Math Challenge Exam</h1>
+              <span className="bg-rose-100 text-rose-700 font-semibold px-3 py-1 rounded-full text-sm inline-block mx-auto">Advanced Level</span>
+              <p className="text-lg text-slate-600">
+                A comprehensive 42-question test spanning all 7 core topics of Secondary 1 Mathematics. This test features slightly more challenging logic, complex fractions, and 7 rigorous word problems.
+              </p>
+              <div className="grid grid-cols-2 gap-4 text-left bg-slate-50 p-6 rounded-xl border border-slate-100 mb-8">
+                <div><span className="font-semibold text-slate-700">Questions:</span> {totalQuestions} (6 per topic)</div>
+                <div><span className="font-semibold text-slate-700">Mode:</span> Practice (Immediate Feedback)</div>
+                <div><span className="font-semibold text-slate-700">Format:</span> Multiple Choice & Word Problems</div>
+                <div><span className="font-semibold text-slate-700">Level:</span> Secondary 1 (Advanced)</div>
+              </div>
+              <button 
+                onClick={() => setView('quiz')}
+                className="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold text-lg transition-colors flex items-center justify-center gap-2 mx-auto"
+              >
+                <Play className="w-5 h-5" /> Start Exam
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      if (view === 'results') {
+        const score = calculateScore();
+        const percentage = Math.round((score / totalQuestions) * 100);
+        return (
+          <div className="min-h-screen bg-slate-50 p-6 flex flex-col items-center py-12">
+            <div className="max-w-3xl w-full bg-white rounded-2xl shadow-xl p-8 text-center space-y-8">
+              <h2 className="text-3xl font-bold text-slate-800">Exam Results</h2>
+              
+              <div className="relative w-48 h-48 mx-auto flex items-center justify-center bg-indigo-50 rounded-full border-8 border-indigo-100">
+                <div className="text-center">
+                  <span className="text-5xl font-extrabold text-indigo-700">{percentage}%</span>
+                  <p className="text-indigo-600 font-medium mt-1">Score</p>
+                </div>
+              </div>
+
+              <div className="flex justify-center gap-8 text-lg">
+                <div className="flex flex-col items-center">
+                  <span className="text-3xl font-bold text-emerald-600">{score}</span>
+                  <span className="text-slate-500">Correct</span>
+                </div>
+                <div className="w-px bg-slate-200"></div>
+                <div className="flex flex-col items-center">
+                  <span className="text-3xl font-bold text-rose-600">{Object.keys(showFeedback).length - score}</span>
+                  <span className="text-slate-500">Incorrect</span>
+                </div>
+                <div className="w-px bg-slate-200"></div>
+                <div className="flex flex-col items-center">
+                  <span className="text-3xl font-bold text-slate-400">{totalQuestions - Object.keys(showFeedback).length}</span>
+                  <span className="text-slate-500">Skipped</span>
+                </div>
+              </div>
+
+              <div className="pt-8 border-t border-slate-100 flex flex-col sm:flex-row gap-4 justify-center">
+                <button 
+                  onClick={() => setView('quiz')}
+                  className="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium transition-colors"
+                >
+                  Review Answers
+                </button>
+                <button 
+                  onClick={restartQuiz}
+                  className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
+                >
+                  <RefreshCcw className="w-5 h-5" /> Retake Exam
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      const isAnswered = answers[currentIndex] !== undefined;
+      const hasChecked = showFeedback[currentIndex];
+      const selectedIsCorrect = isAnswered && question.answerOptions[answers[currentIndex]].isCorrect;
+
+      return (
+        <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row">
+          <div className="w-full md:w-80 bg-white border-r border-slate-200 flex flex-col h-auto md:h-screen md:sticky top-0 p-6 overflow-y-auto hidden md:flex shrink-0">
+            <h3 className="text-lg font-bold text-slate-800 mb-6">Question Navigator</h3>
+            <div className="flex flex-wrap gap-2 md:grid md:grid-cols-5 md:gap-2">
+              {quizData.map((q, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`
+                    w-10 h-10 md:w-auto md:h-10 rounded-lg text-sm font-semibold flex items-center justify-center border transition-all
+                    ${currentIndex === idx ? 'ring-2 ring-indigo-500 ring-offset-2' : ''}
+                    ${getQuestionStatusColor(idx)}
+                  `}
+                >
+                  {idx + 1}
+                </button>
+              ))}
+            </div>
+            <div className="mt-auto pt-8 hidden md:block">
+              <button 
+                onClick={() => setView('results')}
+                className="w-full py-3 bg-slate-800 hover:bg-slate-900 text-white rounded-xl font-semibold transition-colors"
+              >
+                Finish & View Results
+              </button>
+            </div>
+          </div>
+
+          <div className="flex-1 p-4 md:p-8 overflow-y-auto pb-24">
+            <div className="max-w-3xl mx-auto space-y-6">
+              
+              <div className="flex items-center justify-between">
+                <span className="text-indigo-600 font-bold tracking-wide uppercase text-sm">
+                  Question {currentIndex + 1} of {totalQuestions} <span className="text-slate-400 font-medium ml-2">({question.topic})</span>
+                </span>
+                <button 
+                  onClick={() => setView('results')}
+                  className="md:hidden text-sm font-medium text-slate-500 hover:text-slate-800 border border-slate-300 px-3 py-1 rounded"
+                >
+                  Finish
+                </button>
+              </div>
+
+              <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-indigo-500 transition-all duration-300"
+                  style={{ width: `${((currentIndex + 1) / totalQuestions) * 100}%` }}
+                ></div>
+              </div>
+
+              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div className="p-6 md:p-8">
+                  <h2 className="text-xl md:text-2xl text-slate-800 font-medium leading-relaxed mb-8">
+                    <FormattedText text={question.question} />
+                  </h2>
+
+                  <div className="space-y-3">
+                    {question.answerOptions.map((option, optIdx) => {
+                      const isSelected = answers[currentIndex] === optIdx;
+                      let optionClass = "border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 text-slate-700";
+                      let icon = null;
+
+                      if (hasChecked) {
+                        if (option.isCorrect) {
+                          optionClass = "border-emerald-500 bg-emerald-50 text-emerald-800 ring-1 ring-emerald-500";
+                          icon = <CheckCircle2 className="w-5 h-5 text-emerald-600 ml-auto" />;
+                        } else if (isSelected && !option.isCorrect) {
+                          optionClass = "border-rose-500 bg-rose-50 text-rose-800 ring-1 ring-rose-500";
+                          icon = <XCircle className="w-5 h-5 text-rose-600 ml-auto" />;
+                        } else {
+                          optionClass = "border-slate-200 opacity-60 bg-slate-50 text-slate-500";
+                        }
+                      } else if (isSelected) {
+                        optionClass = "border-indigo-500 bg-indigo-50 text-indigo-800 ring-1 ring-indigo-500";
+                      }
+
+                      return (
+                        <button
+                          key={optIdx}
+                          onClick={() => handleSelectOption(optIdx)}
+                          disabled={hasChecked}
+                          className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-center ${optionClass} ${hasChecked ? 'cursor-default' : 'cursor-pointer'}`}
+                        >
+                          <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 shrink-0
+                            ${isSelected ? (hasChecked && !option.isCorrect ? 'border-rose-500' : 'border-indigo-500') : 'border-slate-300'}
+                          `}>
+                            {isSelected && <div className={`w-2.5 h-2.5 rounded-full ${hasChecked && !option.isCorrect ? 'bg-rose-500' : 'bg-indigo-500'}`} />}
+                          </div>
+                          <span className="text-lg">
+                            <FormattedText text={option.text} />
+                          </span>
+                          {icon}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="bg-slate-50 p-6 border-t border-slate-100">
+                  <div className="flex flex-wrap gap-4 items-center justify-between">
+                    <button
+                      onClick={toggleHint}
+                      className="flex items-center gap-2 text-amber-600 hover:text-amber-700 font-medium bg-amber-50 px-4 py-2 rounded-lg transition-colors"
+                    >
+                      <Lightbulb className="w-5 h-5" />
+                      {showHint[currentIndex] ? 'Hide Hint' : 'Show Hint'}
+                    </button>
+
+                    {!hasChecked ? (
+                      <button
+                        onClick={handleCheckAnswer}
+                        disabled={!isAnswered}
+                        className={`px-6 py-2.5 rounded-lg font-semibold flex items-center gap-2 transition-all
+                          ${isAnswered 
+                            ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md hover:shadow-lg' 
+                            : 'bg-slate-200 text-slate-400 cursor-not-allowed'}`}
+                      >
+                        Check Answer
+                      </button>
+                    ) : (
+                      <div className={`px-4 py-2 rounded-lg font-semibold flex items-center gap-2 ${selectedIsCorrect ? 'text-emerald-700 bg-emerald-100' : 'text-rose-700 bg-rose-100'}`}>
+                        {selectedIsCorrect ? <><CheckCircle2 className="w-5 h-5" /> Correct</> : <><XCircle className="w-5 h-5" /> Incorrect</>}
+                      </div>
+                    )}
+                  </div>
+
+                  {showHint[currentIndex] && (
+                    <div className="mt-4 p-4 bg-amber-100 border border-amber-200 text-amber-800 rounded-xl flex gap-3 animate-in fade-in slide-in-from-top-2">
+                      <Lightbulb className="w-6 h-6 shrink-0 mt-0.5" />
+                      <p><FormattedText text={question.hint} /></p>
+                    </div>
+                  )}
+
+                  {hasChecked && (
+                    <div className="mt-4 space-y-3 animate-in fade-in slide-in-from-top-2">
+                      <h4 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Explanation</h4>
+                      <div className="p-4 bg-white border border-slate-200 rounded-xl text-slate-700 leading-relaxed shadow-sm">
+                        <p className="mb-3"><span className="font-semibold">Your selection:</span> <FormattedText text={question.answerOptions[answers[currentIndex]].rationale} /></p>
+                        
+                        {!selectedIsCorrect && (
+                           <p className="pt-3 border-t border-slate-100 text-emerald-700">
+                             <span className="font-semibold">Correct Answer:</span> <FormattedText text={question.answerOptions.find(o => o.isCorrect).rationale} />
+                           </p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-4">
+                <button
+                  onClick={handlePrev}
+                  disabled={currentIndex === 0}
+                  className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-colors
+                    ${currentIndex === 0 ? 'text-slate-400 cursor-not-allowed' : 'text-slate-700 bg-white hover:bg-slate-200 shadow-sm border border-slate-200'}`}
+                >
+                  <ChevronLeft className="w-5 h-5" /> Previous
+                </button>
+                
+                <button
+                  onClick={handleNext}
+                  disabled={currentIndex === totalQuestions - 1}
+                  className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-colors
+                    ${currentIndex === totalQuestions - 1 ? 'text-slate-400 cursor-not-allowed' : 'text-slate-700 bg-white hover:bg-slate-200 shadow-sm border border-slate-200'}`}
+                >
+                  Next <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- Advanced Sec 1 Quiz Data (42 Questions) ---
+    const quizData = [
+      // --- TOPIC 1: Primes, HCF, LCM ---
+      {
+        "topic": "Primes, HCF & LCM",
+        "questionNumber": 1,
+        "question": "What is the prime factorisation of $504$?",
+        "answerOptions": [
+          { "text": "$2^2 \\times 3^3 \\times 7$", "rationale": "This evaluates to $4 \\times 27 \\times 7 = 756$.", "isCorrect": false },
+          { "text": "$2^3 \\times 3^2 \\times 7$", "rationale": "Dividing $504$ by $2$ gives $252, 126, 63$. Dividing $63$ by $3$ gives $21, 7$. So, $504 = 2 \\times 2 \\times 2 \\times 3 \\times 3 \\times 7 = 2^3 \\times 3^2 \\times 7$.", "isCorrect": true },
+          { "text": "$2^4 \\times 3 \\times 7$", "rationale": "This evaluates to $16 \\times 3 \\times 7 = 336$.", "isCorrect": false },
+          { "text": "$8 \\times 9 \\times 7$", "rationale": "While mathematically equivalent to $504$, $8$ and $9$ are not prime numbers, so this is not a prime factorisation.", "isCorrect": false }
+        ],
+        "hint": "Use repeated division by the smallest prime numbers ($2$, then $3$, then $5\\dots$) until you reach $1$."
+      },
+      {
+        "topic": "Primes, HCF & LCM",
+        "questionNumber": 2,
+        "question": "Find the Lowest Common Multiple (LCM) of $18, 24,$ and $36$.",
+        "answerOptions": [
+          { "text": "36", "rationale": "36 is not a multiple of 24.", "isCorrect": false },
+          { "text": "72", "rationale": "Prime factors: $18=2 \\times 3^2$, $24=2^3 \\times 3$, $36=2^2 \\times 3^2$. The LCM takes the highest power of each prime factor: $2^3 \\times 3^2 = 8 \\times 9 = 72$.", "isCorrect": true },
+          { "text": "144", "rationale": "144 is a common multiple, but it is not the lowest common multiple.", "isCorrect": false },
+          { "text": "216", "rationale": "This is a common multiple, but not the lowest.", "isCorrect": false }
+        ],
+        "hint": "Write out the prime factorisation for each number, then take the highest power of each prime factor present."
+      },
+      {
+        "topic": "Primes, HCF & LCM",
+        "questionNumber": 3,
+        "question": "What is the Highest Common Factor (HCF) of $120$ and $150$?",
+        "answerOptions": [
+          { "text": "10", "rationale": "10 is a common factor, but not the highest.", "isCorrect": false },
+          { "text": "15", "rationale": "15 is a common factor, but not the highest.", "isCorrect": false },
+          { "text": "30", "rationale": "Prime factors: $120 = 2^3 \\times 3 \\times 5$ and $150 = 2 \\times 3 \\times 5^2$. The HCF takes the lowest power of each common prime factor: $2^1 \\times 3^1 \\times 5^1 = 30$.", "isCorrect": true },
+          { "text": "60", "rationale": "60 is a factor of 120, but it does not divide exactly into 150.", "isCorrect": false }
+        ],
+        "hint": "Identify the prime factors that both numbers share, and take the lowest power of those shared factors."
+      },
+      {
+        "topic": "Primes, HCF & LCM",
+        "questionNumber": 4,
+        "question": "Given that $120 = 2^3 \\times 3 \\times 5$, what is the smallest positive integer $k$ such that $120k$ is a perfect cube?",
+        "answerOptions": [
+          { "text": "15", "rationale": "Multiplying by $15$ ($3 \\times 5$) gives $2^3 \\times 3^2 \\times 5^2$. The powers of 3 and 5 are not multiples of 3, so it is not a perfect cube.", "isCorrect": false },
+          { "text": "45", "rationale": "Multiplying by $45$ ($3^2 \\times 5$) gives $2^3 \\times 3^3 \\times 5^2$. The power of 5 is not a multiple of 3.", "isCorrect": false },
+          { "text": "225", "rationale": "For a perfect cube, all prime factors must have powers that are multiples of 3. We have $2^3 \\times 3^1 \\times 5^1$. We need two more 3s and two more 5s. So $k = 3^2 \\times 5^2 = 9 \\times 25 = 225$.", "isCorrect": true },
+          { "text": "600", "rationale": "This would result in a number that is not a perfect cube.", "isCorrect": false }
+        ],
+        "hint": "For a number to be a perfect cube, the exponent of every prime factor must be a multiple of 3."
+      },
+      {
+        "topic": "Primes, HCF & LCM",
+        "questionNumber": 5,
+        "question": "Using prime factorisation, evaluate $\\sqrt{1764}$.",
+        "answerOptions": [
+          { "text": "38", "rationale": "The last digit of $38^2$ would be $4$, but $38^2 = 1444$.", "isCorrect": false },
+          { "text": "42", "rationale": "$1764 = 4 \\times 441 = 2^2 \\times 3^2 \\times 7^2$. To find the square root, halve the powers: $\\sqrt{1764} = 2^1 \\times 3^1 \\times 7^1 = 42$.", "isCorrect": true },
+          { "text": "48", "rationale": "The last digit of $48^2$ would be $4$, but $48^2 = 2304$.", "isCorrect": false },
+          { "text": "882", "rationale": "This is half of $1764$, not the square root.", "isCorrect": false }
+        ],
+        "hint": "Find the prime factorisation of $1764$ first, then divide all the exponents by $2$ to find the square root."
+      },
+      {
+        "topic": "Primes, HCF & LCM",
+        "questionNumber": 6,
+        "question": "[Word Problem] Three lighthouses flash their lights at intervals of $12$ minutes, $15$ minutes, and $20$ minutes respectively. If they all flash together at exactly 12:00 PM, at what time will they next flash together again?",
+        "answerOptions": [
+          { "text": "12:45 PM", "rationale": "This is 45 minutes later, which is not a multiple of 12 or 20.", "isCorrect": false },
+          { "text": "1:00 PM", "rationale": "Find the LCM of 12, 15, and 20. $12=2^2 \\times 3$, $15=3 \\times 5$, $20=2^2 \\times 5$. The LCM is $2^2 \\times 3 \\times 5 = 4 \\times 15 = 60$. They will flash together 60 minutes (1 hour) later, at 1:00 PM.", "isCorrect": true },
+          { "text": "1:30 PM", "rationale": "This is 90 minutes later. 90 is a multiple of 15, but not 12 or 20.", "isCorrect": false },
+          { "text": "3:00 PM", "rationale": "This represents an LCM of 180, which is a common multiple, but not the lowest.", "isCorrect": false }
+        ],
+        "hint": "To find when multiple recurring events will happen at the same time again, calculate the Lowest Common Multiple (LCM) of their intervals."
+      },
+
+      // --- TOPIC 2: Integers, Rational and Real Numbers ---
+      {
+        "topic": "Integers & Real Numbers",
+        "questionNumber": 7,
+        "question": "Evaluate without a calculator: $-8 - (-4)^2 \\div 2 + (-3) \\times (-2)$",
+        "answerOptions": [
+          { "text": "$-10$", "rationale": "Powers first: $(-4)^2 = +16$. Division: $16 \\div 2 = 8$. Multiplication: $(-3) \\times (-2) = +6$. Combine: $-8 - 8 + 6 = -16 + 6 = -10$.", "isCorrect": true },
+          { "text": "$6$", "rationale": "This happens if you evaluate $(-4)^2$ as $-16$, then subtract it (yielding $+8$).", "isCorrect": false },
+          { "text": "$-14$", "rationale": "This occurs if you multiply $-3 \\times 2$ (ignoring the negative on the 2).", "isCorrect": false },
+          { "text": "$22$", "rationale": "This implies ignoring order of operations and doing addition/subtraction from left to right.", "isCorrect": false }
+        ],
+        "hint": "Follow BODMAS closely. Pay special attention to the difference between $-4^2$ and $(-4)^2$. Here, $(-4)^2$ evaluates to positive 16."
+      },
+      {
+        "topic": "Integers & Real Numbers",
+        "questionNumber": 8,
+        "question": "Evaluate the following fraction expression: $(-\\frac{3}{4} - \\frac{1}{2}) \\div (-\\frac{5}{8})$",
+        "answerOptions": [
+          { "text": "$-\\frac{1}{2}$", "rationale": "This is an arithmetic error.", "isCorrect": false },
+          { "text": "$1\\frac{1}{4}$", "rationale": "This happens if you accidentally add the fractions instead of dividing.", "isCorrect": false },
+          { "text": "$2$", "rationale": "Inside bracket: $-\\frac{3}{4} - \\frac{2}{4} = -\\frac{5}{4}$. Division: $-\\frac{5}{4} \\div -\\frac{5}{8}$. Flip and multiply: $-\\frac{5}{4} \\times -\\frac{8}{5} = +\\frac{40}{20} = 2$.", "isCorrect": true },
+          { "text": "$-2$", "rationale": "This misses that a negative divided by a negative results in a positive number.", "isCorrect": false }
+        ],
+        "hint": "Simplify the bracket first by finding a common denominator (4). Then flip the second fraction and change the division to multiplication."
+      },
+      {
+        "topic": "Integers & Real Numbers",
+        "questionNumber": 9,
+        "question": "Which of the following numbers is an irrational number?",
+        "answerOptions": [
+          { "text": "$\\sqrt{16}$", "rationale": "$\\sqrt{16} = 4$, which is an integer and thus a rational number.", "isCorrect": false },
+          { "text": "$0.\\dot{3}$", "rationale": "A recurring decimal can be written as a fraction (1/3), making it rational.", "isCorrect": false },
+          { "text": "$-\\frac{5}{7}$", "rationale": "This is a ratio of two integers, meaning it is a rational number.", "isCorrect": false },
+          { "text": "$\\sqrt{3}$", "rationale": "The square root of a non-perfect square cannot be written as a simple fraction, meaning it is an irrational number.", "isCorrect": true }
+        ],
+        "hint": "Irrational numbers cannot be written as a simple fraction $\\frac{a}{b}$. Look out for non-perfect square roots."
+      },
+      {
+        "topic": "Integers & Real Numbers",
+        "questionNumber": 10,
+        "question": "Evaluate: $-2.5 \\times (3.4 - 5.8)$",
+        "answerOptions": [
+          { "text": "$-6.0$", "rationale": "This happens if you ignore the double negative rule when multiplying.", "isCorrect": false },
+          { "text": "$6.0$", "rationale": "Inside the bracket: $3.4 - 5.8 = -2.4$. Multiplication: $-2.5 \\times -2.4 = +6.0$.", "isCorrect": true },
+          { "text": "$5.0$", "rationale": "This is an arithmetic error.", "isCorrect": false },
+          { "text": "$23.0$", "rationale": "This happens if you distribute incorrectly and ignore decimal points.", "isCorrect": false }
+        ],
+        "hint": "Solve the bracket first. When you subtract a larger number from a smaller one, the result is negative. Then multiply."
+      },
+      {
+        "topic": "Integers & Real Numbers",
+        "questionNumber": 11,
+        "question": "Arrange the following numbers in descending order: $-0.6, -\\frac{5}{8}, -0.65, -\\frac{2}{3}$.",
+        "answerOptions": [
+          { "text": "$-0.6, -\\frac{5}{8}, -0.65, -\\frac{2}{3}$", "rationale": "Convert to decimals: $-\\frac{5}{8} = -0.625$, and $-\\frac{2}{3} \\approx -0.666$. Descending order means largest (closest to zero) first: $-0.6 > -0.625 > -0.65 > -0.666$.", "isCorrect": true },
+          { "text": "$-\\frac{2}{3}, -0.65, -\\frac{5}{8}, -0.6$", "rationale": "This is ascending order (smallest to largest).", "isCorrect": false },
+          { "text": "$-0.6, -0.65, -\\frac{5}{8}, -\\frac{2}{3}$", "rationale": "This gets the order of $-0.625$ and $-0.65$ mixed up.", "isCorrect": false },
+          { "text": "$-\\frac{5}{8}, -0.6, -\\frac{2}{3}, -0.65$", "rationale": "This order is jumbled.", "isCorrect": false }
+        ],
+        "hint": "Convert all fractions to decimals first to easily compare them. Remember that for negative numbers, the smaller the absolute value, the larger the number!"
+      },
+      {
+        "topic": "Integers & Real Numbers",
+        "questionNumber": 12,
+        "question": "[Word Problem] The boiling point of liquid nitrogen is $-196^\\circ\\text{C}$. The temperature in a typical chemistry laboratory is $25^\\circ\\text{C}$. What is the difference in temperature between the laboratory and the liquid nitrogen?",
+        "answerOptions": [
+          { "text": "$-171^\\circ\\text{C}$", "rationale": "This is an arithmetic error from treating it as $196 - 25$.", "isCorrect": false },
+          { "text": "$171^\\circ\\text{C}$", "rationale": "This is $196 - 25$, but you must subtract a negative number from a positive number.", "isCorrect": false },
+          { "text": "$221^\\circ\\text{C}$", "rationale": "Difference = Highest - Lowest = $25 - (-196) = 25 + 196 = 221^\\circ\\text{C}$.", "isCorrect": true },
+          { "text": "$-221^\\circ\\text{C}$", "rationale": "A difference in temperature should be expressed as a positive absolute magnitude.", "isCorrect": false }
+        ],
+        "hint": "Difference is calculated by taking the higher value and subtracting the lower value."
+      },
+
+      // --- TOPIC 3: Approximation & Estimation ---
+      {
+        "topic": "Approximation & Estimation",
+        "questionNumber": 13,
+        "question": "Express $0.04059$ correct to $3$ significant figures.",
+        "answerOptions": [
+          { "text": "$0.040$", "rationale": "This is rounded to 2 significant figures.", "isCorrect": false },
+          { "text": "$0.041$", "rationale": "This drops the third significant figure entirely.", "isCorrect": false },
+          { "text": "$0.0406$", "rationale": "Leading zeros are not significant. The 1st sig fig is 4, 2nd is 0, 3rd is 5. Look at the 4th digit (9) to round up the 5 to a 6. Result: $0.0406$.", "isCorrect": true },
+          { "text": "$0.04059$", "rationale": "This is the original number, which has 4 significant figures.", "isCorrect": false }
+        ],
+        "hint": "Zeros before the first non-zero digit are never significant. Start counting significant figures at the '4'."
+      },
+      {
+        "topic": "Approximation & Estimation",
+        "questionNumber": 14,
+        "question": "Estimate the value of $\\frac{\\sqrt{35.8} \\times 19.3}{3.14}$ by rounding each number to $1$ significant figure first.",
+        "answerOptions": [
+          { "text": "$20$", "rationale": "This assumes the numerator evaluates to 60.", "isCorrect": false },
+          { "text": "$40$", "rationale": "Rounding to 1 sig fig: $35.8 \\rightarrow 40$ (wait, nearest perfect square is $36 \\rightarrow 6$), $19.3 \\rightarrow 20$, $3.14 \\rightarrow 3$. Calculation: $\\frac{\\sqrt{36} \\times 20}{3} = \\frac{6 \\times 20}{3} = \\frac{120}{3} = 40$. Note: we round the number inside the root to a perfect square to make mental estimation possible.", "isCorrect": true },
+          { "text": "$60$", "rationale": "This happens if you don't divide by 3.", "isCorrect": false },
+          { "text": "$120$", "rationale": "This is just the numerator's estimated value.", "isCorrect": false }
+        ],
+        "hint": "When estimating square roots, round the number inside the root to the nearest perfect square (e.g. 36) to make it solvable without a calculator."
+      },
+      {
+        "topic": "Approximation & Estimation",
+        "questionNumber": 15,
+        "question": "Round $384,500$ to $2$ significant figures.",
+        "answerOptions": [
+          { "text": "$380,000$", "rationale": "The first two significant digits are 3 and 8. The third digit is 4, which is less than 5, so we keep the 8. We replace the rest with placeholding zeros. $380,000$.", "isCorrect": true },
+          { "text": "$390,000$", "rationale": "This incorrectly rounds up.", "isCorrect": false },
+          { "text": "$38$", "rationale": "This drops the digits without replacing them with zeros, changing the magnitude of the number completely.", "isCorrect": false },
+          { "text": "$385,000$", "rationale": "This is rounded to 3 significant figures.", "isCorrect": false }
+        ],
+        "hint": "Identify the 2nd significant figure, look at the digit to its right, decide whether to round up or down, and replace the remaining digits with zeros to maintain the number's size."
+      },
+      {
+        "topic": "Approximation & Estimation",
+        "questionNumber": 16,
+        "question": "An unknown whole number $x$ was rounded to $2$ significant figures, resulting in $4500$. What is the smallest possible value that $x$ could have been?",
+        "answerOptions": [
+          { "text": "$4400$", "rationale": "4400 rounded to 2 sig figs remains 4400.", "isCorrect": false },
+          { "text": "$4450$", "rationale": "To round to 4500 (2 sig figs), the number must be between 4450 and 4549. The smallest whole number in this range is 4450.", "isCorrect": true },
+          { "text": "$4499$", "rationale": "This rounds to 4500, but it is not the smallest possible value.", "isCorrect": false },
+          { "text": "$4549$", "rationale": "This is the LARGEST possible whole number that rounds to 4500.", "isCorrect": false }
+        ],
+        "hint": "Think about the rules of rounding. What is the smallest number that, when rounded to the hundreds place, rounds UP to 4500?"
+      },
+      {
+        "topic": "Approximation & Estimation",
+        "questionNumber": 17,
+        "question": "Evaluate $5.678 + 2.345$ and give your answer correct to $2$ decimal places.",
+        "answerOptions": [
+          { "text": "$8.02$", "rationale": "Exact sum = $5.678 + 2.345 = 8.023$. Looking at the 3rd decimal place (3), we round down. The answer is $8.02$.", "isCorrect": true },
+          { "text": "$8.03$", "rationale": "This incorrectly rounds up the 2.", "isCorrect": false },
+          { "text": "$8.00$", "rationale": "This drops the decimals incorrectly.", "isCorrect": false },
+          { "text": "$8.10$", "rationale": "This is a miscalculation.", "isCorrect": false }
+        ],
+        "hint": "Add the numbers exactly first, and then apply the rounding rules to the final sum."
+      },
+      {
+        "topic": "Approximation & Estimation",
+        "questionNumber": 18,
+        "question": "[Word Problem] A shipping container holds exactly $24.8$ liters of oil. By rounding the volume to the nearest $10$ liters and the quantity to the nearest $10$, estimate the total volume of oil contained in $52$ identical shipping containers.",
+        "answerOptions": [
+          { "text": "$1000$ liters", "rationale": "Round $24.8$ to nearest 10: $20$. Round $52$ to nearest 10: $50$. Total volume $\\approx 20 \\times 50 = 1000$ liters.", "isCorrect": true },
+          { "text": "$1250$ liters", "rationale": "This rounds $24.8$ to $25$, which is the nearest 5, not the nearest 10.", "isCorrect": false },
+          { "text": "$1500$ liters", "rationale": "This assumes $24.8$ rounds up to $30$.", "isCorrect": false },
+          { "text": "$1300$ liters", "rationale": "This is the exact answer ($1289.6$) rounded, not an estimation from rounded initial values.", "isCorrect": false }
+        ],
+        "hint": "Follow the instructions carefully: round 24.8 to the nearest 'ten' (10, 20, 30...), and round 52 to the nearest 'ten'. Multiply those two rounded numbers."
+      },
+
+      // --- TOPIC 4: Basic Algebra & Algebraic Manipulation ---
+      {
+        "topic": "Basic Algebra",
+        "questionNumber": 19,
+        "question": "Expand and simplify completely: $3(2x - 4y) - 2(-x + 3y)$",
+        "answerOptions": [
+          { "text": "$4x - 18y$", "rationale": "This happens if $-2(-x)$ is calculated as $-2x$.", "isCorrect": false },
+          { "text": "$8x - 6y$", "rationale": "This happens if $-2(3y)$ is evaluated as positive $6y$.", "isCorrect": false },
+          { "text": "$8x - 18y$", "rationale": "Expand first: $6x - 12y + 2x - 6y$. Collect like terms: $(6x + 2x) + (-12y - 6y) = 8x - 18y$.", "isCorrect": true },
+          { "text": "$4x - 6y$", "rationale": "This contains multiple sign errors during expansion.", "isCorrect": false }
+        ],
+        "hint": "Multiply the number outside the bracket by every term inside it. Pay very close attention to multiplying two negative signs together!"
+      },
+      {
+        "topic": "Basic Algebra",
+        "questionNumber": 20,
+        "question": "Evaluate the expression $a(2b - c) - b^2$ given that $a = 3$, $b = -2$, and $c = -5$.",
+        "answerOptions": [
+          { "text": "$-19$", "rationale": "This happens if $2b$ is evaluated incorrectly or signs are mixed up.", "isCorrect": false },
+          { "text": "$-1$", "rationale": "Substitute: $3[2(-2) - (-5)] - (-2)^2$. Inside bracket: $3[-4 + 5] - 4$. Simplifies to: $3(1) - 4 = 3 - 4 = -1$.", "isCorrect": true },
+          { "text": "$7$", "rationale": "This happens if you evaluate $(-2)^2$ as $-4$ and subtract it, resulting in $+4$.", "isCorrect": false },
+          { "text": "$-27$", "rationale": "This happens if $2b - c$ is evaluated as $-4 - 5 = -9$.", "isCorrect": false }
+        ],
+        "hint": "Use parentheses when substituting negative numbers to avoid sign mistakes. Remember that subtracting a negative is the same as adding."
+      },
+      {
+        "topic": "Basic Algebra",
+        "questionNumber": 21,
+        "question": "Factorise the algebraic expression completely: $12x^2y - 18xy^2 + 6xy$.",
+        "answerOptions": [
+          { "text": "$6xy(2x - 3y)$", "rationale": "This drops the final term ($+1$) completely when extracting the common factor.", "isCorrect": false },
+          { "text": "$3xy(4x - 6y + 2)$", "rationale": "This extracts a common factor, but not the HIGHEST common factor (which is 6).", "isCorrect": false },
+          { "text": "$6x(2xy - 3y^2 + y)$", "rationale": "This misses extracting the common $y$ variable.", "isCorrect": false },
+          { "text": "$6xy(2x - 3y + 1)$", "rationale": "The highest common numerical factor is $6$. The highest common variables are $x$ and $y$. Extracting $6xy$ leaves $(2x - 3y + 1)$.", "isCorrect": true }
+        ],
+        "hint": "Identify the Highest Common Factor (HCF) for the numbers 12, 18, and 6. Then find the variables that appear in EVERY term."
+      },
+      {
+        "topic": "Basic Algebra",
+        "questionNumber": 22,
+        "question": "Simplify the fractional expression as a single fraction: $\\frac{3x - 1}{4} - \\frac{x - 2}{3}$",
+        "answerOptions": [
+          { "text": "$\\frac{5x + 5}{12}$", "rationale": "The LCM is 12. $\\frac{3(3x - 1) - 4(x - 2)}{12} = \\frac{9x - 3 - 4x + 8}{12} = \\frac{5x + 5}{12}$.", "isCorrect": true },
+          { "text": "$\\frac{5x - 11}{12}$", "rationale": "This happens if $-4$ is distributed to $-2$ as a negative $8$ instead of positive $8$.", "isCorrect": false },
+          { "text": "$\\frac{2x + 1}{12}$", "rationale": "This is an arithmetic error.", "isCorrect": false },
+          { "text": "$\\frac{5x - 5}{12}$", "rationale": "This happens if the signs are completely swapped.", "isCorrect": false }
+        ],
+        "hint": "Find the lowest common multiple (12) for the denominators. Place brackets around the numerators when expanding to prevent sign errors."
+      },
+      {
+        "topic": "Basic Algebra",
+        "questionNumber": 23,
+        "question": "Factorise the following expression by grouping: $3px - 3py + 2qx - 2qy$.",
+        "answerOptions": [
+          { "text": "$(3p - 2q)(x - y)$", "rationale": "This incorrectly subtracts $2q$ instead of adding it.", "isCorrect": false },
+          { "text": "$(3p + 2q)(x + y)$", "rationale": "This incorrectly has $(x+y)$ as the common bracket.", "isCorrect": false },
+          { "text": "$(3p + 2q)(x - y)$", "rationale": "Group first two: $3p(x - y)$. Group last two: $2q(x - y)$. Combine: $(3p + 2q)(x - y)$.", "isCorrect": true },
+          { "text": "$(p + q)(3x - 2y)$", "rationale": "This is an incorrect factoring method.", "isCorrect": false }
+        ],
+        "hint": "Group the first two terms and factor out their common term. Group the last two terms and factor out their common term. You should see a repeating bracket."
+      },
+      {
+        "topic": "Basic Algebra",
+        "questionNumber": 24,
+        "question": "[Word Problem] A teacher buys $4$ identical boxes of pens. Each box contains $x$ red pens and $y$ blue pens. If the teacher gives away $5$ red pens to students, write an algebraic expression for the total number of pens the teacher has left.",
+        "answerOptions": [
+          { "text": "$4(x + y) + 5$", "rationale": "This adds 5 pens instead of subtracting them.", "isCorrect": false },
+          { "text": "$4xy - 5$", "rationale": "This implies multiplying the red and blue pens together inside the box.", "isCorrect": false },
+          { "text": "$4x + 4y - 5$", "rationale": "Total pens initially = $4 \\times (x + y) = 4x + 4y$. After giving away 5, the total is $4x + 4y - 5$.", "isCorrect": true },
+          { "text": "$x + 4y - 5$", "rationale": "This fails to multiply the $x$ red pens by the 4 boxes.", "isCorrect": false }
+        ],
+        "hint": "Calculate the total number of pens in the 4 boxes first. Then subtract the pens that were given away."
+      },
+
+      // --- TOPIC 5: Linear Equations ---
+      {
+        "topic": "Linear Equations",
+        "questionNumber": 25,
+        "question": "Solve the linear equation: $4(x - 2) = 2(3x + 1)$.",
+        "answerOptions": [
+          { "text": "$x = -5$", "rationale": "Expand: $4x - 8 = 6x + 2$. Subtract $4x$ from both sides: $-8 = 2x + 2$. Subtract 2: $-10 = 2x$. Divide by 2: $x = -5$.", "isCorrect": true },
+          { "text": "$x = 5$", "rationale": "This is a sign error during the balancing of the equation.", "isCorrect": false },
+          { "text": "$x = -3$", "rationale": "This happens if you expand $4(-2)$ as $-6$ instead of $-8$.", "isCorrect": false },
+          { "text": "$x = 3$", "rationale": "This is an arithmetic error.", "isCorrect": false }
+        ],
+        "hint": "Expand both brackets first. Then gather all terms with $x$ on one side of the equals sign, and all constant numbers on the other side."
+      },
+      {
+        "topic": "Linear Equations",
+        "questionNumber": 26,
+        "question": "Solve for $x$: $\\frac{2x}{3} - 1 = \\frac{x - 1}{2}$.",
+        "answerOptions": [
+          { "text": "$x = 1$", "rationale": "This is an arithmetic error.", "isCorrect": false },
+          { "text": "$x = 3$", "rationale": "Multiply all terms by 6 to clear fractions: $2(2x) - 6(1) = 3(x - 1) \\Rightarrow 4x - 6 = 3x - 3$. Subtract $3x$: $x - 6 = -3$. Add 6: $x = 3$.", "isCorrect": true },
+          { "text": "$x = 5$", "rationale": "This happens if the $-6$ is added incorrectly to $-3$ to get $3$ but combined differently.", "isCorrect": false },
+          { "text": "$x = 9$", "rationale": "This happens if you forget to multiply the constant '$1$' by 6.", "isCorrect": false }
+        ],
+        "hint": "Multiply every term in the equation by $6$ to remove the fractions. Don't forget to multiply the standalone $1$!"
+      },
+      {
+        "topic": "Linear Equations",
+        "questionNumber": 27,
+        "question": "Solve the equation involving decimals: $0.5x - 1.2 = 0.2x + 0.9$.",
+        "answerOptions": [
+          { "text": "$x = 3$", "rationale": "This is an arithmetic error.", "isCorrect": false },
+          { "text": "$x = 7$", "rationale": "Subtract $0.2x$ from both sides: $0.3x - 1.2 = 0.9$. Add $1.2$ to both sides: $0.3x = 2.1$. Divide by $0.3$: $x = 7$.", "isCorrect": true },
+          { "text": "$x = -1$", "rationale": "This happens if you subtract $0.9$ from $-1.2$ incorrectly.", "isCorrect": false },
+          { "text": "$x = 10$", "rationale": "This is a calculation error during the final division.", "isCorrect": false }
+        ],
+        "hint": "Collect the $x$ terms on the left and the numbers on the right. You can multiply the whole equation by 10 to remove decimals if you prefer."
+      },
+      {
+        "topic": "Linear Equations",
+        "questionNumber": 28,
+        "question": "Solve the fractional equation: $\\frac{3}{x - 2} = 4$.",
+        "answerOptions": [
+          { "text": "$x = 1.25$", "rationale": "This implies moving the $-2$ incorrectly before multiplying.", "isCorrect": false },
+          { "text": "$x = 2.75$", "rationale": "Multiply both sides by $(x - 2)$: $3 = 4(x - 2) \\Rightarrow 3 = 4x - 8$. Add 8 to both sides: $11 = 4x$. Divide by 4: $x = \\frac{11}{4} = 2.75$.", "isCorrect": true },
+          { "text": "$x = 3.5$", "rationale": "This happens if you add 2 to 3 instead of 8 to 3.", "isCorrect": false },
+          { "text": "$x = -1.25$", "rationale": "This is an arithmetic error involving negative signs.", "isCorrect": false }
+        ],
+        "hint": "Multiply both sides by the denominator $(x - 2)$ to bring it up to the numerator level."
+      },
+      {
+        "topic": "Linear Equations",
+        "questionNumber": 29,
+        "question": "If $x = -2$ is a solution to the equation $kx - 4 = 3x + k$, find the value of the constant $k$.",
+        "answerOptions": [
+          { "text": "$k = -2$", "rationale": "This is an arithmetic error.", "isCorrect": false },
+          { "text": "$k = \\frac{2}{3}$", "rationale": "Substitute $x = -2$: $k(-2) - 4 = 3(-2) + k \\Rightarrow -2k - 4 = -6 + k$. Add $2k$ to both sides: $-4 = -6 + 3k$. Add $6$: $2 = 3k$. Divide by 3: $k = \\frac{2}{3}$.", "isCorrect": true },
+          { "text": "$k = 2$", "rationale": "This happens if you evaluate $-2k - k$ as $-k$ instead of $-3k$.", "isCorrect": false },
+          { "text": "$k = -\\frac{2}{3}$", "rationale": "This is a sign error on the final division step.", "isCorrect": false }
+        ],
+        "hint": "Substitute $-2$ wherever you see an $x$, then solve the resulting equation for $k$."
+      },
+      {
+        "topic": "Linear Equations",
+        "questionNumber": 30,
+        "question": "[Word Problem] A father is currently $4$ times as old as his son. In $10$ years' time, the father will be exactly twice as old as his son. Find the son's current age.",
+        "answerOptions": [
+          { "text": "4 years old", "rationale": "If son is 4, father is 16. In 10 years, they are 14 and 26. $26 \\ne 14 \\times 2$.", "isCorrect": false },
+          { "text": "5 years old", "rationale": "Let son = $x$, father = $4x$. In 10 years: $(4x + 10) = 2(x + 10) \\Rightarrow 4x + 10 = 2x + 20 \\Rightarrow 2x = 10 \\Rightarrow x = 5$.", "isCorrect": true },
+          { "text": "10 years old", "rationale": "If son is 10, father is 40. In 10 years, they are 20 and 50. $50 \\ne 20 \\times 2$.", "isCorrect": false },
+          { "text": "20 years old", "rationale": "This is the father's current age.", "isCorrect": false }
+        ],
+        "hint": "Let the son's current age be $x$, making the father's age $4x$. Add 10 to both ages to build your equation for the future scenario."
+      },
+
+      // --- TOPIC 6: Linear Functions and Graphs ---
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 31,
+        "question": "Find the gradient (slope) of the straight line passing through the points $(-2, 4)$ and $(3, -6)$.",
+        "answerOptions": [
+          { "text": "$-2$", "rationale": "Gradient $m = \\frac{y_2 - y_1}{x_2 - x_1} = \\frac{-6 - 4}{3 - (-2)} = \\frac{-10}{5} = -2$.", "isCorrect": true },
+          { "text": "$2$", "rationale": "This evaluates to $10/5$ due to dropped negative signs.", "isCorrect": false },
+          { "text": "$-\\frac{1}{2}$", "rationale": "This is the result of flipping the formula to run over rise ($x$ over $y$).", "isCorrect": false },
+          { "text": "$-10$", "rationale": "This only evaluates the numerator (change in y).", "isCorrect": false }
+        ],
+        "hint": "Use the gradient formula: $m = \\frac{y_2 - y_1}{x_2 - x_1}$. Pay attention to subtracting negative numbers!"
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 32,
+        "question": "What is the $y$-intercept of the line given by the equation $3x - 5y = 15$?",
+        "answerOptions": [
+          { "text": "$5$", "rationale": "This is the $x$-intercept (when $y=0$, $3x=15 \\Rightarrow x=5$).", "isCorrect": false },
+          { "text": "$-3$", "rationale": "The $y$-intercept occurs when $x=0$. Substituting $x=0$ yields $-5y = 15 \\Rightarrow y = -3$. Alternatively, rearrange to $y = \\frac{3}{5}x - 3$.", "isCorrect": true },
+          { "text": "$3$", "rationale": "This drops the negative sign from the $-5y$.", "isCorrect": false },
+          { "text": "$15$", "rationale": "This assumes the constant term on the right is always the $y$-intercept without isolating $y$.", "isCorrect": false }
+        ],
+        "hint": "The $y$-intercept is the point where the line crosses the $y$-axis. What is the value of $x$ at any point on the $y$-axis?"
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 33,
+        "question": "The point $(k, 7)$ lies on the straight line $y = 3x - 2$. Find the value of $k$.",
+        "answerOptions": [
+          { "text": "$2$", "rationale": "This is a calculation error.", "isCorrect": false },
+          { "text": "$3$", "rationale": "Substitute $x=k$ and $y=7$ into the equation: $7 = 3(k) - 2$. Add 2 to both sides: $9 = 3k$. Divide by 3: $k = 3$.", "isCorrect": true },
+          { "text": "$5$", "rationale": "This assumes $7 = 3k + 2$.", "isCorrect": false },
+          { "text": "$19$", "rationale": "This happens if you plug $x=7$ into the formula to find $y$ ($y = 21 - 2 = 19$). But $7$ is the $y$-value, not the $x$-value.", "isCorrect": false }
+        ],
+        "hint": "Substitute $k$ for $x$ and $7$ for $y$ in the equation, then solve for $k$."
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 34,
+        "question": "What is the equation of the horizontal line passing through the point $(4, -5)$?",
+        "answerOptions": [
+          { "text": "$x = 4$", "rationale": "This is the equation for the vertical line passing through that point.", "isCorrect": false },
+          { "text": "$y = -5$", "rationale": "A horizontal line has a gradient of 0 and a constant $y$-value. The equation is simply $y = c$, where $c$ is the $y$-coordinate. Here, $y = -5$.", "isCorrect": true },
+          { "text": "$y = 4x - 5$", "rationale": "This is a slanted line.", "isCorrect": false },
+          { "text": "$x + y = -1$", "rationale": "This is a slanted line passing through $(4, -5)$.", "isCorrect": false }
+        ],
+        "hint": "A horizontal line is completely flat. Does the $x$-value or the $y$-value remain constant across the entire line?"
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 35,
+        "question": "Calculate the area of the triangle bounded by the line $y = 2x + 6$, the $x$-axis, and the $y$-axis.",
+        "answerOptions": [
+          { "text": "$6$ square units", "rationale": "This is just the height ($y$-intercept).", "isCorrect": false },
+          { "text": "$9$ square units", "rationale": "$y$-int (height) is where $x=0 \\Rightarrow y=6$. $x$-int (base) is where $y=0 \\Rightarrow 0=2x+6 \\Rightarrow x=-3$. The base length is $3$. Area = $0.5 \\times 3 \\times 6 = 9$.", "isCorrect": true },
+          { "text": "$12$ square units", "rationale": "This assumes the $x$-intercept is $4$.", "isCorrect": false },
+          { "text": "$18$ square units", "rationale": "This forgets to multiply by $\\frac{1}{2}$ for the area of a triangle.", "isCorrect": false }
+        ],
+        "hint": "Draw a quick sketch. Find the $y$-intercept to get the height. Find the $x$-intercept to get the base length. Use Area = $\\frac{1}{2} \\times \\text{base} \\times \\text{height}$."
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 36,
+        "question": "[Word Problem] A taxi company charges a flag-down fare of $\\$3$ and an additional $\\$0.50$ for every kilometer travelled. If a passenger paid exactly $\\$10$ for a ride, how many kilometers did they travel?",
+        "answerOptions": [
+          { "text": "$12$ km", "rationale": "This is a calculation error.", "isCorrect": false },
+          { "text": "$14$ km", "rationale": "Equation: $C = 0.50x + 3$. Substitute $C = 10 \\Rightarrow 10 = 0.50x + 3 \\Rightarrow 7 = 0.50x \\Rightarrow x = 14$.", "isCorrect": true },
+          { "text": "$17$ km", "rationale": "This assumes the $\\$3$ is subtracted from the total instead of part of it.", "isCorrect": false },
+          { "text": "$20$ km", "rationale": "This ignores the $\\$3$ flag-down fare entirely ($10 \\div 0.50 = 20$).", "isCorrect": false }
+        ],
+        "hint": "Set up a linear equation: $\\text{Total Cost} = (\\text{Rate per km} \\times \\text{Distance}) + \\text{Fixed Fare}$."
+      },
+
+      // --- TOPIC 7: Number Patterns ---
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 37,
+        "question": "What are the next two terms in the sequence $1, 4, 13, 40, \\dots$?",
+        "answerOptions": [
+          { "text": "$121, 364$", "rationale": "The rule is to multiply by 3 and add 1. $1 \\times 3 + 1 = 4$. $4 \\times 3 + 1 = 13$. $13 \\times 3 + 1 = 40$. $40 \\times 3 + 1 = 121$. $121 \\times 3 + 1 = 364$.", "isCorrect": true },
+          { "text": "$120, 360$", "rationale": "This just multiplies by 3 without adding 1.", "isCorrect": false },
+          { "text": "$80, 160$", "rationale": "This assumes multiplying by 2.", "isCorrect": false },
+          { "text": "$121, 363$", "rationale": "This forgets to add 1 on the very last term.", "isCorrect": false }
+        ],
+        "hint": "Look at the differences between the numbers. What happens if you multiply a term by 3? Are you close to the next term?"
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 38,
+        "question": "Find the general formula for the $n$-th term ($T_n$) of the arithmetic sequence: $5, 9, 13, 17, \\dots$",
+        "answerOptions": [
+          { "text": "$T_n = n + 4$", "rationale": "If $n=1$, this gives $5$, but if $n=2$, this gives $6$, not $9$.", "isCorrect": false },
+          { "text": "$T_n = 4n + 1$", "rationale": "The common difference is $+4$, so the term involves $4n$. For $n=1$, $4(1) + c = 5 \\Rightarrow c = 1$. The formula is $4n + 1$.", "isCorrect": true },
+          { "text": "$T_n = 5n - 1$", "rationale": "This gives $4$ for the first term.", "isCorrect": false },
+          { "text": "$T_n = n^2 + 4$", "rationale": "This gives $5$ for the first term, but $8$ for the second term.", "isCorrect": false }
+        ],
+        "hint": "Identify the common difference between each term. This value is multiplied by $n$. Then find the adjustment (+ or - a constant) needed to match the first term."
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 39,
+        "question": "The $n$-th term of a sequence is given by the formula $T_n = n^2 - 3n$. What is the value of the 10th term?",
+        "answerOptions": [
+          { "text": "$40$", "rationale": "This is an arithmetic error.", "isCorrect": false },
+          { "text": "$70$", "rationale": "Substitute $n=10$: $T_{10} = (10)^2 - 3(10) = 100 - 30 = 70$.", "isCorrect": true },
+          { "text": "$97$", "rationale": "This calculates $10^2 - 3$ instead of $- 3n$.", "isCorrect": false },
+          { "text": "$130$", "rationale": "This adds $3n$ instead of subtracting it.", "isCorrect": false }
+        ],
+        "hint": "Substitute the number $10$ into the formula wherever you see an $n$."
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 40,
+        "question": "Which term in the sequence defined by $T_n = 5n - 2$ is equal to $73$?",
+        "answerOptions": [
+          { "text": "14th term", "rationale": "The 14th term is $5(14) - 2 = 68$.", "isCorrect": false },
+          { "text": "15th term", "rationale": "Set the formula equal to the value: $5n - 2 = 73 \\Rightarrow 5n = 75 \\Rightarrow n = 15$.", "isCorrect": true },
+          { "text": "16th term", "rationale": "The 16th term is $5(16) - 2 = 78$.", "isCorrect": false },
+          { "text": "363rd term", "rationale": "This happens if you plug $73$ in for $n$ ($5 \\times 73 - 2 = 363$), rather than solving for $n$.", "isCorrect": false }
+        ],
+        "hint": "Set the formula equal to $73$ and use algebra to solve for $n$."
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 41,
+        "question": "The Fibonacci sequence starts as $1, 1, 2, 3, 5, \\dots$ What is the 8th term of this sequence?",
+        "answerOptions": [
+          { "text": "$13$", "rationale": "This is the 7th term.", "isCorrect": false },
+          { "text": "$21$", "rationale": "The rule is to add the two previous terms to get the next term. Terms are: $1, 1, 2, 3, 5, 8, 13, 21$. The 8th term is 21.", "isCorrect": true },
+          { "text": "$34$", "rationale": "This is the 9th term.", "isCorrect": false },
+          { "text": "$55$", "rationale": "This is the 10th term.", "isCorrect": false }
+        ],
+        "hint": "In the Fibonacci sequence, each number is the sum of the two preceding ones."
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 42,
+        "question": "[Word Problem] Square tables are placed in a row to form a long banquet table. 1 table seats $6$ people, 2 tables seat $10$ people, and 3 tables seat $14$ people. How many people can be seated if $20$ tables are placed together in this way?",
+        "answerOptions": [
+          { "text": "$80$", "rationale": "This assumes the formula is just $4n$.", "isCorrect": false },
+          { "text": "$82$", "rationale": "The sequence is $6, 10, 14, \\dots$ The common difference is $4$. The formula is $T_n = 4n + 2$. For $n=20$, $T_{20} = 4(20) + 2 = 80 + 2 = 82$.", "isCorrect": true },
+          { "text": "$120$", "rationale": "This incorrectly assumes $20$ tables multiplied by $6$ seats per table, failing to account for the shared edges.", "isCorrect": false },
+          { "text": "$122$", "rationale": "This misidentifies the sequence formula.", "isCorrect": false }
+        ],
+        "hint": "First, find the formula for the $n$-th term of the sequence ($6, 10, 14\\dots$). Then substitute $n=20$ into your formula."
+      }
+    ];
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
