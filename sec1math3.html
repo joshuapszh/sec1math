@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sec 1 Math Mock Exam - Chapters 4 & 5</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // --- Inline SVG Icons ---
+    const CheckCircle2 = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+    );
+    const XCircle = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+    );
+    const Lightbulb = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>
+    );
+    const RefreshCcw = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 21v-5h5"></path></svg>
+    );
+    const Play = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+    );
+    const ChevronLeft = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m15 18-6-6 6-6"></path></svg>
+    );
+    const ChevronRight = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m9 18 6-6-6-6"></path></svg>
+    );
+
+    // --- Custom component to render inline math enclosed in $ $ ---
+    const FormattedText = ({ text }) => {
+      if (!text) return null;
+      const parts = text.split(/\$(.*?)\$/g);
+      return (
+        <span>
+          {parts.map((part, index) => {
+            if (index % 2 === 1) {
+              let html = part
+                .replace(/\\times/g, ' &times; ')
+                .replace(/\\div/g, ' &divide; ')
+                .replace(/\\Rightarrow/g, ' &rArr; ')
+                .replace(/\\le/g, ' &le; ')
+                .replace(/\\ge/g, ' &ge; ')
+                .replace(/\\pm/g, ' &plusmn; ')
+                .replace(/\\pi/g, '&pi;')
+                .replace(/\^\\circ/g, '&deg;')
+                .replace(/\\approx/g, '&asymp;')
+                .replace(/\\text\{([^}]+)\}/g, '<span class="font-sans text-[0.9em]">$1</span>')
+                .replace(/\\sqrt\{([^}]+)\}/g, '<span class="whitespace-nowrap">&radic;<span class="border-t border-slate-700 ml-[1px] pt-[1px]">$1</span></span>')
+                .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '<span class="inline-flex flex-col align-middle text-center mx-1" style="font-size: 0.85em; line-height: 1.2;"><span class="border-b border-slate-700 px-0.5">$1</span><span class="px-0.5">$2</span></span>')
+                .replace(/\^\{([^}]+)\}/g, '<sup class="text-[0.75em]">$1</sup>')
+                .replace(/\^([a-zA-Z0-9])/g, '<sup class="text-[0.75em]">$1</sup>');
+
+              return (
+                <span
+                  key={index}
+                  className="font-serif text-[1.1em] text-slate-800 tracking-wide mx-0.5"
+                  dangerouslySetInnerHTML={{ __html: html }}
+                />
+              );
+            }
+            return <span key={index}>{part}</span>;
+          })}
+        </span>
+      );
+    };
+
+    // --- Main App Component ---
+    function App() {
+      const [view, setView] = useState('start'); 
+      const [currentIndex, setCurrentIndex] = useState(0);
+      const [answers, setAnswers] = useState({});
+      const [showFeedback, setShowFeedback] = useState({});
+      const [showHint, setShowHint] = useState({});
+
+      const question = quizData[currentIndex];
+      const totalQuestions = quizData.length;
+
+      useEffect(() => {
+        window.scrollTo(0, 0);
+      }, [currentIndex, view]);
+
+      const handleSelectOption = (optionIndex) => {
+        if (showFeedback[currentIndex]) return;
+        setAnswers({ ...answers, [currentIndex]: optionIndex });
+      };
+
+      const handleCheckAnswer = () => {
+        if (answers[currentIndex] !== undefined) {
+          setShowFeedback({ ...showFeedback, [currentIndex]: true });
+        }
+      };
+
+      const handleNext = () => {
+        if (currentIndex < totalQuestions - 1) setCurrentIndex(currentIndex + 1);
+      };
+
+      const handlePrev = () => {
+        if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
+      };
+
+      const toggleHint = () => {
+        setShowHint({ ...showHint, [currentIndex]: !showHint[currentIndex] });
+      };
+
+      const calculateScore = () => {
+        let score = 0;
+        Object.keys(showFeedback).forEach((key) => {
+          const qIndex = parseInt(key, 10);
+          const selectedOption = answers[qIndex];
+          if (selectedOption !== undefined && quizData[qIndex].answerOptions[selectedOption].isCorrect) {
+            score++;
+          }
+        });
+        return score;
+      };
+
+      const restartQuiz = () => {
+        setAnswers({});
+        setShowFeedback({});
+        setShowHint({});
+        setCurrentIndex(0);
+        setView('start');
+      };
+
+      const getQuestionStatusColor = (index) => {
+        if (!showFeedback[index]) return 'bg-slate-100 text-slate-600 hover:bg-slate-200 border-slate-200';
+        const isCorrect = quizData[index].answerOptions[answers[index]].isCorrect;
+        return isCorrect 
+          ? 'bg-emerald-100 text-emerald-700 border-emerald-300' 
+          : 'bg-rose-100 text-rose-700 border-rose-300';
+      };
+
+      if (view === 'start') {
+        return (
+          <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6">
+            <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl p-8 text-center space-y-6">
+              <div className="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="w-10 h-10 text-indigo-600" />
+              </div>
+              <h1 className="text-4xl font-bold text-slate-800">Sec 1 Math SA1 Mock Exam</h1>
+              <span className="bg-rose-100 text-rose-700 font-semibold px-3 py-1 rounded-full text-sm inline-block mx-auto">Chapters 4 & 5</span>
+              <p className="text-lg text-slate-600">
+                A 20-question mock exam covering Basic Algebra, Algebraic Manipulation, and Linear Equations based on Tutorials 4 & 5.
+              </p>
+              <div className="grid grid-cols-2 gap-4 text-left bg-slate-50 p-6 rounded-xl border border-slate-100 mb-8">
+                <div><span className="font-semibold text-slate-700">Questions:</span> {totalQuestions}</div>
+                <div><span className="font-semibold text-slate-700">Mode:</span> Practice (Immediate Feedback)</div>
+                <div><span className="font-semibold text-slate-700">Format:</span> Multiple Choice</div>
+                <div><span className="font-semibold text-slate-700">Level:</span> Secondary 1 SA1</div>
+              </div>
+              <button 
+                onClick={() => setView('quiz')}
+                className="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold text-lg transition-colors flex items-center justify-center gap-2 mx-auto"
+              >
+                <Play className="w-5 h-5" /> Start Exam
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      if (view === 'results') {
+        const score = calculateScore();
+        const percentage = Math.round((score / totalQuestions) * 100);
+        return (
+          <div className="min-h-screen bg-slate-50 p-6 flex flex-col items-center py-12">
+            <div className="max-w-3xl w-full bg-white rounded-2xl shadow-xl p-8 text-center space-y-8">
+              <h2 className="text-3xl font-bold text-slate-800">Exam Results</h2>
+              
+              <div className="relative w-48 h-48 mx-auto flex items-center justify-center bg-indigo-50 rounded-full border-8 border-indigo-100">
+                <div className="text-center">
+                  <span className="text-5xl font-extrabold text-indigo-700">{percentage}%</span>
+                  <p className="text-indigo-600 font-medium mt-1">Score</p>
+                </div>
+              </div>
+
+              <div className="flex justify-center gap-8 text-lg">
+                <div className="flex flex-col items-center">
+                  <span className="text-3xl font-bold text-emerald-600">{score}</span>
+                  <span className="text-slate-500">Correct</span>
+                </div>
+                <div className="w-px bg-slate-200"></div>
+                <div className="flex flex-col items-center">
+                  <span className="text-3xl font-bold text-rose-600">{Object.keys(showFeedback).length - score}</span>
+                  <span className="text-slate-500">Incorrect</span>
+                </div>
+                <div className="w-px bg-slate-200"></div>
+                <div className="flex flex-col items-center">
+                  <span className="text-3xl font-bold text-slate-400">{totalQuestions - Object.keys(showFeedback).length}</span>
+                  <span className="text-slate-500">Skipped</span>
+                </div>
+              </div>
+
+              <div className="pt-8 border-t border-slate-100 flex flex-col sm:flex-row gap-4 justify-center">
+                <button 
+                  onClick={() => setView('quiz')}
+                  className="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium transition-colors"
+                >
+                  Review Answers
+                </button>
+                <button 
+                  onClick={restartQuiz}
+                  className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
+                >
+                  <RefreshCcw className="w-5 h-5" /> Retake Exam
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      const isAnswered = answers[currentIndex] !== undefined;
+      const hasChecked = showFeedback[currentIndex];
+      const selectedIsCorrect = isAnswered && question.answerOptions[answers[currentIndex]].isCorrect;
+
+      return (
+        <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row">
+          <div className="w-full md:w-80 bg-white border-r border-slate-200 flex flex-col h-auto md:h-screen md:sticky top-0 p-6 overflow-y-auto hidden md:flex shrink-0">
+            <h3 className="text-lg font-bold text-slate-800 mb-6">Question Navigator</h3>
+            <div className="flex flex-wrap gap-2 md:grid md:grid-cols-5 md:gap-2">
+              {quizData.map((q, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`
+                    w-10 h-10 md:w-auto md:h-10 rounded-lg text-sm font-semibold flex items-center justify-center border transition-all
+                    ${currentIndex === idx ? 'ring-2 ring-indigo-500 ring-offset-2' : ''}
+                    ${getQuestionStatusColor(idx)}
+                  `}
+                >
+                  {idx + 1}
+                </button>
+              ))}
+            </div>
+            <div className="mt-auto pt-8 hidden md:block">
+              <button 
+                onClick={() => setView('results')}
+                className="w-full py-3 bg-slate-800 hover:bg-slate-900 text-white rounded-xl font-semibold transition-colors"
+              >
+                Finish & View Results
+              </button>
+            </div>
+          </div>
+
+          <div className="flex-1 p-4 md:p-8 overflow-y-auto pb-24">
+            <div className="max-w-3xl mx-auto space-y-6">
+              
+              <div className="flex items-center justify-between">
+                <span className="text-indigo-600 font-bold tracking-wide uppercase text-sm">
+                  Question {currentIndex + 1} of {totalQuestions} <span className="text-slate-400 font-medium ml-2">({question.topic})</span>
+                </span>
+                <button 
+                  onClick={() => setView('results')}
+                  className="md:hidden text-sm font-medium text-slate-500 hover:text-slate-800 border border-slate-300 px-3 py-1 rounded"
+                >
+                  Finish
+                </button>
+              </div>
+
+              <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-indigo-500 transition-all duration-300"
+                  style={{ width: `${((currentIndex + 1) / totalQuestions) * 100}%` }}
+                ></div>
+              </div>
+
+              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div className="p-6 md:p-8">
+                  <h2 className="text-xl md:text-2xl text-slate-800 font-medium leading-relaxed mb-8">
+                    <FormattedText text={question.question} />
+                  </h2>
+
+                  <div className="space-y-3">
+                    {question.answerOptions.map((option, optIdx) => {
+                      const isSelected = answers[currentIndex] === optIdx;
+                      let optionClass = "border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 text-slate-700";
+                      let icon = null;
+
+                      if (hasChecked) {
+                        if (option.isCorrect) {
+                          optionClass = "border-emerald-500 bg-emerald-50 text-emerald-800 ring-1 ring-emerald-500";
+                          icon = <CheckCircle2 className="w-5 h-5 text-emerald-600 ml-auto" />;
+                        } else if (isSelected && !option.isCorrect) {
+                          optionClass = "border-rose-500 bg-rose-50 text-rose-800 ring-1 ring-rose-500";
+                          icon = <XCircle className="w-5 h-5 text-rose-600 ml-auto" />;
+                        } else {
+                          optionClass = "border-slate-200 opacity-60 bg-slate-50 text-slate-500";
+                        }
+                      } else if (isSelected) {
+                        optionClass = "border-indigo-500 bg-indigo-50 text-indigo-800 ring-1 ring-indigo-500";
+                      }
+
+                      return (
+                        <button
+                          key={optIdx}
+                          onClick={() => handleSelectOption(optIdx)}
+                          disabled={hasChecked}
+                          className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-center ${optionClass} ${hasChecked ? 'cursor-default' : 'cursor-pointer'}`}
+                        >
+                          <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 shrink-0
+                            ${isSelected ? (hasChecked && !option.isCorrect ? 'border-rose-500' : 'border-indigo-500') : 'border-slate-300'}
+                          `}>
+                            {isSelected && <div className={`w-2.5 h-2.5 rounded-full ${hasChecked && !option.isCorrect ? 'bg-rose-500' : 'bg-indigo-500'}`} />}
+                          </div>
+                          <span className="text-lg">
+                            <FormattedText text={option.text} />
+                          </span>
+                          {icon}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="bg-slate-50 p-6 border-t border-slate-100">
+                  <div className="flex flex-wrap gap-4 items-center justify-between">
+                    <button
+                      onClick={toggleHint}
+                      className="flex items-center gap-2 text-amber-600 hover:text-amber-700 font-medium bg-amber-50 px-4 py-2 rounded-lg transition-colors"
+                    >
+                      <Lightbulb className="w-5 h-5" />
+                      {showHint[currentIndex] ? 'Hide Hint' : 'Show Hint'}
+                    </button>
+
+                    {!hasChecked ? (
+                      <button
+                        onClick={handleCheckAnswer}
+                        disabled={!isAnswered}
+                        className={`px-6 py-2.5 rounded-lg font-semibold flex items-center gap-2 transition-all
+                          ${isAnswered 
+                            ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md hover:shadow-lg' 
+                            : 'bg-slate-200 text-slate-400 cursor-not-allowed'}`}
+                      >
+                        Check Answer
+                      </button>
+                    ) : (
+                      <div className={`px-4 py-2 rounded-lg font-semibold flex items-center gap-2 ${selectedIsCorrect ? 'text-emerald-700 bg-emerald-100' : 'text-rose-700 bg-rose-100'}`}>
+                        {selectedIsCorrect ? <><CheckCircle2 className="w-5 h-5" /> Correct</> : <><XCircle className="w-5 h-5" /> Incorrect</>}
+                      </div>
+                    )}
+                  </div>
+
+                  {showHint[currentIndex] && (
+                    <div className="mt-4 p-4 bg-amber-100 border border-amber-200 text-amber-800 rounded-xl flex gap-3 animate-in fade-in slide-in-from-top-2">
+                      <Lightbulb className="w-6 h-6 shrink-0 mt-0.5" />
+                      <p><FormattedText text={question.hint} /></p>
+                    </div>
+                  )}
+
+                  {hasChecked && (
+                    <div className="mt-4 space-y-3 animate-in fade-in slide-in-from-top-2">
+                      <h4 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Explanation</h4>
+                      <div className="p-4 bg-white border border-slate-200 rounded-xl text-slate-700 leading-relaxed shadow-sm">
+                        <p className="mb-3"><span className="font-semibold">Your selection:</span> <FormattedText text={question.answerOptions[answers[currentIndex]].rationale} /></p>
+                        
+                        {!selectedIsCorrect && (
+                           <p className="pt-3 border-t border-slate-100 text-emerald-700">
+                             <span className="font-semibold">Correct Answer:</span> <FormattedText text={question.answerOptions.find(o => o.isCorrect).rationale} />
+                           </p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-4">
+                <button
+                  onClick={handlePrev}
+                  disabled={currentIndex === 0}
+                  className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-colors
+                    ${currentIndex === 0 ? 'text-slate-400 cursor-not-allowed' : 'text-slate-700 bg-white hover:bg-slate-200 shadow-sm border border-slate-200'}`}
+                >
+                  <ChevronLeft className="w-5 h-5" /> Previous
+                </button>
+                
+                <button
+                  onClick={handleNext}
+                  disabled={currentIndex === totalQuestions - 1}
+                  className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-colors
+                    ${currentIndex === totalQuestions - 1 ? 'text-slate-400 cursor-not-allowed' : 'text-slate-700 bg-white hover:bg-slate-200 shadow-sm border border-slate-200'}`}
+                >
+                  Next <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- Sec 1 SA1 Mock Exam Data (20 Questions - Chapters 4 & 5) ---
+    const quizData = [
+      // --- CHAPTER 4 ---
+      {
+        "topic": "Algebraic Evaluation",
+        "questionNumber": 1,
+        "question": "Given that $x = -3$, $y = 2$, and $z = 4$, evaluate the expression $\\frac{2x - 9yz}{6}$.",
+        "answerOptions": [
+          { "text": "$-11$", "rationale": "This implies a sign error in evaluating $9yz$.", "isCorrect": false },
+          { "text": "$-13$", "rationale": "Substitute the values: $\\frac{2(-3) - 9(2)(4)}{6} = \\frac{-6 - 72}{6} = \\frac{-78}{6} = -13$.", "isCorrect": true },
+          { "text": "$11$", "rationale": "This implies adding the terms in the numerator instead of subtracting.", "isCorrect": false },
+          { "text": "$13$", "rationale": "This misses the overall negative sign.", "isCorrect": false }
+        ],
+        "hint": "Substitute the numbers carefully into the expression, using brackets to avoid sign errors, particularly with the negative value of x."
+      },
+      {
+        "topic": "Simplifying Expressions",
+        "questionNumber": 2,
+        "question": "Simplify the linear expression $8x + 5y - 3x - 4y$.",
+        "answerOptions": [
+          { "text": "$5x - y$", "rationale": "This incorrectly subtracts $5y - 4y$ to get $-y$.", "isCorrect": false },
+          { "text": "$11x + 9y$", "rationale": "This adds all the coefficients regardless of their signs.", "isCorrect": false },
+          { "text": "$5x + y$", "rationale": "Group the like terms: $(8x - 3x) + (5y - 4y) = 5x + 1y = 5x + y$.", "isCorrect": true },
+          { "text": "$11x - y$", "rationale": "This adds $8x$ and $3x$ instead of subtracting.", "isCorrect": false }
+        ],
+        "hint": "Group the terms with 'x' together and the terms with 'y' together, then combine their coefficients."
+      },
+      {
+        "topic": "Expanding Brackets",
+        "questionNumber": 3,
+        "question": "Expand and simplify $3(2a - b) + 5(a - 4b)$.",
+        "answerOptions": [
+          { "text": "$11a - 17b$", "rationale": "This implies distributing $5$ to $a$ but not correctly to $-4b$.", "isCorrect": false },
+          { "text": "$8a - 23b$", "rationale": "This implies incorrectly adding the $3$ and $5$ before expanding.", "isCorrect": false },
+          { "text": "$11a - 23b$", "rationale": "Expand the brackets: $6a - 3b + 5a - 20b$. Collect like terms: $(6a + 5a) + (-3b - 20b) = 11a - 23b$.", "isCorrect": true },
+          { "text": "$8a - 7b$", "rationale": "This implies errors in distributing both numbers.", "isCorrect": false }
+        ],
+        "hint": "Use the distributive law to multiply the numbers outside the brackets with every term inside the brackets first."
+      },
+      {
+        "topic": "Nested Brackets",
+        "questionNumber": 4,
+        "question": "Simplify the expression $5x - 2[3y - (4x - 7y)]$.",
+        "answerOptions": [
+          { "text": "$13x - 20y$", "rationale": "Inner bracket: $3y - 4x + 7y = 10y - 4x$. Outer expansion: $5x - 2[10y - 4x] = 5x - 20y + 8x = 13x - 20y$.", "isCorrect": true },
+          { "text": "$-3x - 20y$", "rationale": "This happens if you subtract $8x$ instead of adding it when distributing the $-2$.", "isCorrect": false },
+          { "text": "$13x + 8y$", "rationale": "This involves a sign error inside the inner bracket.", "isCorrect": false },
+          { "text": "$-3x + 8y$", "rationale": "This implies multiple sign errors when removing the brackets.", "isCorrect": false }
+        ],
+        "hint": "Start with the innermost brackets (the round ones). Remember that a minus sign in front of a bracket changes the signs of all terms inside."
+      },
+      {
+        "topic": "Algebraic Fractions",
+        "questionNumber": 5,
+        "question": "Express $\\frac{x}{2} - \\frac{3x + 1}{7}$ as a single fraction in its simplest form.",
+        "answerOptions": [
+          { "text": "$\\frac{-2x - 1}{14}$", "rationale": "This implies subtracting numerators directly without finding a common denominator.", "isCorrect": false },
+          { "text": "$\\frac{x + 2}{14}$", "rationale": "This implies an error in distributing the negative sign to the $+1$.", "isCorrect": false },
+          { "text": "$\\frac{x - 2}{14}$", "rationale": "LCM is $14$. Multiply first fraction by $7/7$ and second by $2/2$. $\\frac{7x - 2(3x + 1)}{14} = \\frac{7x - 6x - 2}{14} = \\frac{x - 2}{14}$.", "isCorrect": true },
+          { "text": "$\\frac{4x - 2}{14}$", "rationale": "This implies a subtraction error when calculating $7x - 6x$.", "isCorrect": false }
+        ],
+        "hint": "Find the Lowest Common Multiple (LCM) for the denominators, which is 14. Be very careful with the negative sign when expanding the numerator!"
+      },
+      {
+        "topic": "Algebraic Fractions",
+        "questionNumber": 6,
+        "question": "Express $\\frac{2(x - 1)}{3} + \\frac{3(2x - 3)}{4}$ as a single fraction.",
+        "answerOptions": [
+          { "text": "$\\frac{26x - 17}{12}$", "rationale": "This happens if you do not multiply the constants inside the brackets correctly.", "isCorrect": false },
+          { "text": "$\\frac{10x - 11}{12}$", "rationale": "This implies an arithmetic error in expanding the brackets.", "isCorrect": false },
+          { "text": "$\\frac{26x - 35}{12}$", "rationale": "LCM is $12$. $\\frac{4[2(x - 1)] + 3[3(2x - 3)]}{12} = \\frac{8(x - 1) + 9(2x - 3)}{12} = \\frac{8x - 8 + 18x - 27}{12} = \\frac{26x - 35}{12}$.", "isCorrect": true },
+          { "text": "$\\frac{14x - 35}{12}$", "rationale": "This implies adding $8x$ and $18x$ incorrectly.", "isCorrect": false }
+        ],
+        "hint": "Find a common denominator (12). Remember to multiply the numbers outside the brackets before expanding them."
+      },
+      {
+        "topic": "Factorisation",
+        "questionNumber": 7,
+        "question": "Factorise the algebraic expression completely: $15a^2bc - 20a^2b^2c^3 + 5abc$.",
+        "answerOptions": [
+          { "text": "$5abc(3a - 4abc^2)$", "rationale": "This completely drops the final term ($+1$) when factoring out $5abc$.", "isCorrect": false },
+          { "text": "$5a^2bc(3 - 4bc^2 + c)$", "rationale": "This incorrectly extracts $a^2$ as a common factor, but the last term only has $a^1$.", "isCorrect": false },
+          { "text": "$5bc(3a^2 - 4a^2bc^2 + a)$", "rationale": "This does not extract the common factor '$a$', meaning it is not factorised completely.", "isCorrect": false },
+          { "text": "$5abc(3a - 4abc^2 + 1)$", "rationale": "The Highest Common Factor is $5abc$. Extracting this leaves: $3a$ from the first term, $-4abc^2$ from the second, and $+1$ from the third.", "isCorrect": true }
+        ],
+        "hint": "Identify the Highest Common Factor (HCF) for the numbers (15, 20, 5), and then find the lowest power of each variable (a, b, c) present in every term."
+      },
+      {
+        "topic": "Factorisation by Grouping",
+        "questionNumber": 8,
+        "question": "Factorise the following expression: $2x(a + 2b - c) - 5y(a + 2b - c)$.",
+        "answerOptions": [
+          { "text": "$(a + 2b - c)(2x + 5y)$", "rationale": "This incorrectly changes the $-5y$ to $+5y$.", "isCorrect": false },
+          { "text": "$(2x - 5y)(a - 2b + c)$", "rationale": "This incorrectly alters the signs inside the common bracket.", "isCorrect": false },
+          { "text": "$(a + 2b - c)(2x - 5y)$", "rationale": "The expression $(a + 2b - c)$ is a common factor to both terms. Extracting it leaves $(2x - 5y)$.", "isCorrect": true },
+          { "text": "$10xy(a + 2b - c)$", "rationale": "This implies multiplying the outer terms instead of grouping them.", "isCorrect": false }
+        ],
+        "hint": "Look for the block of terms in the brackets that is exactly the same in both halves of the expression. You can extract that entire bracket just like you would a single variable."
+      },
+      {
+        "topic": "Algebra in Real-World Contexts",
+        "questionNumber": 9,
+        "question": "The total cost of $x$ doughnuts and $y$ cupcakes is $\\$p$ and $\\$q$ respectively. Express the cost of $1$ doughnut in terms of $x$, $y$, $p$, and/or $q$.",
+        "answerOptions": [
+          { "text": "$\\frac{x}{p}$", "rationale": "This is the number of doughnuts per dollar, not the cost per doughnut.", "isCorrect": false },
+          { "text": "$px$", "rationale": "This implies multiplying the quantity by the total cost.", "isCorrect": false },
+          { "text": "$\\frac{p}{x}$", "rationale": "If $x$ doughnuts cost $\\$p$ in total, then the cost of a single doughnut is the total cost divided by the quantity, which is $\\frac{p}{x}$.", "isCorrect": true },
+          { "text": "$p - x$", "rationale": "This implies subtracting quantity from cost.", "isCorrect": false }
+        ],
+        "hint": "If 5 apples cost $10, one apple costs $10 divided by 5. Apply this logic to the algebra."
+      },
+      {
+        "topic": "Algebraic Geometry",
+        "questionNumber": 10,
+        "question": "The perimeter of a rectangle is $(10x + 4y - 8)$ cm and its breadth is $(2x + y)$ cm. Find the length of the rectangle in terms of $x$ and $y$.",
+        "answerOptions": [
+          { "text": "$(8x + 3y - 8)$ cm", "rationale": "This simply subtracts one breadth from the perimeter.", "isCorrect": false },
+          { "text": "$(5x + 2y - 4)$ cm", "rationale": "This is half of the perimeter, which represents (Length + Breadth), not just the Length.", "isCorrect": false },
+          { "text": "$(6x + 2y - 8)$ cm", "rationale": "This subtracts two breadths from the perimeter but forgets to divide the remaining value by 2 to find a single length.", "isCorrect": false },
+          { "text": "$(3x + y - 4)$ cm", "rationale": "Perimeter $= 2L + 2B$. So, $10x + 4y - 8 = 2L + 2(2x + y)$. This gives $10x + 4y - 8 = 2L + 4x + 2y$. Subtracting the breadths gives $2L = 6x + 2y - 8$. Divide by 2: $L = 3x + y - 4$.", "isCorrect": true }
+        ],
+        "hint": "The formula for the perimeter of a rectangle is $P = 2 \\times \\text{Length} + 2 \\times \\text{Breadth}$. Substitute what you know and solve for Length."
+      },
+
+      // --- CHAPTER 5 ---
+      {
+        "topic": "Linear Equations",
+        "questionNumber": 11,
+        "question": "Solve the linear equation: $5x + 4 = 18 - 2x$.",
+        "answerOptions": [
+          { "text": "$x = \\frac{14}{3}$", "rationale": "This happens if you subtract $2x$ from $5x$ instead of adding it when moving across the equals sign.", "isCorrect": false },
+          { "text": "$x = -2$", "rationale": "This happens if you move $18$ to the left as $-18$ and calculate $4 - 18$ but mess up the signs.", "isCorrect": false },
+          { "text": "$x = 2$", "rationale": "Add $2x$ to both sides: $7x + 4 = 18$. Subtract $4$ from both sides: $7x = 14$. Divide by $7$: $x = 2$.", "isCorrect": true },
+          { "text": "$x = \\frac{22}{7}$", "rationale": "This happens if you add $4$ to $18$ instead of subtracting it.", "isCorrect": false }
+        ],
+        "hint": "Group all the terms with $x$ on one side of the equation and all the constant numbers on the other side."
+      },
+      {
+        "topic": "Equations with Brackets",
+        "questionNumber": 12,
+        "question": "Solve the equation: $3(x - 2.5) = 6$.",
+        "answerOptions": [
+          { "text": "$x = 0.5$", "rationale": "This implies an arithmetic error after expanding.", "isCorrect": false },
+          { "text": "$x = 2.5$", "rationale": "This happens if you subtract $2$ from $4.5$ instead of $2.5$.", "isCorrect": false },
+          { "text": "$x = 8.5$", "rationale": "This implies adding $2.5$ to $6$ before dividing by $3$.", "isCorrect": false },
+          { "text": "$x = 4.5$", "rationale": "Divide both sides by 3: $x - 2.5 = 2$. Add 2.5 to both sides: $x = 4.5$. Alternatively, expand: $3x - 7.5 = 6 \\Rightarrow 3x = 13.5 \\Rightarrow x = 4.5$.", "isCorrect": true }
+        ],
+        "hint": "You can either expand the bracket first, or divide both sides of the equation by 3 as your first step."
+      },
+      {
+        "topic": "Fractional Equations",
+        "questionNumber": 13,
+        "question": "Solve the fractional equation: $\\frac{2x - 1}{3} = \\frac{x + 2}{4}$.",
+        "answerOptions": [
+          { "text": "$x = 10$", "rationale": "This happens if you miscalculate $6 + 4$ or $8x - 3x$.", "isCorrect": false },
+          { "text": "$x = 2$", "rationale": "Cross-multiply: $4(2x - 1) = 3(x + 2)$. Expand: $8x - 4 = 3x + 6$. Group terms: $8x - 3x = 6 + 4 \\Rightarrow 5x = 10 \\Rightarrow x = 2$.", "isCorrect": true },
+          { "text": "$x = -2$", "rationale": "This happens if you move $+4$ to the right as $-4$.", "isCorrect": false },
+          { "text": "$x = \\frac{2}{5}$", "rationale": "This implies a division error at the final step.", "isCorrect": false }
+        ],
+        "hint": "Use the cross-multiplication method to remove the fractions, then expand the brackets."
+      },
+      {
+        "topic": "Fractional Equations",
+        "questionNumber": 14,
+        "question": "Solve the equation: $\\frac{x}{3} - \\frac{2x}{5} = \\frac{x}{2} + \\frac{3}{10}$.",
+        "answerOptions": [
+          { "text": "$x = \\frac{9}{17}$", "rationale": "This misses the negative sign when isolating $x$.", "isCorrect": false },
+          { "text": "$x = -9$", "rationale": "This is an arithmetic error during the simplification of the $x$ terms.", "isCorrect": false },
+          { "text": "$x = -\\frac{9}{17}$", "rationale": "Multiply the entire equation by the LCM (30): $10x - 12x = 15x + 9$. Simplify: $-2x = 15x + 9$. Subtract $15x$: $-17x = 9$. Divide by $-17$: $x = -\\frac{9}{17}$.", "isCorrect": true },
+          { "text": "$x = \\frac{17}{9}$", "rationale": "This inverses the final division step.", "isCorrect": false }
+        ],
+        "hint": "Find the Lowest Common Multiple (LCM) for all the denominators (3, 5, 2, 10). Multiply every single term in the equation by this LCM to eliminate the fractions."
+      },
+      {
+        "topic": "Fractional Equations",
+        "questionNumber": 15,
+        "question": "Solve for $x$: $\\frac{5}{2x - 1} = 3$.",
+        "answerOptions": [
+          { "text": "$x = \\frac{3}{4}$", "rationale": "This implies an arithmetic error.", "isCorrect": false },
+          { "text": "$x = 2$", "rationale": "This happens if you evaluate $5 + 3$ as $8$, but miscalculate $8 / 6$.", "isCorrect": false },
+          { "text": "$x = 1\\frac{1}{3}$", "rationale": "Multiply both sides by $(2x - 1)$: $5 = 3(2x - 1)$. Expand: $5 = 6x - 3$. Add 3 to both sides: $8 = 6x$. Divide by 6: $x = \\frac{8}{6} = \\frac{4}{3} = 1\\frac{1}{3}$.", "isCorrect": true },
+          { "text": "$x = \\frac{2}{3}$", "rationale": "This happens if you subtract 3 from 5 instead of adding it.", "isCorrect": false }
+        ],
+        "hint": "Multiply both sides of the equation by the denominator $(2x - 1)$ to bring the $x$ out of the fraction."
+      },
+      {
+        "topic": "Formula Substitution",
+        "questionNumber": 16,
+        "question": "Given the formula $v^2 = u^2 + 2at$, find the value of $a$ when $t = 3$, $u = -4$, and $v = 5$.",
+        "answerOptions": [
+          { "text": "$3$", "rationale": "This is a calculation error.", "isCorrect": false },
+          { "text": "$0.5$", "rationale": "This happens if you evaluate $(-4)^2$ as $-16$ and add it to $25$.", "isCorrect": false },
+          { "text": "$4.5$", "rationale": "This implies an error in dividing by $6$.", "isCorrect": false },
+          { "text": "$1.5$", "rationale": "Substitute values: $5^2 = (-4)^2 + 2a(3)$. This gives $25 = 16 + 6a$. Subtract 16: $9 = 6a$. Divide by 6: $a = \\frac{9}{6} = 1.5$.", "isCorrect": true }
+        ],
+        "hint": "Substitute the numbers into the formula carefully. Remember that $(-4)^2$ is positive 16."
+      },
+      {
+        "topic": "Age Word Problems",
+        "questionNumber": 17,
+        "question": "A father is $27$ years older than his son. In $12$ years' time, he will be twice as old as his son. What is the son's present age?",
+        "answerOptions": [
+          { "text": "$12$ years old", "rationale": "This is the number of years in the future, not the son's age.", "isCorrect": false },
+          { "text": "$27$ years old", "rationale": "This is the age difference between the father and son.", "isCorrect": false },
+          { "text": "$15$ years old", "rationale": "Let son's age $= x$. Father's age $= x + 27$. In 12 years, son $= x + 12$ and father $= x + 39$. Equation: $x + 39 = 2(x + 12)$. Expand: $x + 39 = 2x + 24$. Solve: $x = 15$.", "isCorrect": true },
+          { "text": "$42$ years old", "rationale": "This is the father's current age.", "isCorrect": false }
+        ],
+        "hint": "Let the son's current age be $x$. Write an expression for the father's current age. Then, add 12 to BOTH ages to build the equation for the future scenario."
+      },
+      {
+        "topic": "Number Word Problems",
+        "questionNumber": 18,
+        "question": "Find two consecutive odd integers such that the sum of the smaller integer and twice the greater integer is $85$.",
+        "answerOptions": [
+          { "text": "$25$ and $27$", "rationale": "Check: $25 + 2(27) = 25 + 54 = 79$, which is not 85.", "isCorrect": false },
+          { "text": "$29$ and $31$", "rationale": "Check: $29 + 2(31) = 29 + 62 = 91$, which is not 85.", "isCorrect": false },
+          { "text": "$31$ and $33$", "rationale": "Check: $31 + 2(33) = 31 + 66 = 97$, which is not 85.", "isCorrect": false },
+          { "text": "$27$ and $29$", "rationale": "Let the smaller odd integer be $x$ and the next be $x + 2$. Equation: $x + 2(x + 2) = 85$. Expand: $x + 2x + 4 = 85 \\Rightarrow 3x = 81 \\Rightarrow x = 27$. The integers are 27 and 29.", "isCorrect": true }
+        ],
+        "hint": "If the first odd integer is $x$, the next consecutive odd integer must be $(x + 2)$. Build your equation using these two terms."
+      },
+      {
+        "topic": "Fraction Word Problems",
+        "questionNumber": 19,
+        "question": "The numerator of a fraction is $4$ less than the denominator. If $1$ is added to both the numerator and the denominator, the fraction becomes $\\frac{1}{2}$. Find the original fraction.",
+        "answerOptions": [
+          { "text": "$\\frac{4}{8}$", "rationale": "The difference between 4 and 8 is 4, but adding 1 to both gives $\\frac{5}{9}$, not $\\frac{1}{2}$.", "isCorrect": false },
+          { "text": "$\\frac{2}{6}$", "rationale": "The difference is 4, but adding 1 to both gives $\\frac{3}{7}$, not $\\frac{1}{2}$.", "isCorrect": false },
+          { "text": "$\\frac{3}{7}$", "rationale": "Let the denominator be $x$. The numerator is $x - 4$. Adding 1 to both: $\\frac{x - 4 + 1}{x + 1} = \\frac{1}{2} \\Rightarrow \\frac{x - 3}{x + 1} = \\frac{1}{2}$. Cross-multiply: $2(x - 3) = x + 1 \\Rightarrow 2x - 6 = x + 1 \\Rightarrow x = 7$. Denominator is $7$, numerator is $3$. Original fraction is $\\frac{3}{7}$.", "isCorrect": true },
+          { "text": "$\\frac{5}{9}$", "rationale": "The difference is 4, but adding 1 gives $\\frac{6}{10}$, which is $\\frac{3}{5}$.", "isCorrect": false }
+        ],
+        "hint": "Let the denominator be $x$. That makes the numerator $(x - 4)$. Add 1 to both the top and bottom expressions, set it equal to $1/2$, and cross-multiply."
+      },
+      {
+        "topic": "Multi-Step Word Problems",
+        "questionNumber": 20,
+        "question": "George spent $\\frac{1}{5}$ of his money on a T-shirt, then $\\frac{1}{4}$ of his remaining money on a pair of shoes. He then spent $\\frac{1}{3}$ of what he had left on a knapsack. He spent his last $\\$96$ on a tennis racket. How much money did he have initially?",
+        "answerOptions": [
+          { "text": "$\\$320$", "rationale": "This happens if fractions of the *total* are taken instead of fractions of the *remainder*.", "isCorrect": false },
+          { "text": "$\\$180$", "rationale": "This implies a calculation error when working backwards.", "isCorrect": false },
+          { "text": "$\\$240$", "rationale": "Let initial money be $x$. After T-shirt: leaves $\\frac{4}{5}x$. Shoes take $\\frac{1}{4}$ of that, leaving $\\frac{3}{4}$ of the remainder: $\\frac{3}{4} \\times \\frac{4}{5}x = \\frac{3}{5}x$. Knapsack takes $\\frac{1}{3}$, leaving $\\frac{2}{3}$ of that remainder: $\\frac{2}{3} \\times \\frac{3}{5}x = \\frac{2}{5}x$. The last $\\frac{2}{5}x = 96 \\Rightarrow x = \\frac{96 \\times 5}{2} = 240$.", "isCorrect": true },
+          { "text": "$\\$400$", "rationale": "This implies incorrect fraction multiplication.", "isCorrect": false }
+        ],
+        "hint": "Calculate the *fraction of money remaining* after each purchase. For example, if he spends $1/5$, he has $4/5$ left. Then he spends $1/4$ of that $4/5$..."
+      }
+    ];
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
