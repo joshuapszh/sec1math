@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sec 1 Math Mock Exam - Chapters 6 & 7</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // --- Inline SVG Icons ---
+    const CheckCircle2 = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+    );
+    const XCircle = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+    );
+    const Lightbulb = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>
+    );
+    const RefreshCcw = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 21v-5h5"></path></svg>
+    );
+    const Play = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+    );
+    const ChevronLeft = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m15 18-6-6 6-6"></path></svg>
+    );
+    const ChevronRight = ({ className }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m9 18 6-6-6-6"></path></svg>
+    );
+
+    // --- Custom component to render inline math enclosed in $ $ ---
+    const FormattedText = ({ text }) => {
+      if (!text) return null;
+      const parts = text.split(/\$(.*?)\$/g);
+      return (
+        <span>
+          {parts.map((part, index) => {
+            if (index % 2 === 1) {
+              let html = part
+                .replace(/\\times/g, ' &times; ')
+                .replace(/\\div/g, ' &divide; ')
+                .replace(/\\Rightarrow/g, ' &rArr; ')
+                .replace(/\\le/g, ' &le; ')
+                .replace(/\\ge/g, ' &ge; ')
+                .replace(/\\pm/g, ' &plusmn; ')
+                .replace(/\\pi/g, '&pi;')
+                .replace(/\^\\circ/g, '&deg;')
+                .replace(/\\approx/g, '&asymp;')
+                .replace(/\\text\{([^}]+)\}/g, '<span class="font-sans text-[0.9em]">$1</span>')
+                .replace(/\\sqrt\{([^}]+)\}/g, '<span class="whitespace-nowrap">&radic;<span class="border-t border-slate-700 ml-[1px] pt-[1px]">$1</span></span>')
+                .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '<span class="inline-flex flex-col align-middle text-center mx-1" style="font-size: 0.85em; line-height: 1.2;"><span class="border-b border-slate-700 px-0.5">$1</span><span class="px-0.5">$2</span></span>')
+                .replace(/\^\{([^}]+)\}/g, '<sup class="text-[0.75em]">$1</sup>')
+                .replace(/\^([a-zA-Z0-9])/g, '<sup class="text-[0.75em]">$1</sup>');
+
+              return (
+                <span
+                  key={index}
+                  className="font-serif text-[1.1em] text-slate-800 tracking-wide mx-0.5"
+                  dangerouslySetInnerHTML={{ __html: html }}
+                />
+              );
+            }
+            return <span key={index}>{part}</span>;
+          })}
+        </span>
+      );
+    };
+
+    // --- Main App Component ---
+    function App() {
+      const [view, setView] = useState('start'); 
+      const [currentIndex, setCurrentIndex] = useState(0);
+      const [answers, setAnswers] = useState({});
+      const [showFeedback, setShowFeedback] = useState({});
+      const [showHint, setShowHint] = useState({});
+
+      const question = quizData[currentIndex];
+      const totalQuestions = quizData.length;
+
+      // Scroll to top when question changes
+      useEffect(() => {
+        window.scrollTo(0, 0);
+      }, [currentIndex, view]);
+
+      const handleSelectOption = (optionIndex) => {
+        if (showFeedback[currentIndex]) return;
+        setAnswers({ ...answers, [currentIndex]: optionIndex });
+      };
+
+      const handleCheckAnswer = () => {
+        if (answers[currentIndex] !== undefined) {
+          setShowFeedback({ ...showFeedback, [currentIndex]: true });
+        }
+      };
+
+      const handleNext = () => {
+        if (currentIndex < totalQuestions - 1) setCurrentIndex(currentIndex + 1);
+      };
+
+      const handlePrev = () => {
+        if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
+      };
+
+      const toggleHint = () => {
+        setShowHint({ ...showHint, [currentIndex]: !showHint[currentIndex] });
+      };
+
+      const calculateScore = () => {
+        let score = 0;
+        Object.keys(showFeedback).forEach((key) => {
+          const qIndex = parseInt(key, 10);
+          const selectedOption = answers[qIndex];
+          if (selectedOption !== undefined && quizData[qIndex].answerOptions[selectedOption].isCorrect) {
+            score++;
+          }
+        });
+        return score;
+      };
+
+      const restartQuiz = () => {
+        setAnswers({});
+        setShowFeedback({});
+        setShowHint({});
+        setCurrentIndex(0);
+        setView('start');
+      };
+
+      const getQuestionStatusColor = (index) => {
+        if (!showFeedback[index]) return 'bg-slate-100 text-slate-600 hover:bg-slate-200 border-slate-200';
+        const isCorrect = quizData[index].answerOptions[answers[index]].isCorrect;
+        return isCorrect 
+          ? 'bg-emerald-100 text-emerald-700 border-emerald-300' 
+          : 'bg-rose-100 text-rose-700 border-rose-300';
+      };
+
+      if (view === 'start') {
+        return (
+          <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6">
+            <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl p-8 text-center space-y-6">
+              <div className="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="w-10 h-10 text-indigo-600" />
+              </div>
+              <h1 className="text-4xl font-bold text-slate-800">Sec 1 Math SA1 Mock Exam</h1>
+              <span className="bg-rose-100 text-rose-700 font-semibold px-3 py-1 rounded-full text-sm inline-block mx-auto">Chapters 6 & 7</span>
+              <p className="text-lg text-slate-600">
+                A 20-question mock exam covering Linear Functions & Graphs, and Number Patterns based on the latest topics.
+              </p>
+              <div className="grid grid-cols-2 gap-4 text-left bg-slate-50 p-6 rounded-xl border border-slate-100 mb-8">
+                <div><span className="font-semibold text-slate-700">Questions:</span> {totalQuestions}</div>
+                <div><span className="font-semibold text-slate-700">Mode:</span> Practice (Immediate Feedback)</div>
+                <div><span className="font-semibold text-slate-700">Format:</span> Multiple Choice</div>
+                <div><span className="font-semibold text-slate-700">Level:</span> Secondary 1 SA1</div>
+              </div>
+              <button 
+                onClick={() => setView('quiz')}
+                className="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold text-lg transition-colors flex items-center justify-center gap-2 mx-auto"
+              >
+                <Play className="w-5 h-5" /> Start Exam
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      if (view === 'results') {
+        const score = calculateScore();
+        const percentage = Math.round((score / totalQuestions) * 100);
+        return (
+          <div className="min-h-screen bg-slate-50 p-6 flex flex-col items-center py-12">
+            <div className="max-w-3xl w-full bg-white rounded-2xl shadow-xl p-8 text-center space-y-8">
+              <h2 className="text-3xl font-bold text-slate-800">Exam Results</h2>
+              
+              <div className="relative w-48 h-48 mx-auto flex items-center justify-center bg-indigo-50 rounded-full border-8 border-indigo-100">
+                <div className="text-center">
+                  <span className="text-5xl font-extrabold text-indigo-700">{percentage}%</span>
+                  <p className="text-indigo-600 font-medium mt-1">Score</p>
+                </div>
+              </div>
+
+              <div className="flex justify-center gap-8 text-lg">
+                <div className="flex flex-col items-center">
+                  <span className="text-3xl font-bold text-emerald-600">{score}</span>
+                  <span className="text-slate-500">Correct</span>
+                </div>
+                <div className="w-px bg-slate-200"></div>
+                <div className="flex flex-col items-center">
+                  <span className="text-3xl font-bold text-rose-600">{Object.keys(showFeedback).length - score}</span>
+                  <span className="text-slate-500">Incorrect</span>
+                </div>
+                <div className="w-px bg-slate-200"></div>
+                <div className="flex flex-col items-center">
+                  <span className="text-3xl font-bold text-slate-400">{totalQuestions - Object.keys(showFeedback).length}</span>
+                  <span className="text-slate-500">Skipped</span>
+                </div>
+              </div>
+
+              <div className="pt-8 border-t border-slate-100 flex flex-col sm:flex-row gap-4 justify-center">
+                <button 
+                  onClick={() => setView('quiz')}
+                  className="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium transition-colors"
+                >
+                  Review Answers
+                </button>
+                <button 
+                  onClick={restartQuiz}
+                  className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
+                >
+                  <RefreshCcw className="w-5 h-5" /> Retake Exam
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      const isAnswered = answers[currentIndex] !== undefined;
+      const hasChecked = showFeedback[currentIndex];
+      const selectedIsCorrect = isAnswered && question.answerOptions[answers[currentIndex]].isCorrect;
+
+      return (
+        <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row">
+          <div className="w-full md:w-80 bg-white border-r border-slate-200 flex flex-col h-auto md:h-screen md:sticky top-0 p-6 overflow-y-auto hidden md:flex shrink-0">
+            <h3 className="text-lg font-bold text-slate-800 mb-6">Question Navigator</h3>
+            <div className="flex flex-wrap gap-2 md:grid md:grid-cols-5 md:gap-2">
+              {quizData.map((q, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`
+                    w-10 h-10 md:w-auto md:h-10 rounded-lg text-sm font-semibold flex items-center justify-center border transition-all
+                    ${currentIndex === idx ? 'ring-2 ring-indigo-500 ring-offset-2' : ''}
+                    ${getQuestionStatusColor(idx)}
+                  `}
+                >
+                  {idx + 1}
+                </button>
+              ))}
+            </div>
+            <div className="mt-auto pt-8 hidden md:block">
+              <button 
+                onClick={() => setView('results')}
+                className="w-full py-3 bg-slate-800 hover:bg-slate-900 text-white rounded-xl font-semibold transition-colors"
+              >
+                Finish & View Results
+              </button>
+            </div>
+          </div>
+
+          <div className="flex-1 p-4 md:p-8 overflow-y-auto pb-24">
+            <div className="max-w-3xl mx-auto space-y-6">
+              
+              <div className="flex items-center justify-between">
+                <span className="text-indigo-600 font-bold tracking-wide uppercase text-sm">
+                  Question {currentIndex + 1} of {totalQuestions} <span className="text-slate-400 font-medium ml-2">({question.topic})</span>
+                </span>
+                <button 
+                  onClick={() => setView('results')}
+                  className="md:hidden text-sm font-medium text-slate-500 hover:text-slate-800 border border-slate-300 px-3 py-1 rounded"
+                >
+                  Finish
+                </button>
+              </div>
+
+              <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-indigo-500 transition-all duration-300"
+                  style={{ width: `${((currentIndex + 1) / totalQuestions) * 100}%` }}
+                ></div>
+              </div>
+
+              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div className="p-6 md:p-8">
+                  <h2 className="text-xl md:text-2xl text-slate-800 font-medium leading-relaxed mb-8">
+                    <FormattedText text={question.question} />
+                  </h2>
+
+                  <div className="space-y-3">
+                    {question.answerOptions.map((option, optIdx) => {
+                      const isSelected = answers[currentIndex] === optIdx;
+                      let optionClass = "border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 text-slate-700";
+                      let icon = null;
+
+                      if (hasChecked) {
+                        if (option.isCorrect) {
+                          optionClass = "border-emerald-500 bg-emerald-50 text-emerald-800 ring-1 ring-emerald-500";
+                          icon = <CheckCircle2 className="w-5 h-5 text-emerald-600 ml-auto" />;
+                        } else if (isSelected && !option.isCorrect) {
+                          optionClass = "border-rose-500 bg-rose-50 text-rose-800 ring-1 ring-rose-500";
+                          icon = <XCircle className="w-5 h-5 text-rose-600 ml-auto" />;
+                        } else {
+                          optionClass = "border-slate-200 opacity-60 bg-slate-50 text-slate-500";
+                        }
+                      } else if (isSelected) {
+                        optionClass = "border-indigo-500 bg-indigo-50 text-indigo-800 ring-1 ring-indigo-500";
+                      }
+
+                      return (
+                        <button
+                          key={optIdx}
+                          onClick={() => handleSelectOption(optIdx)}
+                          disabled={hasChecked}
+                          className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-center ${optionClass} ${hasChecked ? 'cursor-default' : 'cursor-pointer'}`}
+                        >
+                          <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 shrink-0
+                            ${isSelected ? (hasChecked && !option.isCorrect ? 'border-rose-500' : 'border-indigo-500') : 'border-slate-300'}
+                          `}>
+                            {isSelected && <div className={`w-2.5 h-2.5 rounded-full ${hasChecked && !option.isCorrect ? 'bg-rose-500' : 'bg-indigo-500'}`} />}
+                          </div>
+                          <span className="text-lg">
+                            <FormattedText text={option.text} />
+                          </span>
+                          {icon}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="bg-slate-50 p-6 border-t border-slate-100">
+                  <div className="flex flex-wrap gap-4 items-center justify-between">
+                    <button
+                      onClick={toggleHint}
+                      className="flex items-center gap-2 text-amber-600 hover:text-amber-700 font-medium bg-amber-50 px-4 py-2 rounded-lg transition-colors"
+                    >
+                      <Lightbulb className="w-5 h-5" />
+                      {showHint[currentIndex] ? 'Hide Hint' : 'Show Hint'}
+                    </button>
+
+                    {!hasChecked ? (
+                      <button
+                        onClick={handleCheckAnswer}
+                        disabled={!isAnswered}
+                        className={`px-6 py-2.5 rounded-lg font-semibold flex items-center gap-2 transition-all
+                          ${isAnswered 
+                            ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md hover:shadow-lg' 
+                            : 'bg-slate-200 text-slate-400 cursor-not-allowed'}`}
+                      >
+                        Check Answer
+                      </button>
+                    ) : (
+                      <div className={`px-4 py-2 rounded-lg font-semibold flex items-center gap-2 ${selectedIsCorrect ? 'text-emerald-700 bg-emerald-100' : 'text-rose-700 bg-rose-100'}`}>
+                        {selectedIsCorrect ? <><CheckCircle2 className="w-5 h-5" /> Correct</> : <><XCircle className="w-5 h-5" /> Incorrect</>}
+                      </div>
+                    )}
+                  </div>
+
+                  {showHint[currentIndex] && (
+                    <div className="mt-4 p-4 bg-amber-100 border border-amber-200 text-amber-800 rounded-xl flex gap-3 animate-in fade-in slide-in-from-top-2">
+                      <Lightbulb className="w-6 h-6 shrink-0 mt-0.5" />
+                      <p><FormattedText text={question.hint} /></p>
+                    </div>
+                  )}
+
+                  {hasChecked && (
+                    <div className="mt-4 space-y-3 animate-in fade-in slide-in-from-top-2">
+                      <h4 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Explanation</h4>
+                      <div className="p-4 bg-white border border-slate-200 rounded-xl text-slate-700 leading-relaxed shadow-sm">
+                        <p className="mb-3"><span className="font-semibold">Your selection:</span> <FormattedText text={question.answerOptions[answers[currentIndex]].rationale} /></p>
+                        
+                        {!selectedIsCorrect && (
+                           <p className="pt-3 border-t border-slate-100 text-emerald-700">
+                             <span className="font-semibold">Correct Answer:</span> <FormattedText text={question.answerOptions.find(o => o.isCorrect).rationale} />
+                           </p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-4">
+                <button
+                  onClick={handlePrev}
+                  disabled={currentIndex === 0}
+                  className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-colors
+                    ${currentIndex === 0 ? 'text-slate-400 cursor-not-allowed' : 'text-slate-700 bg-white hover:bg-slate-200 shadow-sm border border-slate-200'}`}
+                >
+                  <ChevronLeft className="w-5 h-5" /> Previous
+                </button>
+                
+                <button
+                  onClick={handleNext}
+                  disabled={currentIndex === totalQuestions - 1}
+                  className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-colors
+                    ${currentIndex === totalQuestions - 1 ? 'text-slate-400 cursor-not-allowed' : 'text-slate-700 bg-white hover:bg-slate-200 shadow-sm border border-slate-200'}`}
+                >
+                  Next <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- Sec 1 SA1 Mock Exam Data (20 Questions - Chapters 6 & 7) ---
+    const quizData = [
+      // --- CHAPTER 6: Linear Functions & Graphs ---
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 1,
+        "question": "Find the distance between the coordinates $(0, -3)$ and $(0, 5)$.",
+        "answerOptions": [
+          { "text": "$2$ units", "rationale": "This implies adding $-3$ and $5$ instead of finding the distance between them.", "isCorrect": false },
+          { "text": "$8$ units", "rationale": "Because the x-coordinates are both 0, the points lie on a vertical line. The distance is the difference in y-values: $5 - (-3) = 8$ units.", "isCorrect": true },
+          { "text": "$-8$ units", "rationale": "Distance must always be a positive measurement.", "isCorrect": false },
+          { "text": "$15$ units", "rationale": "This implies multiplying the non-zero coordinates.", "isCorrect": false }
+        ],
+        "hint": "Since both x-coordinates are the same, you can simply find the absolute difference between the y-coordinates."
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 2,
+        "question": "The straight line $y = -3x + c$ passes through the point $(1, 2)$. Find the value of $c$.",
+        "answerOptions": [
+          { "text": "$5$", "rationale": "Substitute the point $(1, 2)$ into the equation: $2 = -3(1) + c \\Rightarrow 2 = -3 + c$. Adding $3$ to both sides gives $c = 5$.", "isCorrect": true },
+          { "text": "$-1$", "rationale": "This happens if you subtract 3 from 2 instead of adding it.", "isCorrect": false },
+          { "text": "$-5$", "rationale": "This happens if you plug $x=2$ and $y=1$ incorrectly.", "isCorrect": false },
+          { "text": "$1$", "rationale": "This implies setting $c$ equal to $x$.", "isCorrect": false }
+        ],
+        "hint": "Substitute the $x$-value ($1$) and $y$-value ($2$) from the coordinate pair into the equation, then solve for $c$."
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 3,
+        "question": "What is the gradient (slope) of the line represented by the equation $3x + 2y = 12$?",
+        "answerOptions": [
+          { "text": "$3$", "rationale": "This is the coefficient of $x$ before rearranging the equation into $y=mx+c$ form.", "isCorrect": false },
+          { "text": "$-1.5$", "rationale": "Rearrange into $y=mx+c$ form: $2y = -3x + 12 \\Rightarrow y = -1.5x + 6$. The gradient is the coefficient of $x$, which is $-1.5$.", "isCorrect": true },
+          { "text": "$1.5$", "rationale": "This misses the negative sign when moving $3x$ to the other side.", "isCorrect": false },
+          { "text": "$6$", "rationale": "This is the y-intercept ($c$), not the gradient.", "isCorrect": false }
+        ],
+        "hint": "Rearrange the equation so that $y$ is isolated by itself on the left side ($y = mx + c$). The gradient is the number multiplying $x$."
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 4,
+        "question": "Which of the following points lies perfectly on the line $y = 2x - 5$?",
+        "answerOptions": [
+          { "text": "$(2, 1)$", "rationale": "Substitute $x=2$: $2(2) - 5 = 4 - 5 = -1$, not $1$.", "isCorrect": false },
+          { "text": "$(0, 5)$", "rationale": "Substitute $x=0$: $2(0) - 5 = -5$, not $5$.", "isCorrect": false },
+          { "text": "$(3, 1)$", "rationale": "Substitute $x=3$: $y = 2(3) - 5 = 6 - 5 = 1$. The point $(3, 1)$ satisfies the equation.", "isCorrect": true },
+          { "text": "$(4, 2)$", "rationale": "Substitute $x=4$: $2(4) - 5 = 8 - 5 = 3$, not $2$.", "isCorrect": false }
+        ],
+        "hint": "Test each coordinate pair by substituting the $x$-value into the equation. See if it produces the correct $y$-value."
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 5,
+        "question": "The gradient of a straight line passing through $(1, 4)$ and $(x, 10)$ is $2$. Find the value of $x$.",
+        "answerOptions": [
+          { "text": "$3$", "rationale": "Gradient $m = \\frac{y_2 - y_1}{x_2 - x_1}$. Set up the equation: $2 = \\frac{10 - 4}{x - 1}$. This simplifies to $2 = \\frac{6}{x - 1}$. Multiply by $(x - 1)$: $2x - 2 = 6 \\Rightarrow 2x = 8 \\Rightarrow x = 4$.", "isCorrect": false },
+          { "text": "$4$", "rationale": "Gradient $m = \\frac{y_2 - y_1}{x_2 - x_1}$. $2 = \\frac{10 - 4}{x - 1} \\Rightarrow 2 = \\frac{6}{x - 1} \\Rightarrow 2(x - 1) = 6 \\Rightarrow 2x - 2 = 6 \\Rightarrow 2x = 8 \\Rightarrow x = 4$.", "isCorrect": true },
+          { "text": "$5$", "rationale": "This happens if you divide 10 by 2 directly without subtracting.", "isCorrect": false },
+          { "text": "$7$", "rationale": "This happens if you add the coordinates instead of finding the difference.", "isCorrect": false }
+        ],
+        "hint": "Use the gradient formula: $m = \\frac{y_2 - y_1}{x_2 - x_1}$. Set $m = 2$ and solve the equation for $x$."
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 6,
+        "question": "Calculate the area of the triangle bounded by the points $(0,0)$, $(4,0)$, and $(0,6)$.",
+        "answerOptions": [
+          { "text": "$10$ square units", "rationale": "This is the sum of the non-zero coordinates.", "isCorrect": false },
+          { "text": "$12$ square units", "rationale": "The base lies on the x-axis with length $4$. The height lies on the y-axis with length $6$. Area = $\\frac{1}{2} \\times \\text{base} \\times \\text{height} = \\frac{1}{2} \\times 4 \\times 6 = 12$ square units.", "isCorrect": true },
+          { "text": "$24$ square units", "rationale": "This calculates the area of a rectangle ($4 \\times 6$), forgetting to multiply by half.", "isCorrect": false },
+          { "text": "$14$ square units", "rationale": "This implies a miscalculation.", "isCorrect": false }
+        ],
+        "hint": "Plot the points on a quick mental sketch. The triangle has a horizontal base on the x-axis and a vertical height on the y-axis."
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 7,
+        "question": "Determine the mathematical equation that represents the entire $y$-axis.",
+        "answerOptions": [
+          { "text": "$y = 0$", "rationale": "This is the equation for the x-axis.", "isCorrect": false },
+          { "text": "$x = 0$", "rationale": "Every point on the vertical y-axis has an x-coordinate of exactly $0$. Therefore, the equation for the line is $x = 0$.", "isCorrect": true },
+          { "text": "$x = y$", "rationale": "This is a diagonal line passing through the origin.", "isCorrect": false },
+          { "text": "Undefined", "rationale": "While the *gradient* of the y-axis is undefined, it still has an equation.", "isCorrect": false }
+        ],
+        "hint": "Think about any point that lies directly on the vertical y-axis. What value is always constant for every single one of those points?"
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 8,
+        "question": "At which point do the straight lines $y = 2x + 1$ and $y = -x + 4$ intersect?",
+        "answerOptions": [
+          { "text": "$(0, 4)$", "rationale": "This is the y-intercept of the second line, but it does not lie on the first line.", "isCorrect": false },
+          { "text": "$(1, 3)$", "rationale": "At the point of intersection, the y-values are equal. Set the equations equal to each other: $2x + 1 = -x + 4$. Add $x$ to both sides: $3x + 1 = 4$. Subtract $1$: $3x = 3 \\Rightarrow x = 1$. Substitute $x=1$ into either equation: $y = 2(1) + 1 = 3$. Point is $(1, 3)$.", "isCorrect": true },
+          { "text": "$(2, 5)$", "rationale": "This point lies on the first line, but not the second line ($y = -2 + 4 = 2$).", "isCorrect": false },
+          { "text": "$(1.5, 4)$", "rationale": "This implies a calculation error.", "isCorrect": false }
+        ],
+        "hint": "At the point of intersection, the equations share the same $x$ and $y$ values. Set the right side of both equations equal to each other and solve for $x$."
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 9,
+        "question": "[Word Problem] A car's value $V$ (in dollars) depreciates over time $t$ (in years) according to the linear model $V = 50000 - 2000t$. What was the initial value of the car when it was brand new?",
+        "answerOptions": [
+          { "text": "$\\$2000$", "rationale": "This is the rate of depreciation per year, not the initial value.", "isCorrect": false },
+          { "text": "$\\$48000$", "rationale": "This is the value of the car after exactly 1 year.", "isCorrect": false },
+          { "text": "$\\$50000$", "rationale": "The initial value occurs when time $t = 0$. Substituting $t=0$ gives $V = 50000 - 2000(0) = 50000$.", "isCorrect": true },
+          { "text": "$\\$52000$", "rationale": "This incorrectly adds the depreciation rate to the base value.", "isCorrect": false }
+        ],
+        "hint": "When the car is 'brand new', zero years have passed. Set $t = 0$ in the equation."
+      },
+      {
+        "topic": "Linear Functions & Graphs",
+        "questionNumber": 10,
+        "question": "Convert the linear equation $\\frac{x}{2} + \\frac{y}{3} = 1$ into the standard gradient-intercept form $y = mx + c$.",
+        "answerOptions": [
+          { "text": "$y = 1.5x + 3$", "rationale": "This misses the negative sign when moving $x/2$ across the equals sign.", "isCorrect": false },
+          { "text": "$y = -1.5x + 3$", "rationale": "Isolate the $y$ term: $\\frac{y}{3} = -\\frac{x}{2} + 1$. Multiply the entire equation by $3$: $y = -\\frac{3}{2}x + 3$, which is $y = -1.5x + 3$.", "isCorrect": true },
+          { "text": "$y = -2x + 1$", "rationale": "This incorrectly cross-multiplies the denominators.", "isCorrect": false },
+          { "text": "$y = -0.5x + 1$", "rationale": "This isolates $\\frac{y}{3}$ but forgets to multiply the right side by $3$.", "isCorrect": false }
+        ],
+        "hint": "Rearrange the equation to leave only the $y$ term on the left side. Then, multiply everything by $3$ to completely isolate $y$."
+      },
+
+      // --- CHAPTER 7: Number Patterns ---
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 11,
+        "question": "Find the next term in the sequence: $2, 6, 12, 20, 30, \\dots$",
+        "answerOptions": [
+          { "text": "$40$", "rationale": "This assumes the difference stabilizes at $+10$.", "isCorrect": false },
+          { "text": "$42$", "rationale": "Look at the differences between terms: $+4, +6, +8, +10$. The next difference must be $+12$. Adding $12$ to $30$ gives $42$.", "isCorrect": true },
+          { "text": "$44$", "rationale": "This implies a miscalculation of the growing differences.", "isCorrect": false },
+          { "text": "$46$", "rationale": "This implies adding $+16$.", "isCorrect": false }
+        ],
+        "hint": "This is not a linear sequence. Write down the differences between consecutive terms and look for a pattern in those differences."
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 12,
+        "question": "What is the general term $T_n$ for the arithmetic sequence: $5, 1, -3, -7, \\dots$?",
+        "answerOptions": [
+          { "text": "$T_n = -4n + 9$", "rationale": "The common difference is $-4$, so the formula involves $-4n$. For $n=1$, $-4(1) + c = 5 \\Rightarrow c = 9$. The general term is $-4n + 9$.", "isCorrect": true },
+          { "text": "$T_n = 4n + 1$", "rationale": "This generates $5, 9, 13$, which goes in the wrong direction.", "isCorrect": false },
+          { "text": "$T_n = -4n + 5$", "rationale": "If $n=1$, this gives $1$, which is the second term, not the first.", "isCorrect": false },
+          { "text": "$T_n = 9n - 4$", "rationale": "This swaps the constant and the common difference.", "isCorrect": false }
+        ],
+        "hint": "The sequence is decreasing, which means the common difference multiplied by $n$ will be negative. Adjust with a constant to match the first term ($5$)."
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 13,
+        "question": "In a Fibonacci-like sequence starting with $2, 2, 4, 6, 10, \\dots$, what is the 8th term?",
+        "answerOptions": [
+          { "text": "$26$", "rationale": "This is the 7th term.", "isCorrect": false },
+          { "text": "$36$", "rationale": "This is an arithmetic error.", "isCorrect": false },
+          { "text": "$42$", "rationale": "Each term is the sum of the two preceding terms. Terms: $2, 2, 4, 6, 10, 16, 26, 42$. The 8th term is $42$.", "isCorrect": true },
+          { "text": "$68$", "rationale": "This is the 9th term.", "isCorrect": false }
+        ],
+        "hint": "In a Fibonacci-style sequence, you find the next number by adding the two numbers immediately before it."
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 14,
+        "question": "Find the value of $k$ if the sequence $3, k, 15, 21$ forms a perfect arithmetic progression.",
+        "answerOptions": [
+          { "text": "$6$", "rationale": "This would mean the first difference is $+3$ and the second is $+9$, which is not a constant arithmetic progression.", "isCorrect": false },
+          { "text": "$9$", "rationale": "The difference between $15$ and $21$ is $+6$. In an arithmetic progression, the difference is constant. $3 + 6 = 9$, and $9 + 6 = 15$. Thus, $k = 9$.", "isCorrect": true },
+          { "text": "$10$", "rationale": "This implies a non-constant difference.", "isCorrect": false },
+          { "text": "$12$", "rationale": "This is an arithmetic error.", "isCorrect": false }
+        ],
+        "hint": "Look at the two consecutive terms you know ($15$ and $21$) to find the common difference. Apply that difference to the first term."
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 15,
+        "question": "The general term of a sequence is given by $T_n = \\frac{n(n+1)}{2}$. Find the value of $T_8$.",
+        "answerOptions": [
+          { "text": "$16$", "rationale": "This evaluates $(8+8)$.", "isCorrect": false },
+          { "text": "$36$", "rationale": "Substitute $n=8$: $T_8 = \\frac{8(8+1)}{2} = \\frac{8(9)}{2} = \\frac{72}{2} = 36$.", "isCorrect": true },
+          { "text": "$72$", "rationale": "This forgets to divide by 2.", "isCorrect": false },
+          { "text": "$64$", "rationale": "This evaluates $8^2$.", "isCorrect": false }
+        ],
+        "hint": "Substitute the number $8$ wherever there is an $n$ in the formula."
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 16,
+        "question": "How many terms are in the finite arithmetic sequence: $4, 7, 10, \\dots, 61$?",
+        "answerOptions": [
+          { "text": "$19$ terms", "rationale": "This is an off-by-one error.", "isCorrect": false },
+          { "text": "$20$ terms", "rationale": "The formula for the sequence is $T_n = 3n + 1$. We want to find $n$ when $T_n = 61$. $3n + 1 = 61 \\Rightarrow 3n = 60 \\Rightarrow n = 20$. There are 20 terms.", "isCorrect": true },
+          { "text": "$21$ terms", "rationale": "This assumes the formula is $3n + 4$.", "isCorrect": false },
+          { "text": "$25$ terms", "rationale": "This implies a miscalculation.", "isCorrect": false }
+        ],
+        "hint": "First, find the formula for the $n$-th term. Set that formula equal to the final value ($61$) and solve for $n$."
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 17,
+        "question": "A pattern of dots forms growing pentagons. The sequence of the total number of dots is $1, 5, 12, 22, \\dots$ What is the difference between the 5th term and the 4th term?",
+        "answerOptions": [
+          { "text": "$10$", "rationale": "This is the difference between the 3rd and 4th term.", "isCorrect": false },
+          { "text": "$13$", "rationale": "Analyze the differences: $5-1=4$, $12-5=7$, $22-12=10$. The differences ($4, 7, 10$) grow by $+3$ each time. The next difference must be $10+3 = 13$. The 5th term will be $22+13=35$. The difference between the 5th (35) and 4th (22) term is exactly $13$.", "isCorrect": true },
+          { "text": "$15$", "rationale": "This implies a miscalculation in the growing differences.", "isCorrect": false },
+          { "text": "$35$", "rationale": "This is the actual value of the 5th term, but the question asks for the *difference*.", "isCorrect": false }
+        ],
+        "hint": "Write out the differences between the given terms. Do you notice an arithmetic pattern in the differences themselves?"
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 18,
+        "question": "If the general formula for a sequence is $T_n = 2^n - 1$, find the 5th term.",
+        "answerOptions": [
+          { "text": "$9$", "rationale": "This evaluates $(2 \\times 5) - 1$.", "isCorrect": false },
+          { "text": "$15$", "rationale": "This is the 4th term ($16 - 1$).", "isCorrect": false },
+          { "text": "$31$", "rationale": "Substitute $n=5$: $T_5 = 2^5 - 1 = 32 - 1 = 31$.", "isCorrect": true },
+          { "text": "$63$", "rationale": "This is the 6th term.", "isCorrect": false }
+        ],
+        "hint": "Remember that $2^5$ means $2 \\times 2 \\times 2 \\times 2 \\times 2$."
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 19,
+        "question": "Find the sum of the first $4$ terms of the sequence defined by $T_n = 10 - 2n$.",
+        "answerOptions": [
+          { "text": "$20$", "rationale": "Generate the first 4 terms by plugging in $n=1, 2, 3, 4$: Term 1 = $8$. Term 2 = $6$. Term 3 = $4$. Term 4 = $2$. The sum is $8 + 6 + 4 + 2 = 20$.", "isCorrect": true },
+          { "text": "$32$", "rationale": "This assumes the terms are $10, 8, 6, 4$.", "isCorrect": false },
+          { "text": "$40$", "rationale": "This multiplies $10$ by $4$.", "isCorrect": false },
+          { "text": "$2$", "rationale": "This is just the value of the 4th term, not the sum.", "isCorrect": false }
+        ],
+        "hint": "Calculate the value for $n=1$, $n=2$, $n=3$, and $n=4$ individually, then add those four numbers together."
+      },
+      {
+        "topic": "Number Patterns",
+        "questionNumber": 20,
+        "question": "[Word Problem] A theater has $15$ seats in the very first row. The second row has $18$ seats, the third row has $21$ seats, and so on. How many seats are located in the 10th row?",
+        "answerOptions": [
+          { "text": "$39$ seats", "rationale": "This evaluates $15 + 3(8)$, an off-by-one error for the formula.", "isCorrect": false },
+          { "text": "$42$ seats", "rationale": "The sequence is $15, 18, 21\\dots$ The common difference is $+3$. The formula is $T_n = 3n + 12$. For the 10th row, $n=10$: $T_{10} = 3(10) + 12 = 30 + 12 = 42$ seats.", "isCorrect": true },
+          { "text": "$45$ seats", "rationale": "This evaluates $3(10) + 15$, adding the first term instead of the adjusted constant.", "isCorrect": false },
+          { "text": "$150$ seats", "rationale": "This simply multiplies the first row by 10.", "isCorrect": false }
+        ],
+        "hint": "Find the $n$-th term formula first. What is the common difference? What do you need to add to match the first row ($15$)?"
+      }
+    ];
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
