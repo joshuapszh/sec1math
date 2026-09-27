@@ -28,12 +28,14 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  html { font-size: 19px; }
+
   body {
     font-family: 'Source Sans 3', sans-serif;
     background: var(--bg);
     color: var(--text);
-    font-size: 16px;
-    line-height: 1.75;
+    font-size: 1rem;
+    line-height: 1.7;
   }
 
   /* ── COVER ── */
@@ -73,7 +75,7 @@
 
   /* ── TOC ── */
   .toc {
-    max-width: 860px;
+    max-width: 980px;
     margin: 40px auto;
     padding: 32px 40px;
     background: var(--card);
@@ -87,7 +89,7 @@
   .toc a:hover { text-decoration: underline; }
 
   /* ── LAYOUT ── */
-  .page { max-width: 860px; margin: 0 auto; padding: 0 24px 60px; }
+  .page { max-width: 980px; margin: 0 auto; padding: 0 24px 60px; }
 
   /* ── CHAPTER ── */
   .chapter {
@@ -193,12 +195,13 @@
 
   /* ── SVG DIAGRAMS ── */
   .diagram-wrap {
-    margin: 20px auto;
+    margin: 24px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
   }
+  .diagram-wrap svg, .dst-grid svg { max-width: 100%; height: auto; }
   .diagram-caption {
     font-size: .95rem;
     color: var(--muted);
@@ -232,6 +235,15 @@
   /* ── DATA CHARTS ── */
   .charts-row { display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; margin: 16px 0; }
 
+  @media screen and (max-width: 700px) {
+    html { font-size: 17px; }
+    .page { padding: 0 16px 48px; }
+    .toc { margin: 20px 16px; padding: 24px; }
+    .toc ol { columns: 1; }
+    .cover { padding: 56px 20px 44px; }
+    .mult-grid { grid-template-columns: 1fr; }
+  }
+
   /* Print */
   @media print {
     .cover { break-after: page; }
@@ -244,7 +256,7 @@
 <!-- ══ COVER ══════════════════════════════════════════════ -->
 <div class="cover">
   <h1>Secondary 1 Mathematics</h1>
-  <h2>Complete Revision Notes — All 15 Chapters</h2>
+  <h2>Revision Notes — 15 Topics Across 14 Workbook Chapters</h2>
   <p class="subtitle">Diagrams · LaTeX Equations · Key Formulas · Worked Examples</p>
 </div>
 
@@ -271,12 +283,34 @@
 </div>
 
 <div class="page">
+<div class="section" aria-label="Workbook chapter guide">
+  <div class="section-title">How to use these notes with Think Mathematics 1A and 1B</div>
+  <p>The notes are arranged as 15 revision topics, while the two workbooks have 14 chapters. Use this guide to find the matching notes. After reading an example, cover its solution and redo it before attempting the workbook exercises.</p>
+  <table>
+    <tr><th>Workbook</th><th>Chapter</th><th>Revision topic</th></tr>
+    <tr><td>1A</td><td>1 Primes, HCF and LCM</td><td><a href="#ch1">Topic 1</a></td></tr>
+    <tr><td>1A</td><td>2 Integers, rational and real numbers</td><td><a href="#ch2">Topic 2</a></td></tr>
+    <tr><td>1A</td><td>3 Approximation and estimation</td><td><a href="#ch3">Topic 3</a></td></tr>
+    <tr><td>1A</td><td>4 Basic algebra and manipulation</td><td><a href="#ch4">Topic 4</a></td></tr>
+    <tr><td>1A</td><td>5 Linear equations</td><td><a href="#ch5">Topic 5</a></td></tr>
+    <tr><td>1A</td><td>6 Linear functions and graphs</td><td><a href="#ch6">Topic 6</a></td></tr>
+    <tr><td>1A</td><td>7 Number patterns</td><td><a href="#ch10">Topic 10</a></td></tr>
+    <tr><td>1B</td><td>8 Percentages</td><td><a href="#ch12">Topic 12</a></td></tr>
+    <tr><td>1B</td><td>9 Ratio and rate</td><td><a href="#ch11">Topic 11</a> and <a href="#ch13">Topic 13</a></td></tr>
+    <tr><td>1B</td><td>10 Basic geometry</td><td><a href="#ch7">Topic 7</a></td></tr>
+    <tr><td>1B</td><td>11 Polygons and constructions</td><td><a href="#ch8">Topic 8</a></td></tr>
+    <tr><td>1B</td><td>12 Perimeter and area</td><td><a href="#ch14">Topic 14</a></td></tr>
+    <tr><td>1B</td><td>13 Volume and surface area</td><td><a href="#ch14">Topic 14</a></td></tr>
+    <tr><td>1B</td><td>14 Statistical data handling</td><td><a href="#ch15">Topic 15</a></td></tr>
+  </table>
+  <p><a href="#ch9">Topic 9, Inequalities</a>, is kept as additional practice; check whether it is in your school's end-of-year scope.</p>
+</div>
 
 <!-- ══════════════════════════════════════════════════════ -->
 <!-- CH 1 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch1">
-  <div class="chapter-title"><span>Ch 1</span> Factors and Multiples</div>
+  <div class="chapter-title"><span>Topic 1</span> Factors and Multiples</div>
 
   <div class="section">
     <div class="section-title">Prime Numbers</div>
@@ -291,7 +325,7 @@
       <div class="ex-label">Example — Prime factorisation of 1176</div>
       <!-- Division ladder diagram -->
       <div class="diagram-wrap">
-        <svg width="260" height="210" viewBox="0 0 260 210">
+        <svg width="325" height="262" viewBox="0 0 260 210">
           <!-- division lines -->
           <line x1="50" y1="0" x2="50" y2="200" stroke="#333" stroke-width="1.5"/>
           <line x1="10" y1="30" x2="50" y2="30" stroke="#333" stroke-width="1.5"/>
@@ -364,7 +398,7 @@
 <!-- CH 2 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch2">
-  <div class="chapter-title"><span>Ch 2</span> Real Numbers</div>
+  <div class="chapter-title"><span>Topic 2</span> Real Numbers</div>
 
   <div class="section">
     <div class="section-title">Types of Numbers</div>
@@ -381,7 +415,7 @@
   <div class="section">
     <div class="section-title">Number Line</div>
     <div class="diagram-wrap">
-      <svg width="560" height="60" viewBox="0 0 560 60">
+      <svg width="700" height="75" viewBox="0 0 560 60">
         <!-- axis -->
         <line x1="20" y1="30" x2="540" y2="30" stroke="#333" stroke-width="1.8"/>
         <!-- arrows -->
@@ -447,13 +481,21 @@
       <div class="ex-step">$= -2 + 65 = 63$</div>
     </div>
   </div>
+  <div class="section">
+    <div class="section-title">Operations with Negative Numbers and Fractions</div>
+    <p>Subtracting a negative number is the same as adding its positive value: $5-(-3)=8$. To add fractions, use a common denominator; to divide by a non-zero fraction, multiply by its reciprocal.</p>
+    <div class="example"><div class="ex-label">Example</div>
+      <div class="ex-step">$-\dfrac34+\dfrac56=-\dfrac9{12}+\dfrac{10}{12}=\dfrac1{12}$</div>
+      <div class="ex-step">$-\dfrac34\div\dfrac56=-\dfrac34\times\dfrac65=-\dfrac9{10}$</div>
+    </div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════ -->
 <!-- CH 3 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch3">
-  <div class="chapter-title"><span>Ch 3</span> Estimation</div>
+  <div class="chapter-title"><span>Topic 3</span> Estimation</div>
 
   <div class="section">
     <div class="section-title">Rounding Off</div>
@@ -468,16 +510,24 @@
 
   <div class="section">
     <div class="section-title">Significant Figures</div>
-    <p>Significant figures show the accuracy in measurements. Higher s.f. = more accurate.</p>
+    <p>Significant figures record the precision of a stated value. More significant figures do not guarantee that a measurement is accurate.</p>
     <table>
       <tr><th>Number</th><th>S.F.</th><th>Reason</th></tr>
       <tr><td>$1.23$</td><td>3</td><td>All digits are significant</td></tr>
       <tr><td>$0.123$</td><td>3</td><td>Leading zero only shows size, not accuracy</td></tr>
       <tr><td>$0.1230$</td><td>4</td><td>Trailing zero is significant — shows rounding was done</td></tr>
       <tr><td>$0.10023$</td><td>5</td><td>Zeros between significant figures are significant</td></tr>
-      <tr><td>$10.0$</td><td>3</td><td>Zero between significant figures is significant</td></tr>
+      <tr><td>$10.0$</td><td>3</td><td>The zero after the decimal point is significant</td></tr>
       <tr><td>$10$</td><td>1 or 2</td><td>Depends on context: $10.2 \approx 10\ (2\ \text{s.f.})$ or $10\ (1\ \text{s.f.})$</td></tr>
     </table>
+  </div>
+  <div class="section">
+    <div class="section-title">Estimating and Checking Reasonableness</div>
+    <p>Round numbers to convenient values <em>before</em> calculating. An estimate helps catch a misplaced decimal point; it is not the exact answer.</p>
+    <div class="example"><div class="ex-label">Example</div>
+      <p>$19.8\times 4.91\approx 20\times5=100$. The exact product is $97.218$, which is close to the estimate.</p>
+    </div>
+    <div class="note">When a measurement is rounded to the nearest unit, its true value lies within half a unit of the stated value. For example, $12\text{ cm}$ to the nearest centimetre means $11.5\text{ cm}\leq L&lt;12.5\text{ cm}$.</div>
   </div>
 </div>
 
@@ -485,7 +535,15 @@
 <!-- CH 4 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch4">
-  <div class="chapter-title"><span>Ch 4</span> Algebraic Simplification</div>
+  <div class="chapter-title"><span>Topic 4</span> Algebraic Simplification</div>
+
+  <div class="section">
+    <div class="section-title">Collecting Like Terms</div>
+    <p>Only terms with the same variables raised to the same powers can be combined. Keep the sign attached to each term.</p>
+    <div class="example"><div class="ex-label">Example</div>
+      <p>$3x-2y+5x+7y=8x+5y$. The terms $x$ and $x^2$ are <strong>not</strong> like terms.</p>
+    </div>
+  </div>
 
   <div class="section">
     <div class="section-title">Substitution</div>
@@ -536,7 +594,7 @@
 <!-- CH 5 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch5">
-  <div class="chapter-title"><span>Ch 5</span> Algebraic Equations</div>
+  <div class="chapter-title"><span>Topic 5</span> Algebraic Equations</div>
 
   <div class="section">
     <div class="section-title">Solving Linear Equations</div>
@@ -560,7 +618,16 @@
       <div class="ex-step">$10p + 5 - 36 + 30p = 36p - 45$</div>
       <div class="ex-step">$40p - 31 = 36p - 45$</div>
       <div class="ex-step">$4p = -14$</div>
-      <div class="ex-step">$$p = \frac{7}{2}$$</div>
+      <div class="ex-step">$$p = -\frac{7}{2}$$</div>
+      <p>Check: substituting $p=-\frac72$ gives $-1-\frac{47}{10}=-\frac{57}{10}$ on the left and $\frac{-42-15}{10}=-\frac{57}{10}$ on the right.</p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">Forming an Equation from a Word Problem</div>
+    <div class="example"><div class="ex-label">Example — three consecutive integers sum to 72</div>
+      <div class="ex-step">Let the first integer be $n$. The others are $n+1$ and $n+2$.</div>
+      <div class="ex-step">$n+(n+1)+(n+2)=72\Rightarrow3n+3=72\Rightarrow n=23$.</div>
+      <div class="ex-step">The integers are $23,24,25$. Check: $23+24+25=72$.</div>
     </div>
   </div>
 </div>
@@ -569,12 +636,12 @@
 <!-- CH 6 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch6">
-  <div class="chapter-title"><span>Ch 6</span> Coordinates and Linear Functions</div>
+  <div class="chapter-title"><span>Topic 6</span> Coordinates and Linear Functions</div>
 
   <div class="section">
     <div class="section-title">Cartesian Plane — Coordinates</div>
     <div class="diagram-wrap">
-      <svg width="340" height="320" viewBox="0 0 340 320">
+      <svg width="425" height="400" viewBox="0 0 340 320">
         <!-- grid -->
         <defs>
           <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
@@ -644,7 +711,7 @@
     <div class="formula">$$m = \frac{y_2 - y_1}{x_2 - x_1} = \frac{\Delta y}{\Delta x}$$</div>
     <!-- Gradient diagram with points A(1,7) and B(3,11) -->
     <div class="diagram-wrap">
-      <svg width="300" height="280" viewBox="0 0 300 280">
+      <svg width="375" height="350" viewBox="0 0 300 280">
         <defs><pattern id="g2" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke="#dde8f0" stroke-width="0.8"/></pattern></defs>
         <rect width="300" height="280" fill="url(#g2)"/>
         <!-- axes -->
@@ -686,7 +753,7 @@
     <div class="section-title">Different Gradients</div>
     <div class="diagram-wrap">
       <!-- origin at (240,220), scale 36px per unit, full size 560×460 -->
-      <svg width="560" height="460" viewBox="0 0 560 460" style="max-width:100%">
+      <svg width="700" height="575" viewBox="0 0 560 460" style="max-width:100%">
         <defs>
           <pattern id="g3" width="36" height="36" patternUnits="userSpaceOnUse">
             <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#dde8f0" stroke-width="1"/>
@@ -726,7 +793,7 @@
         <text x="225" y="302" text-anchor="end" font-size="13" fill="#777">−2</text>
         <text x="225" y="374" text-anchor="end" font-size="13" fill="#777">−4</text>
 
-        <!-- m = ∞ (vertical, dashed dark grey) — x=240 -->
+        <!-- Vertical line: gradient undefined; x=240 -->
         <line x1="240" y1="30" x2="240" y2="425" stroke="#555" stroke-width="2.5" stroke-dasharray="8,4"/>
 
         <!-- m = 2 (red): y=2x → dy/dx=2, rise 2 for run 1 = 72px up per 36px right -->
@@ -747,8 +814,8 @@
         <line x1="110" y1="30" x2="370" y2="550" stroke="#27ae60" stroke-width="2.8"/>
 
         <!-- Labels — positioned near the ends of lines, large and bold -->
-        <!-- m=∞ label near top of vertical -->
-        <text x="248" y="55" font-size="16" fill="#555" font-weight="700">m = ∞</text>
+        <!-- A vertical line has no defined gradient. -->
+        <text x="248" y="32" font-size="16" fill="#555" font-weight="700">gradient undefined</text>
         <!-- m=2 label upper right area -->
         <text x="332" y="68" font-size="16" fill="#c0392b" font-weight="700">m = 2</text>
         <!-- m=1 label upper right -->
@@ -762,6 +829,7 @@
       </svg>
       <div class="diagram-caption" style="font-size:1rem;margin-top:8px"><em>Lines through the origin with different gradients</em></div>
     </div>
+    <p>A vertical line has an <strong>undefined gradient</strong> because its change in $x$ is zero; division by zero is not defined.</p>
   </div>
 
   <div class="section">
@@ -780,7 +848,7 @@
     <div class="diagram-wrap" style="flex-direction:row;gap:48px;flex-wrap:wrap;align-items:flex-start;">
       <!-- y=2 horizontal -->
       <div>
-        <svg width="260" height="260" viewBox="0 0 260 260">
+        <svg width="325" height="325" viewBox="0 0 260 260">
           <defs><pattern id="g4" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M 26 0 L 0 0 0 26" fill="none" stroke="#eef2f8" stroke-width="1"/></pattern></defs>
           <rect width="260" height="260" fill="url(#g4)"/>
           <line x1="15" y1="130" x2="245" y2="130" stroke="#555" stroke-width="1.8"/>
@@ -799,7 +867,7 @@
       </div>
       <!-- x=3 vertical -->
       <div>
-        <svg width="260" height="260" viewBox="0 0 260 260">
+        <svg width="325" height="325" viewBox="0 0 260 260">
           <rect width="260" height="260" fill="url(#g4)"/>
           <line x1="15" y1="130" x2="245" y2="130" stroke="#555" stroke-width="1.8"/>
           <line x1="130" y1="15" x2="130" y2="245" stroke="#555" stroke-width="1.8"/>
@@ -823,13 +891,13 @@
 <!-- CH 7 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch7">
-  <div class="chapter-title"><span>Ch 7</span> Geometry (Angles)</div>
+  <div class="chapter-title"><span>Topic 7</span> Geometry (Angles)</div>
 
   <div class="section">
     <div class="section-title">Types of Angles</div>
     <div class="diagram-wrap">
       <!-- 5 angle diagrams in a row, each ~120px wide, total ~660px, height 200 -->
-      <svg width="660" height="200" viewBox="0 0 660 200" style="max-width:100%">
+      <svg width="825" height="250" viewBox="0 0 660 200" style="max-width:100%">
 
         <!-- ── ACUTE (< 90°) ── centre x=66 -->
         <line x1="20" y1="150" x2="112" y2="150" stroke="#333" stroke-width="2.2"/>
@@ -883,7 +951,7 @@
     </table>
     <!-- Parallel lines diagram -->
     <div class="diagram-wrap">
-      <svg width="540" height="220" viewBox="0 0 540 220" style="max-width:100%">
+      <svg width="875" height="275" viewBox="0 0 700 220" style="max-width:100%">
         <!-- parallel lines -->
         <line x1="20" y1="70" x2="380" y2="70" stroke="#333" stroke-width="2.2"/>
         <line x1="20" y1="155" x2="380" y2="155" stroke="#333" stroke-width="2.2"/>
@@ -903,9 +971,8 @@
         <text x="195" y="150" font-size="16" fill="#333" font-weight="700">D</text>
         <text x="220" y="105" font-size="13" fill="#2563a8" font-style="italic">transversal</text>
         <!-- annotations right side -->
-        <text x="400" y="74" font-size="14" fill="#27ae60" font-weight="600">∠A = ∠B  (corresponding, equal)</text>
-        <text x="400" y="112" font-size="14" fill="#c0392b" font-weight="600">∠A = ∠D  (alternate, equal)</text>
-        <text x="400" y="155" font-size="14" fill="#e67e22" font-weight="600">∠B + ∠C = 180°  (co-interior)</text>
+        <text x="400" y="74" font-size="14" fill="#27ae60" font-weight="600">∠B = ∠D (corresponding)</text>
+        <text x="400" y="112" font-size="14" fill="#c0392b" font-weight="600">∠A + ∠B = 180°</text>
       </svg>
     </div>
   </div>
@@ -915,13 +982,13 @@
 <!-- CH 8 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch8">
-  <div class="chapter-title"><span>Ch 8</span> Polygons</div>
+  <div class="chapter-title"><span>Topic 8</span> Polygons</div>
 
   <div class="section">
     <div class="section-title">Types of Polygons</div>
     <div class="diagram-wrap">
       <!-- 5 polygons, each centred in a ~130px cell, height 220 -->
-      <svg width="660" height="220" viewBox="0 0 660 220" style="max-width:100%">
+      <svg width="825" height="275" viewBox="0 0 660 220" style="max-width:100%">
 
         <!-- Triangle (3) — centre 66 -->
         <polygon points="66,30 16,160 116,160" fill="none" stroke="#2563a8" stroke-width="2.5"/>
@@ -960,7 +1027,7 @@
     <div class="diagram-wrap" style="flex-direction:row;gap:60px;flex-wrap:wrap;">
       <!-- Equilateral — larger -->
       <div style="text-align:center">
-        <svg width="180" height="170" viewBox="0 0 180 170">
+        <svg width="225" height="212" viewBox="0 0 180 170">
           <polygon points="90,12 168,152 12,152" fill="none" stroke="#2563a8" stroke-width="2.8"/>
           <!-- double tick marks on all 3 sides -->
           <!-- left side midpoint ≈ (51,82): perpendicular tick -->
@@ -978,7 +1045,7 @@
       </div>
       <!-- Isosceles — larger -->
       <div style="text-align:center">
-        <svg width="180" height="170" viewBox="0 0 180 170">
+        <svg width="225" height="212" viewBox="0 0 180 170">
           <polygon points="90,12 158,152 22,152" fill="none" stroke="#c0392b" stroke-width="2.8"/>
           <!-- single tick marks on the two equal sides -->
           <line x1="50" y1="78" x2="63" y2="90" stroke="#c0392b" stroke-width="2.2"/>
@@ -1014,20 +1081,31 @@
       <div class="ex-step">$20°\cdot n = 360°\ \Rightarrow\ n = 18$</div>
     </div>
   </div>
+  <div class="section">
+    <div class="section-title">Geometry Constructions</div>
+    <p>Use a ruler and compasses for an exact construction. Keep the arcs visible so another person can see how the result was obtained.</p>
+    <table>
+      <tr><th>Construction</th><th>Steps</th><th>Why it works</th></tr>
+      <tr><td>Perpendicular bisector of $AB$</td><td>With the same compass radius greater than half of $AB$, draw arcs from $A$ and $B$ above and below the segment. Join the arc intersections.</td><td>Each intersection is equally distant from $A$ and $B$.</td></tr>
+      <tr><td>Angle bisector</td><td>From the vertex, draw an arc crossing both arms. From those two points, draw equal-radius arcs that meet inside the angle. Join the vertex to their meeting point.</td><td>The two resulting angles are equal.</td></tr>
+      <tr><td>Perpendicular from a point on a line</td><td>Mark two points equally distant from the given point on the line. Draw equal-radius arcs from them; join the given point to the arc intersection.</td><td>The construction is symmetric about the new line.</td></tr>
+    </table>
+    <div class="note">Do not measure and guess a midpoint or angle bisector when a compass construction is required.</div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════ -->
 <!-- CH 9 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch9">
-  <div class="chapter-title"><span>Ch 9</span> Inequalities</div>
+  <div class="chapter-title"><span>Topic 9</span> Inequalities</div>
 
   <div class="section">
     <div class="section-title">Inequality Symbols</div>
     <table>
       <tr><th>Symbol</th><th>Meaning</th><th>Number Line</th></tr>
       <tr><td>$a > b$</td><td>$a$ is more than $b$</td><td>Open circle ○, arrow right</td></tr>
-      <tr><td>$a < b$</td><td>$a$ is less than $b$</td><td>Open circle ○, arrow left</td></tr>
+      <tr><td>$a &lt; b$</td><td>$a$ is less than $b$</td><td>Open circle ○, arrow left</td></tr>
       <tr><td>$a \geq b$</td><td>$a$ is more than or equal to $b$</td><td>Closed circle ●, arrow right</td></tr>
       <tr><td>$a \leq b$</td><td>$a$ is less than or equal to $b$</td><td>Closed circle ●, arrow left</td></tr>
     </table>
@@ -1037,7 +1115,7 @@
     <div class="section-title">Number Line Representations</div>
     <!-- 4 number lines — wider, bigger text, bigger circles, more tick marks -->
     <div class="diagram-wrap">
-      <svg width="700" height="300" viewBox="0 0 700 300" style="max-width:100%">
+      <svg width="875" height="375" viewBox="0 0 700 300" style="max-width:100%">
 
         <!-- ── NL 1: x > 2 ── y=40 -->
         <text x="10" y="28" font-size="16" fill="#333" font-weight="600">1)  x &gt; 2</text>
@@ -1111,7 +1189,7 @@
 <!-- CH 10 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch10">
-  <div class="chapter-title"><span>Ch 10</span> Patterns</div>
+  <div class="chapter-title"><span>Topic 10</span> Patterns</div>
 
   <div class="section">
     <div class="section-title">Arithmetic Sequences (Same Difference)</div>
@@ -1161,7 +1239,7 @@
 <!-- CH 11 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch11">
-  <div class="chapter-title"><span>Ch 11</span> Ratio and Proportion</div>
+  <div class="chapter-title"><span>Topic 11</span> Ratio and Proportion</div>
 
   <div class="section">
     <div class="section-title">What is a Ratio?</div>
@@ -1176,8 +1254,8 @@
   <div class="section">
     <div class="section-title">Equivalent Ratios</div>
     <div class="example">
-      <div class="ex-label">Example — $\dfrac{1}{2} : 3 = \dfrac{2}{3} x : 5$</div>
-      $$\frac{1}{2} \div 3 \times 5 = \frac{2}{3}x \quad\Rightarrow\quad \frac{5}{6} = \frac{2}{3}x \quad\Rightarrow\quad x = \frac{5}{6} \div \frac{2}{3} = \frac{5}{4}$$
+      <div class="ex-label">Example — write $12:18$ in simplest form</div>
+      <p>Divide both parts by their HCF, $6$: $12:18=2:3$. Multiplying both parts of $2:3$ by the same non-zero number gives an equivalent ratio, such as $4:6$.</p>
     </div>
   </div>
 
@@ -1193,13 +1271,20 @@
       <div class="formula">$$a : b : c = 8 : 12 : 15$$</div>
     </div>
   </div>
+  <div class="section">
+    <div class="section-title">Sharing a Quantity in a Ratio</div>
+    <div class="example"><div class="ex-label">Example — share 84 in the ratio $2:5$</div>
+      <div class="ex-step">There are $2+5=7$ equal parts, so one part is $84\div7=12$.</div>
+      <div class="ex-step">The shares are $2\times12=24$ and $5\times12=60$; check that $24+60=84$.</div>
+    </div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════ -->
 <!-- CH 12 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch12">
-  <div class="chapter-title"><span>Ch 12</span> Percentage</div>
+  <div class="chapter-title"><span>Topic 12</span> Percentage</div>
 
   <div class="section">
     <div class="section-title">Key Formulas</div>
@@ -1229,8 +1314,16 @@
   <div class="section">
     <div class="section-title">Percentage Increase and Decrease</div>
     <div class="example">
-      <div class="ex-label">Example — Price increased from $28 to $32</div>
+      <div class="ex-label">Example — price increased from 28 dollars to 32 dollars</div>
       $$\text{Increase} = 32 - 28 = 4 \qquad \% \text{Increase} = \frac{4}{28}\times 100\% = 14\tfrac{2}{7}\%$$
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">Successive Percentage Changes</div>
+    <p>Apply each change to the <em>new</em> amount. A 20% increase followed by a 20% decrease does not return to the original amount.</p>
+    <div class="example"><div class="ex-label">Example — start with 100 dollars</div>
+      <div class="ex-step">After a 20% increase: $100\times1.20=120$.</div>
+      <div class="ex-step">After a 20% decrease: $120\times0.80=96$.</div>
     </div>
   </div>
 </div>
@@ -1239,14 +1332,14 @@
 <!-- CH 13 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch13">
-  <div class="chapter-title"><span>Ch 13</span> Rate and Speed</div>
+  <div class="chapter-title"><span>Topic 13</span> Rate and Speed</div>
 
   <div class="section">
     <div class="section-title">DST Triangle</div>
     <div class="dst-grid">
       <!-- Triangle 1: D highlighted -->
       <div style="text-align:center">
-        <svg width="120" height="110" viewBox="0 0 120 110">
+        <svg width="150" height="138" viewBox="0 0 120 110">
           <polygon points="60,5 115,100 5,100" fill="#e8f0f8" stroke="#2563a8" stroke-width="2"/>
           <line x1="60" y1="55" x2="60" y2="100" stroke="#2563a8" stroke-width="1.5" stroke-dasharray="4"/>
           <rect x="15" y="58" width="45" height="40" fill="#e8f0f8" stroke="#2563a8" stroke-width="1.5"/>
@@ -1259,7 +1352,7 @@
       </div>
       <!-- Triangle 2: S highlighted -->
       <div style="text-align:center">
-        <svg width="120" height="110" viewBox="0 0 120 110">
+        <svg width="150" height="138" viewBox="0 0 120 110">
           <polygon points="60,5 115,100 5,100" fill="#e8f0f8" stroke="#2563a8" stroke-width="2"/>
           <line x1="60" y1="55" x2="60" y2="100" stroke="#2563a8" stroke-width="1.5" stroke-dasharray="4"/>
           <rect x="15" y="58" width="45" height="40" fill="#fff3e0" stroke="#2563a8" stroke-width="1.5"/>
@@ -1272,7 +1365,7 @@
       </div>
       <!-- Triangle 3: T highlighted -->
       <div style="text-align:center">
-        <svg width="120" height="110" viewBox="0 0 120 110">
+        <svg width="150" height="138" viewBox="0 0 120 110">
           <polygon points="60,5 115,100 5,100" fill="#e8f0f8" stroke="#2563a8" stroke-width="2"/>
           <line x1="60" y1="55" x2="60" y2="100" stroke="#2563a8" stroke-width="1.5" stroke-dasharray="4"/>
           <rect x="15" y="58" width="45" height="40" fill="#e8f0f8" stroke="#2563a8" stroke-width="1.5"/>
@@ -1286,6 +1379,9 @@
     </div>
     <div class="note">
       <strong>Average Speed</strong> $= \dfrac{\text{Total Distance}}{\text{Total Time}}$
+    </div>
+    <div class="example"><div class="ex-label">Example — two-stage journey</div>
+      <p>A cyclist travels $30\text{ km}$ in $2\text{ h}$ and another $30\text{ km}$ in $1\text{ h}$. Average speed $=\dfrac{30+30}{2+1}=20\text{ km/h}$, not the unweighted average of the two speeds.</p>
     </div>
   </div>
 
@@ -1307,7 +1403,7 @@
 <!-- CH 14 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch14">
-  <div class="chapter-title"><span>Ch 14</span> Measurement</div>
+  <div class="chapter-title"><span>Topic 14</span> Measurement</div>
 
   <div class="section">
     <div class="section-title">Perimeter</div>
@@ -1318,11 +1414,11 @@
     </table>
     <div class="formula">$$C = 2\pi r \qquad \pi \approx 3.14 \text{ or } \frac{22}{7}$$</div>
     <div class="diagram-wrap">
-      <svg width="200" height="140" viewBox="0 0 200 140">
-        <ellipse cx="100" cy="70" rx="70" ry="60" fill="none" stroke="#2563a8" stroke-width="2.2"/>
-        <line x1="100" y1="70" x2="170" y2="70" stroke="#b02020" stroke-width="1.8" stroke-dasharray="5,3"/>
-        <text x="135" y="62" font-size="14" font-style="italic" fill="#b02020">r</text>
-        <text x="100" y="135" text-anchor="middle" font-size="14" fill="#333">$C = 2\pi r$</text>
+      <svg width="250" height="175" viewBox="0 0 200 140">
+        <circle cx="100" cy="70" r="60" fill="none" stroke="#2563a8" stroke-width="2.2"/>
+        <line x1="100" y1="70" x2="160" y2="70" stroke="#b02020" stroke-width="1.8" stroke-dasharray="5,3"/>
+        <text x="130" y="62" font-size="14" font-style="italic" fill="#b02020">r</text>
+        <text x="100" y="135" text-anchor="middle" font-size="14" fill="#333">Circumference</text>
       </svg>
     </div>
   </div>
@@ -1332,7 +1428,7 @@
     <div class="diagram-wrap" style="flex-direction:row;gap:32px;flex-wrap:wrap;align-items:flex-start;">
       <!-- Triangle -->
       <div style="text-align:center">
-        <svg width="140" height="110" viewBox="0 0 140 110">
+        <svg width="175" height="138" viewBox="0 0 140 110">
           <polygon points="20,100 120,100 80,20" fill="#e8f8ef" stroke="#1a7a4a" stroke-width="2"/>
           <line x1="80" y1="20" x2="80" y2="100" stroke="#888" stroke-width="1.2" stroke-dasharray="4"/>
           <text x="83" y="62" font-size="14" font-style="italic" fill="#888">h</text>
@@ -1343,7 +1439,7 @@
       </div>
       <!-- Parallelogram -->
       <div style="text-align:center">
-        <svg width="140" height="110" viewBox="0 0 140 110">
+        <svg width="175" height="138" viewBox="0 0 140 110">
           <polygon points="20,100 100,100 120,30 40,30" fill="#fff3e0" stroke="#c8860a" stroke-width="2"/>
           <line x1="40" y1="30" x2="40" y2="100" stroke="#888" stroke-width="1.2" stroke-dasharray="4"/>
           <text x="8" y="68" font-size="14" font-style="italic" fill="#888">h</text>
@@ -1353,7 +1449,7 @@
       </div>
       <!-- Trapezium -->
       <div style="text-align:center">
-        <svg width="150" height="110" viewBox="0 0 150 110">
+        <svg width="188" height="138" viewBox="0 0 150 110">
           <polygon points="20,100 130,100 100,30 50,30" fill="#f0e8ff" stroke="#6030a0" stroke-width="2"/>
           <line x1="50" y1="30" x2="50" y2="100" stroke="#888" stroke-width="1.2" stroke-dasharray="4"/>
           <text x="8" y="68" font-size="14" font-style="italic" fill="#888">h</text>
@@ -1364,7 +1460,7 @@
       </div>
       <!-- Circle -->
       <div style="text-align:center">
-        <svg width="120" height="110" viewBox="0 0 120 110">
+        <svg width="150" height="138" viewBox="0 0 120 110">
           <circle cx="60" cy="55" r="48" fill="#fdeef0" stroke="#b02020" stroke-width="2"/>
           <line x1="60" y1="55" x2="108" y2="55" stroke="#b02020" stroke-width="1.8" stroke-dasharray="4"/>
           <text x="84" y="47" font-size="14" font-style="italic" fill="#b02020">r</text>
@@ -1375,11 +1471,20 @@
   </div>
 
   <div class="section">
+    <div class="section-title">Compound Figures and Units</div>
+    <p>Split a compound figure into familiar shapes, add their areas, then subtract any cut-out. Convert all lengths to the same unit before calculating.</p>
+    <div class="example"><div class="ex-label">Example — rectangular cut-out</div>
+      <p>A $10\text{ cm}\times8\text{ cm}$ rectangle has a $3\text{ cm}\times2\text{ cm}$ corner removed. Remaining area $=10\times8-3\times2=74\text{ cm}^2$.</p>
+    </div>
+    <div class="note">Length is measured in units such as cm, area in $\text{cm}^2$, and volume in $\text{cm}^3$. Also, $1\text{ m}^2=10\,000\text{ cm}^2$.</div>
+  </div>
+
+  <div class="section">
     <div class="section-title">Volume Formulas</div>
     <div class="diagram-wrap" style="flex-direction:row;gap:32px;flex-wrap:wrap;align-items:flex-start;">
       <!-- Cuboid -->
       <div style="text-align:center">
-        <svg width="140" height="120" viewBox="0 0 140 120">
+        <svg width="175" height="150" viewBox="0 0 140 120">
           <!-- front face -->
           <polygon points="20,40 100,40 100,100 20,100" fill="#e8f0f8" stroke="#2563a8" stroke-width="1.8"/>
           <!-- top face -->
@@ -1396,7 +1501,7 @@
       </div>
       <!-- Cube -->
       <div style="text-align:center">
-        <svg width="110" height="110" viewBox="0 0 110 110">
+        <svg width="138" height="138" viewBox="0 0 110 110">
           <polygon points="15,40 75,40 75,100 15,100" fill="#e8f8ef" stroke="#1a7a4a" stroke-width="1.8"/>
           <polygon points="15,40 35,20 95,20 75,40" fill="#c8f0d8" stroke="#1a7a4a" stroke-width="1.8"/>
           <polygon points="75,40 95,20 95,80 75,100" fill="#d8f0e8" stroke="#1a7a4a" stroke-width="1.8"/>
@@ -1408,7 +1513,7 @@
       </div>
       <!-- Cylinder -->
       <div style="text-align:center">
-        <svg width="110" height="120" viewBox="0 0 110 120">
+        <svg width="138" height="150" viewBox="0 0 110 120">
           <ellipse cx="55" cy="30" rx="45" ry="14" fill="#fff3e0" stroke="#c8860a" stroke-width="1.8"/>
           <rect x="10" y="30" width="90" height="70" fill="#fff8f0" stroke="none"/>
           <line x1="10" y1="30" x2="10" y2="100" stroke="#c8860a" stroke-width="1.8"/>
@@ -1427,11 +1532,11 @@
     <div class="section-title">Surface Area</div>
     <!-- Cylinder unroll diagram -->
     <div class="diagram-wrap">
-      <svg width="440" height="130" viewBox="0 0 440 130">
+      <svg width="550" height="162" viewBox="0 0 440 130">
         <!-- Rectangle (unrolled curved surface) -->
         <rect x="20" y="30" width="150" height="80" fill="#fff3e0" stroke="#c8860a" stroke-width="2"/>
-        <text x="95" y="72" text-anchor="middle" font-size="14" fill="#c8860a">$2\pi r$</text>
-        <text x="10" y="72" text-anchor="end" font-size="14" fill="#c8860a">$h$</text>
+        <text x="95" y="72" text-anchor="middle" font-size="14" fill="#c8860a">2πr</text>
+        <text x="10" y="72" text-anchor="end" font-size="14" fill="#c8860a">h</text>
         <text x="95" y="128" text-anchor="middle" font-size="13" fill="#555">unrolled rectangle</text>
         <!-- Arrow -->
         <line x1="180" y1="70" x2="210" y2="70" stroke="#555" stroke-width="1.8" marker-end="url(#arr)"/>
@@ -1457,6 +1562,14 @@
   </div>
 
   <div class="section">
+    <div class="section-title">Prisms and Nets</div>
+    <p>A prism has two congruent parallel end faces and a constant cross-section. Its volume is $\text{area of cross-section}\times\text{length}$. For surface area, use a net and add the areas of <em>all exposed faces</em>.</p>
+    <div class="example"><div class="ex-label">Example — triangular prism</div>
+      <p>The triangular cross-section is a right triangle with sides $3,4,5\text{ cm}$; the prism is $10\text{ cm}$ long. Volume $=\frac12(3)(4)(10)=60\text{ cm}^3$. Surface area $=2\bigl[\frac12(3)(4)\bigr]+(3+4+5)(10)=132\text{ cm}^2$.</p>
+    </div>
+  </div>
+
+  <div class="section">
     <div class="section-title">Mass and Density</div>
     <div class="formula">$$\text{Density} = \frac{\text{Mass}}{\text{Volume}} \qquad\Rightarrow\qquad M = D \times V \qquad V = \frac{M}{D}$$</div>
   </div>
@@ -1466,7 +1579,13 @@
 <!-- CH 15 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="chapter" id="ch15">
-  <div class="chapter-title"><span>Ch 15</span> Data Handling</div>
+  <div class="chapter-title"><span>Topic 15</span> Data Handling</div>
+
+  <div class="section">
+    <div class="section-title">Mean, Median, Mode and Range</div>
+    <p>For the data $2,3,3,6,11$: mean $=\frac{2+3+3+6+11}{5}=5$; median $=3$ (middle after sorting); mode $=3$ (most frequent); range $=11-2=9$.</p>
+    <div class="note">A large or small outlier affects the mean and range more than the median. Always sort the values before finding the median.</div>
+  </div>
 
   <div class="section">
     <div class="section-title">Frequency Table and Tally</div>
@@ -1483,7 +1602,7 @@
   <div class="section">
     <div class="section-title">Bar Graph</div>
     <div class="diagram-wrap">
-      <svg width="400" height="220" viewBox="0 0 400 220">
+      <svg width="500" height="275" viewBox="0 0 400 220">
         <!-- axes -->
         <line x1="60" y1="10" x2="60" y2="180" stroke="#333" stroke-width="1.8"/>
         <line x1="60" y1="180" x2="380" y2="180" stroke="#333" stroke-width="1.8"/>
@@ -1519,36 +1638,28 @@
   <div class="section">
     <div class="section-title">Pie Chart</div>
     <div class="diagram-wrap">
-      <svg width="320" height="240" viewBox="0 0 320 240">
-        <!-- Pie chart centred at (130,120), radius 90 -->
-        <!-- Dog 32%: angle=115.2°; Cat 41%: angle=147.6°; Rabbit 9%: angle=32.4°; Others 18%: angle=64.8° -->
-        <!-- Starting angle: 0 = right, going clockwise. We'll start at top (-90°) -->
-        <!-- Dog: -90 to -90+115.2 = 25.2° -->
-        <!-- Convert to radians and compute paths -->
-        <!-- Dog 32%: start=-90°, end=25.2° -->
-        <path d="M130,120 L130,30 A90,90 0 0,1 206,165 Z" fill="#2563a8"/>
-        <text x="175" y="80" font-size="13" fill="white" font-weight="700">Dog 32%</text>
-        <!-- Cat 41%: 25.2° to 172.8° -->
-        <path d="M130,120 L206,165 A90,90 0 0,1 19,147 Z" fill="#e8832a"/>
-        <text x="90" y="185" font-size="13" fill="white" font-weight="700">Cat 41%</text>
-        <!-- Rabbit 9%: 172.8° to 205.2° -->
-        <path d="M130,120 L19,147 A90,90 0 0,1 49,46 Z" fill="#aaaaaa"/>
-        <text x="26" y="118" font-size="13" fill="white" font-weight="700">Rabbit 9%</text>
-        <!-- Others 18%: 205.2° to 270° -->
-        <path d="M130,120 L49,46 A90,90 0 0,1 130,30 Z" fill="#d4a017"/>
-        <text x="64" y="65" font-size="13" fill="white" font-weight="700">Others 18%</text>
-        <!-- formula annotation -->
-        <text x="240" y="100" font-size="14" fill="#333">Angle = </text>
-        <text x="240" y="116" font-size="14" fill="#333">$\dfrac{f}{n}\times360°$</text>
+      <svg width="375" height="300" viewBox="0 0 300 240" role="img" aria-label="Circular pie chart of 44 pets: 14 dogs, 18 cats, 4 rabbits and 8 other pets">
+        <!-- All four arc endpoints lie exactly on the same circle, centre (130,120), radius 90. -->
+        <path d="M130,120 L130,30 A90,90 0 0,1 211.87,157.39 Z" fill="#2563a8"/>
+        <path d="M130,120 L211.87,157.39 A90,90 0 0,1 40.92,132.81 Z" fill="#e8832a"/>
+        <path d="M130,120 L40.92,132.81 A90,90 0 0,1 48.13,82.61 Z" fill="#777777"/>
+        <path d="M130,120 L48.13,82.61 A90,90 0 0,1 130,30 Z" fill="#a87900"/>
+        <circle cx="130" cy="120" r="90" fill="none" stroke="#333" stroke-width="1"/>
+        <text x="170" y="91" text-anchor="middle" font-size="12" fill="white" font-weight="700">Dog 14</text>
+        <text x="135" y="167" text-anchor="middle" font-size="12" fill="white" font-weight="700">Cat 18</text>
+        <text x="67" y="126" text-anchor="middle" font-size="11" fill="white" font-weight="700">Rabbit 4</text>
+        <text x="93" y="72" text-anchor="middle" font-size="11" fill="white" font-weight="700">Others 8</text>
       </svg>
       <div class="diagram-caption">Pie chart — used to <strong>compare proportions</strong></div>
     </div>
+    <p>The sectors use the frequencies in the table above (total $44$). Each sector angle is $\dfrac{\text{frequency}}{44}\times 360^\circ$; for dogs, $\dfrac{14}{44}\times 360^\circ\approx114.5^\circ$.</p>
   </div>
 
   <div class="section">
     <div class="section-title">Line Graph</div>
+    <p>Use a line graph when the horizontal axis has a meaningful order, such as time. This example shows books borrowed over four days.</p>
     <div class="diagram-wrap">
-      <svg width="360" height="200" viewBox="0 0 360 200">
+      <svg width="450" height="250" viewBox="0 0 360 200">
         <line x1="50" y1="10" x2="50" y2="170" stroke="#333" stroke-width="1.8"/>
         <line x1="50" y1="170" x2="340" y2="170" stroke="#333" stroke-width="1.8"/>
         <!-- y-axis -->
@@ -1561,19 +1672,18 @@
         <text x="46" y="54" text-anchor="end" font-size="13">15</text>
         <line x1="46" y1="10" x2="54" y2="10" stroke="#555" stroke-width="1"/>
         <text x="46" y="14" text-anchor="end" font-size="13">20</text>
-        <!-- data points (same as bar graph) x positions: 95,165,235,305 -->
-        <!-- Dog=14: y=170-14*8=58; Cat=18: y=170-18*8=26; Rabbit=4: y=170-4*8=138; Others=8: y=170-8*8=106 -->
+        <!-- Books borrowed on Mon–Thu: 14, 18, 4, 8. -->
         <polyline points="95,58 165,26 235,138 305,106" fill="none" stroke="#2563a8" stroke-width="2.5"/>
         <circle cx="95" cy="58" r="4" fill="#2563a8"/>
         <circle cx="165" cy="26" r="4" fill="#2563a8"/>
         <circle cx="235" cy="138" r="4" fill="#2563a8"/>
         <circle cx="305" cy="106" r="4" fill="#2563a8"/>
         <!-- x-labels -->
-        <text x="95" y="185" text-anchor="middle" font-size="14" fill="#333">Dog</text>
-        <text x="165" y="185" text-anchor="middle" font-size="14" fill="#333">Cat</text>
-        <text x="235" y="185" text-anchor="middle" font-size="14" fill="#333">Rabbit</text>
-        <text x="305" y="185" text-anchor="middle" font-size="14" fill="#333">Others</text>
-        <text x="195" y="200" text-anchor="middle" font-size="13" fill="#555">Pet</text>
+        <text x="95" y="185" text-anchor="middle" font-size="14" fill="#333">Mon</text>
+        <text x="165" y="185" text-anchor="middle" font-size="14" fill="#333">Tue</text>
+        <text x="235" y="185" text-anchor="middle" font-size="14" fill="#333">Wed</text>
+        <text x="305" y="185" text-anchor="middle" font-size="14" fill="#333">Thu</text>
+        <text x="195" y="200" text-anchor="middle" font-size="13" fill="#555">Day</text>
       </svg>
       <div class="diagram-caption">Line graph — used to <strong>show trends</strong></div>
     </div>
@@ -1592,9 +1702,50 @@
   </div>
 </div>
 
+<div class="chapter" id="mixed-review">
+  <div class="chapter-title">Mixed End-of-Year Check</div>
+  <p>Try these without looking at the topic headings. Show working, include units, and check each answer for reasonableness. The questions are original and are not copied from the workbooks.</p>
+  <ol style="padding-left:1.5rem;margin:14px 0 24px">
+    <li>Find the HCF and LCM of $24$ and $36$.</li>
+    <li>Calculate $-\frac34+\frac56$.</li>
+    <li>Round $0.004786$ to two significant figures.</li>
+    <li>Simplify $3(2x-1)-2(x+4)$.</li>
+    <li>Solve $5x-7=2x+11$.</li>
+    <li>Find the equation of the line through $(0,3)$ and $(2,7)$.</li>
+    <li>Find the $n$th term and the 20th term of $4,7,10,13,\ldots$.</li>
+    <li>An item costs 80 dollars and has a 15% discount. Find the sale price.</li>
+    <li>Share $75$ in the ratio $2:3$. Then find the average speed for $90\text{ km}$ travelled in $1.5\text{ h}$.</li>
+    <li>Two co-interior angles on parallel lines are $115^\circ$ and $x$. Find $x$.</li>
+    <li>Find each interior angle of a regular octagon.</li>
+    <li>A $12\text{ cm}\times7\text{ cm}$ rectangle has a $4\text{ cm}\times2\text{ cm}$ rectangle removed. Find the remaining area.</li>
+    <li>For a closed cylinder with $r=3\text{ cm}$ and $h=5\text{ cm}$, find its volume and total surface area in terms of $\pi$.</li>
+    <li>For $2,4,4,10$, find the mean and median. A category has frequency $4$ out of $20$; find its pie-chart angle.</li>
+  </ol>
+  <div class="section">
+    <div class="section-title">Answers with Key Steps</div>
+    <table>
+      <tr><th>No.</th><th>Answer and working</th></tr>
+      <tr><td>1</td><td>$24=2^3\times3$, $36=2^2\times3^2$; HCF $=2^2\times3=12$, LCM $=2^3\times3^2=72$.</td></tr>
+      <tr><td>2</td><td>$-9/12+10/12=\boxed{1/12}$.</td></tr>
+      <tr><td>3</td><td>The first two significant digits are 4 and 7; the next digit is 8, so $\boxed{0.0048}$.</td></tr>
+      <tr><td>4</td><td>$6x-3-2x-8=\boxed{4x-11}$.</td></tr>
+      <tr><td>5</td><td>$3x=18$, so $\boxed{x=6}$.</td></tr>
+      <tr><td>6</td><td>Gradient $=(7-3)/(2-0)=2$ and $y$-intercept $=3$, so $\boxed{y=2x+3}$.</td></tr>
+      <tr><td>7</td><td>Common difference $=3$; $T_n=4+(n-1)3=\boxed{3n+1}$ and $T_{20}=\boxed{61}$.</td></tr>
+      <tr><td>8</td><td>$80\times0.85=68$ dollars.</td></tr>
+      <tr><td>9</td><td>One part $=75/5=15$; shares $\boxed{30,45}$. Average speed $=90/1.5=\boxed{60\text{ km/h}}$.</td></tr>
+      <tr><td>10</td><td>$x=180^\circ-115^\circ=\boxed{65^\circ}$.</td></tr>
+      <tr><td>11</td><td>Each exterior angle $=360^\circ/8=45^\circ$; interior angle $=\boxed{135^\circ}$.</td></tr>
+      <tr><td>12</td><td>$12\times7-4\times2=\boxed{76\text{ cm}^2}$.</td></tr>
+      <tr><td>13</td><td>Volume $=\pi(3)^2(5)=\boxed{45\pi\text{ cm}^3}$; surface area $=2\pi(3)(5)+2\pi(3)^2=\boxed{48\pi\text{ cm}^2}$.</td></tr>
+      <tr><td>14</td><td>Mean $=(2+4+4+10)/4=\boxed{5}$; median $=(4+4)/2=\boxed{4}$; pie angle $=(4/20)360^\circ=\boxed{72^\circ}$.</td></tr>
+    </table>
+  </div>
+</div>
+
 <!-- ══ FOOTER ═════════════════════════════════════════════ -->
 <div style="margin-top:60px;border-top:2px solid var(--navy);padding-top:20px;text-align:center;color:var(--muted);font-size:.85rem;">
-  Secondary 1 Mathematics Revision Notes &nbsp;·&nbsp; &nbsp;·&nbsp; All diagrams and equations reproduced for educational reference
+  Secondary 1 Mathematics Revision Notes &nbsp;·&nbsp; Think Mathematics 1A and 1B chapter guide
 </div>
 
 </div><!-- /page -->
