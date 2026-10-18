@@ -79,6 +79,24 @@ function make(level,paper,set){
   q[8].steps[0].format={decimalPlaces:2};q[8].steps[1].format={decimalPlaces:2};
  }
 
+
+ // Additional original syllabus practice; numeric responses avoid ungraded graph construction.
+ if(level===1&&set===2){
+  const threshold=a+8,offset=c+3;
+  q[5]=add(6,bookB,'moderate','Simple inequalities',
+   'A number x satisfies 3x + '+offset+' < '+(3*threshold+offset)+'. (a) Find the boundary value when 3x + '+offset+' = '+(3*threshold+offset)+'. (b) Find the greatest integer that satisfies the inequality.',
+   threshold,threshold-1,
+   'Subtract '+offset+' and divide by 3: x = '+threshold+'.',
+   'The solution is x < '+threshold+'; the greatest integer below '+threshold+' is '+(threshold-1)+'.');
+ }
+ if(level===2&&set===2){
+  const widths=[5,10,5],densities=[b+1,c+1,a+1],freq=widths.map((w,i)=>w*densities[i]);
+  q[7]=add(8,bookB,'moderate','Statistical diagrams',
+   'A histogram has three equal-height-scale intervals with class widths '+widths.join(', ')+' minutes and frequencies '+freq.join(', ')+'. (a) Find the frequency density of the middle interval. (b) Find the greatest frequency density.',
+   densities[1],Math.max(...densities),
+   'Frequency density = frequency ÷ class width = '+freq[1]+' ÷ '+widths[1]+' = '+densities[1]+'.',
+   'Compare '+densities.join(', ')+': the greatest is '+Math.max(...densities)+'.');
+ }
  // Extend terse generated working with explicit teaching explanations.
  for(const question of q){
   question.solution=question.solution.map((line,i)=>{
@@ -108,7 +126,9 @@ function make(level,paper,set){
    'Volume of cones':'A cone occupies one third of a cylinder with matching base and height.',
    'Surface area of cones':'Total cone area includes the circular base plus the curved side.',
    'Speed and distance':'For the full journey, divide total distance by total duration.',
-   'Composite area':'A composite region can be found by subtracting the cutout from an outer shape.'
+   'Composite area':'A composite region can be found by subtracting the cutout from an outer shape.',
+   'Simple inequalities':'Use the same operations as equations, but preserve the inequality direction when dividing by a positive number.',
+   'Statistical diagrams':'Histogram bar heights represent frequency density, not raw frequency when class widths differ.'
   };
   question.explanation=specific[question.topic]||'Check the calculation against the given relationship and verify its units.';
  }
