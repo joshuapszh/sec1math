@@ -13,6 +13,16 @@
    const fractional=raw.includes('.')?raw.split('.')[1].length:0;
    if(fractional!==places)return {supported:true,correct:false,reason:"Your value is correct, but write the answer to "+places+" decimal place(s)."};
   }
+  const figures=options.significantFigures;
+  if(correct&&Number.isInteger(figures)&&figures>0){
+   const signless=raw.replace(/^[-+]/,'');
+   const digits=signless.replace('.','').replace(/^0+/,'');
+   const counted=digits.length;
+   const integerTrailingZeros=!signless.includes('.')&&/0$/.test(signless);
+   const canonical=Number(expected.toPrecision(figures));
+   if(Math.abs(got-canonical)>tol||(!integerTrailingZeros&&counted!==figures)|| (integerTrailingZeros&&counted<figures))
+    return {supported:true,correct:false,reason:"Write the answer to "+figures+" significant figure(s)."};
+  }
   return {supported:true,correct};
  };
  const algebra=(value,expected)=>{const r=window.HAAlgebra?.check(value,expected);return r?.supported?{supported:true,correct:r.equivalent}:{supported:false,reason:r?.reason||"Algebra checking is unavailable."}};
