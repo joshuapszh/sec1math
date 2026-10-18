@@ -15,22 +15,23 @@ test('Equivalent algebra: numeric LaTeX fraction',()=>HAAlgebra.check('\\frac{6}
 test('Equivalent algebra: numeric LaTeX square root',()=>HAAlgebra.check('\\sqrt{9}x','3x').equivalent);
 test('Incorrect algebra rejected',()=>!HAAlgebra.check('6x+8','6x+2').equivalent);
 test('Malformed expression unsupported',()=>!HAAlgebra.check('x+(','x').supported);
+test('Unary minus before square',()=>HAAlgebra.check('-x^2','-1*x^2').equivalent);
 test('Exponent greater than two unsupported',()=>!HAAlgebra.check('x^3','x^2').supported);
 test('Numeric correct',()=>HAMarking.evaluate('numeric','42',42).correct);
 test('Numeric incorrect',()=>!HAMarking.evaluate('numeric','41',42).correct);
 test('Blank numeric unsupported',()=>!HAMarking.evaluate('numeric','',42).supported);
-const expected={points:[[0,1],[1,3],[2,5]],mode:'line',line:{m:2,c:1},tolerance:0.001};
-test('Graph correct coordinates and line',()=>HAMarking.evaluate('graph',{points:[[2,5],[0,1],[1,3]],mode:'line'},expected).correct);
-test('Graph detects extra point',()=>!HAMarking.evaluate('graph',{points:[[0,1],[1,3],[2,5],[3,7]],mode:'line'},expected).correct);
-test('Graph detects wrong coordinate',()=>!HAMarking.evaluate('graph',{points:[[0,1],[1,3],[2,4]],mode:'line'},expected).correct);
-test('Graph checks line mode',()=>!HAMarking.evaluate('graph',{points:[[0,1],[1,3],[2,5]],mode:'points'},expected).correct);
+const expected={points:[[0,1],[1,2],[2,3]],mode:'line',line:{m:1,c:1},tolerance:0.001};
+test('Graph correct coordinates and line',()=>HAMarking.evaluate('graph',{points:[[2,3],[0,1],[1,2]],mode:'line'},expected).correct);
+test('Graph detects extra point',()=>!HAMarking.evaluate('graph',{points:[[0,1],[1,2],[2,3],[3,4]],mode:'line'},expected).correct);
+test('Graph detects wrong coordinate',()=>!HAMarking.evaluate('graph',{points:[[0,1],[1,2],[2,4]],mode:'line'},expected).correct);
+test('Graph checks line mode',()=>!HAMarking.evaluate('graph',{points:[[0,1],[1,2],[2,3]],mode:'points'},expected).correct);
 const questions=[{id:'TEST1',prompt:'Question v1',steps:[{answer:3}],stepMarks:[2]}];
 const sig=[questions[0].prompt,JSON.stringify(questions[0].steps),JSON.stringify(questions[0].stepMarks)].join('|');
-let supported=true;
+let supported=true;const originalStorage=localStorage.getItem(HAProgress.key);
 try{HAProgress.save(questions,{TEST1:{answers:['3'],firstScore:[2],signature:sig}},[]);const out=HAProgress.load(questions);test('Progress round trip',()=>out.records.TEST1.answers[0]==='3');
 const changed=[{...questions[0],prompt:'Question v2'}];const result=HAProgress.load(changed);test('Changed question not given stale marks',()=>!result.records.TEST1&&result.quarantined.length===1);
 }catch(e){supported=false;test('Local storage enabled',()=>{throw e})}
-try{localStorage.removeItem(HAProgress.key)}catch{}
+try{if(originalStorage===null)localStorage.removeItem(HAProgress.key);else localStorage.setItem(HAProgress.key,originalStorage)}catch{}
 let data;try{const resp=await fetch('./data/s1-p1-set1-draft.json');data=await resp.json()}catch(e){test('Question bank loads',()=>{throw e})}
 if(data){let qs=data.questions;test('Ten distinct questions',()=>qs.length===10&&new Set(qs.map(x=>x.id)).size===10);
 test('Exactly 50 marks',()=>qs.reduce((s,q)=>s+q.marks,0)===50);
