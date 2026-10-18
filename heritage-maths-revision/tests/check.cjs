@@ -78,7 +78,7 @@ test('Independently recompute generated statistics and numerical probability',()
 });
 
 test('Inequality practice solutions follow the strict boundary',()=>{for(let paper=1;paper<=2;paper++){const q=sandbox.window.HASetGenerator.make(1,paper,2).questions[5];assert.equal(q.topic,'Simple inequalities');assert.equal(q.steps[1].answer,q.steps[0].answer-1);assert.ok(q.prompt.includes('<'))}});
-test('Histogram density answers independently checked',()=>{for(let paper=1;paper<=2;paper++){const q=sandbox.window.HASetGenerator.make(2,paper,2).questions[7];assert.equal(q.topic,'Statistical diagrams');const p=q.prompt.match(/class widths ([\d, ]+) minutes and frequencies ([\d, ]+)\./);assert.ok(p);const w=p[1].split(',').map(Number),f=p[2].split(',').map(Number),d=f.map((x,i)=>x/w[i]);assert.equal(q.steps[0].answer,d[1]);assert.equal(q.steps[1].answer,Math.max(...d))}});
+test('Histogram density answers independently checked',()=>{for(let paper=1;paper<=2;paper++){const q=sandbox.window.HASetGenerator.make(2,paper,2).questions[7];assert.equal(q.topic,'Statistical diagrams');const p=q.prompt.match(/widths ([\d, ]+) minutes and frequencies ([\d, ]+)\./);assert.ok(p);const w=p[1].split(',').map(Number),f=p[2].split(',').map(Number),d=f.map((x,i)=>x/w[i]);assert.equal(q.steps[0].answer,d[1]);assert.equal(q.steps[1].answer,Math.max(...d))}});
 
 test('Generated practice topic coverage and question classifications remain explicit',()=>{
  const required={1:['Ratio','Percentage','Number patterns','Linear graphs','Simple inequalities','Composite area','Volume of prisms','Statistics'],2:['Linear graphs','Similarity','Pythagoras theorem','Trigonometry','Surface area','Probability','Statistical diagrams','Averages']};
