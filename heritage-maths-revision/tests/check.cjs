@@ -119,3 +119,15 @@ test('Paper 2 application variants compute independently',()=>{
   assert.equal(b.steps[1].answer,3*side*side);
  }
 });
+
+test('Paper 2 journey and composite volumes',()=>{
+ for(let set=1;set<=3;set++){
+  const q1=sandbox.window.HASetGenerator.make(1,2,set).questions[4],q2=sandbox.window.HASetGenerator.make(2,2,set).questions[8];
+  assert.equal(q1.topic,'Average speed with rest');assert.equal(q1.steps[1].answer,Math.round(q1.steps[0].answer/4*100)/100);
+  assert.equal(q2.topic,'Composite solid volume');
+  const m=q2.prompt.match(/radius (\d+) cm and perpendicular height (\d+) cm/);assert.ok(m);
+  const r=Number(m[1]),h=Number(m[2]);
+  assert.equal(q2.steps[0].answer,Math.round(3.142*r*r*h/3*100)/100);
+  assert.equal(q2.steps[1].answer,Math.round((3.142*r*r*h/3+2*3.142*r*r*r/3)*100)/100);
+ }
+});
