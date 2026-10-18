@@ -19,3 +19,11 @@ Review date: 2026-10-18. Development branch only.
 
 ## Student assignment gate
 Do not mark the bank as approved or add it to the live student homepage until every prompt, diagram, numerical answer, rounding requirement, hint and model working has been independently checked, and a private exam similarity audit has been completed.
+
+## Private source-based audit update (18 October 2026)
+Available school files were reviewed privately: Secondary 1 EOY Paper 1 (version 2) and its marking scheme, Secondary 2 EOY Paper 2 (amended) and Secondary 2 Paper 1 marking scheme, plus both simplified TOS documents. This is *not* a completed audit of both full exam papers for both levels: some mathematics expressions were absent from parsed source text and graphics need separate visual inspection.
+
+- **Confirmed syllabus issue fixed:** The generated Secondary 2 two-roll probability task was replaced by a single-event counting task, matching the scope of the Secondary 2B probability chapter more closely. Its answers have an independent outcome-enumeration test.
+- **Structural similarity risk remains:** Both level banks share routine contexts such as average speed, similarity, surface area and median/mean with the examinations. These are standard curriculum topics, and overlap at the topic level is not automatically leakage. A private item-by-item comparison of numbers, phrasing, diagrams and solution paths is still needed before release.
+- **Scope mismatch remains:** The generated questions do not fully cover every chapter named in the TOS, particularly statistical diagrams and inequalities. The 20%/80% marks split does not on its own guarantee topic coverage.
+- **No publication approval:** The site remains teacher-preview only, with teacherReviewStatus UNVERIFIED. Never commit examination content, exam excerpts or private similarity matrices to public GitHub.
