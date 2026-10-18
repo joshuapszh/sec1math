@@ -238,7 +238,7 @@ test('Independent Secondary 2 Pythagoras, similarity and trigonometry audit',()=
    assert.equal(sim.steps[0].answer,a*a);
    assert.equal(sim.steps[1].answer,b*b-a*a);
   }else{
-   const sm=sim.prompt.match(/sides are (\d+) cm and (\d+) cm.*is (\d+) cm/);assert.ok(sm);
+   const sm=sim.prompt.match(/shapes are (\d+) cm and (\d+) cm.*is (\d+) cm/);assert.ok(sm);
    const [a,b,c]=sm.slice(1).map(Number);
    assert.equal(sim.steps[0].answer,b/a);
    assert.equal(sim.steps[1].answer,c*b/a);
