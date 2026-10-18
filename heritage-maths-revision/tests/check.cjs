@@ -57,3 +57,6 @@ test('Two-dice application independently counts favourable sums',()=>{
   assert.equal(q.steps[1].answer,Number((favourable/outcomes.length).toFixed(3)));
  }
 });
+
+test('Significant figure checker',()=>{assert.equal(HAMarking.evaluate('numeric','12.3',12.3,{significantFigures:3}).correct,true);assert.equal(HAMarking.evaluate('numeric','12.30',12.3,{significantFigures:3}).correct,false);assert.equal(HAMarking.evaluate('numeric','0.0123',0.0123,{significantFigures:3}).correct,true);assert.equal(HAMarking.evaluate('numeric','0.01230',0.0123,{significantFigures:3}).correct,false)});
+test('Cone-volume draft sets explicitly require three significant figures',()=>{for(let paper=1;paper<=2;paper++)for(let set=1;set<=2;set++){const q=sandbox.window.HASetGenerator.make(2,paper,set).questions[8];assert.equal(q.steps[1].format.significantFigures,3)}});
