@@ -46,17 +46,7 @@ test('Every generated draft includes answer explanations and correct allocations
 
 test('All generated solutions contain calculation and concept explanation',()=>{for(let level=1;level<=2;level++)for(let paper=1;paper<=2;paper++)for(let set=1;set<=3;set++){if(level===1&&paper===1&&set===1)continue;const qs=sandbox.window.HASetGenerator.make(level,paper,set).questions;for(const q of qs){assert.equal(q.solution.length,2);assert.ok(q.solution.every(x=>x.includes('Part (')&&x.includes('Check that your answer')));assert.ok(q.explanation.length>=40)}}});
 
-test('Two-dice application independently counts favourable sums',()=>{
- const outcomes=[];for(let x=1;x<=6;x++)for(let y=1;y<=6;y++)outcomes.push(x+y);
- const favourable=outcomes.filter(n=>n>=9).length;
- assert.equal(outcomes.length,36);assert.equal(favourable,10);
- for(let level=2;level<=2;level++)for(let paper=1;paper<=2;paper++)for(let set=1;set<=3;set++){
-  const q=sandbox.window.HASetGenerator.make(level,paper,set).questions[9];
-  assert.match(q.prompt,/number cube is rolled twice/);
-  assert.equal(q.steps[0].answer,outcomes.length);
-  assert.equal(q.steps[1].answer,Number((favourable/outcomes.length).toFixed(3)));
- }
-});
+test('Independent one-card outcome enumeration',()=>{const n=Array.from({length:12},(_,i)=>i+1);const a=n.filter(x=>x%3===0),u=n.filter(x=>x%3===0||x%4===0);for(let paper=1;paper<=2;paper++)for(let set=1;set<=3;set++){const q=sandbox.window.HASetGenerator.make(2,paper,set).questions[9];assert.equal(q.steps[0].answer,a.length);assert.equal(q.steps[1].answer,u.length/n.length);assert.equal(q.steps[1].format.decimalPlaces,3)}});
 
 test('Significant figure checker',()=>{assert.equal(HAMarking.evaluate('numeric','12.3',12.3,{significantFigures:3}).correct,true);assert.equal(HAMarking.evaluate('numeric','12.30',12.3,{significantFigures:3}).correct,false);assert.equal(HAMarking.evaluate('numeric','0.0123',0.0123,{significantFigures:3}).correct,true);assert.equal(HAMarking.evaluate('numeric','0.01230',0.0123,{significantFigures:3}).correct,false)});
 test('Cone-volume draft sets explicitly require three significant figures',()=>{for(let paper=1;paper<=2;paper++)for(let set=1;set<=2;set++){const q=sandbox.window.HASetGenerator.make(2,paper,set).questions[8];assert.equal(q.steps[1].format.significantFigures,3)}});
@@ -81,8 +71,8 @@ test('Independently recompute generated statistics and numerical probability',()
   assert.equal(stat.steps[0].answer,sorted[3]);
   assert.equal(stat.steps[1].answer,Math.round(nums.reduce((a,b)=>a+b,0)/7*100)/100);
   if(level===2){
-    const dice=qs[9];assert.equal(dice.steps[0].answer,36);
-    assert.equal(dice.steps[1].answer,Number((10/36).toFixed(3)));
+    const event=qs[9];assert.equal(event.steps[0].answer,4);
+    assert.equal(event.steps[1].answer,0.5);
   }
  }
 });
