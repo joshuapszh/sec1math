@@ -92,7 +92,7 @@ function make(level,paper,set){
  if(level===2&&set===2){
   const widths=[5,10,5],densities=[b+1,c+1,a+1],freq=widths.map((w,i)=>w*densities[i]);
   q[7]=add(8,bookB,'moderate','Statistical diagrams',
-   'A histogram has three equal-height-scale intervals with class widths '+widths.join(', ')+' minutes and frequencies '+freq.join(', ')+'. (a) Find the frequency density of the middle interval. (b) Find the greatest frequency density.',
+   'A histogram uses a vertical frequency-density scale. Its three adjacent class intervals have widths '+widths.join(', ')+' minutes and frequencies '+freq.join(', ')+'. (a) Find the frequency density of the middle interval. (b) Find the greatest frequency density.',
    densities[1],Math.max(...densities),
    'Frequency density = frequency ÷ class width = '+freq[1]+' ÷ '+widths[1]+' = '+densities[1]+'.',
    'Compare '+densities.join(', ')+': the greatest is '+Math.max(...densities)+'.');
