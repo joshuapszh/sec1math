@@ -1,0 +1,77 @@
+{
+  "status": "DEVELOPMENT FIXTURES ONLY - incomplete and not representative of complete exam practice",
+  "questions": [
+    {
+      "id": "DEMO-S1-P1-1",
+      "level": "Secondary 1",
+      "paper": 1,
+      "topic": "Linear equations",
+      "book": "1A",
+      "marks": 2,
+      "type": "numeric",
+      "prompt": "Solve \\\\(7x-4=31\\\\).",
+      "answer": 5,
+      "hints": [
+        "Add 4 to both sides.",
+        "Then divide by 7."
+      ],
+      "solution": "\\\\[7x-4=31\\\\]\\\\[7x=35\\\\]\\\\[x=5\\\\]",
+      "explanation": "Use inverse operations to isolate x.",
+      "common": "Remember to add 4 before dividing."
+    },
+    {
+      "id": "DEMO-S1-P2-1",
+      "level": "Secondary 1",
+      "paper": 2,
+      "topic": "Number patterns",
+      "book": "1B",
+      "marks": 2,
+      "type": "numeric",
+      "prompt": "A sequence begins 11, 16, 21, 26, ... . Find the ninth term.",
+      "answer": 51,
+      "hints": [
+        "Find the common difference.",
+        "Use 11 + (9 - 1) × 5."
+      ],
+      "solution": "\\\\[a_9=11+(9-1)(5)=51\\\\]",
+      "explanation": "The difference between successive terms is 5.",
+      "common": "There are eight increases from term 1 to term 9."
+    },
+    {
+      "id": "DEMO-S2-P1-1",
+      "level": "Secondary 2",
+      "paper": 1,
+      "topic": "Algebraic identities",
+      "book": "2A",
+      "marks": 2,
+      "type": "numeric",
+      "prompt": "Expand \\\\((x+6)^2\\\\). Enter the constant term.",
+      "answer": 36,
+      "hints": [
+        "Use (a+b)² = a²+2ab+b².",
+        "The constant term is 6²."
+      ],
+      "solution": "\\\\[(x+6)^2=x^2+12x+36\\\\]",
+      "explanation": "The constant term is the term without x.",
+      "common": "Do not omit the middle term in the expansion."
+    },
+    {
+      "id": "DEMO-S2-P2-1",
+      "level": "Secondary 2",
+      "paper": 2,
+      "topic": "Pythagoras theorem",
+      "book": "2B",
+      "marks": 2,
+      "type": "numeric",
+      "prompt": "A right-angled triangle has perpendicular sides of 9 cm and 12 cm. Find the hypotenuse in cm.",
+      "answer": 15,
+      "hints": [
+        "Square both perpendicular sides.",
+        "Take the square root of the sum."
+      ],
+      "solution": "\\\\[c=\\\\sqrt{9^2+12^2}=\\\\sqrt{225}=15\\\\text{ cm}\\\\]",
+      "explanation": "The hypotenuse is opposite the right angle.",
+      "common": "Add the squared lengths before taking the square root."
+    }
+  ]
+}
