@@ -2,7 +2,7 @@
 (function(){
 const NS="http://www.w3.org/2000/svg";
 function node(parent,tag,attrs,text){const e=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs||{}))e.setAttribute(k,v);if(text!==undefined)e.textContent=text;parent.append(e);return e}
-function render(root,spec){if(!root||!spec)return;const svg=node(root,"svg",{viewBox:"0 0 480 270",role:"img","aria-label":spec.kind==="composite-rectangle"?"Schematic rectangular courtyard with an internal square flower bed":"Schematic triangular prism showing triangular base, perpendicular height and length"});svg.style.maxWidth="520px";svg.style.width="100%";
+function render(root,spec){if(!root||!spec)return;const svg=node(root,"svg",{viewBox:"0 0 480 270",role:"img","aria-label":spec.kind==="linear-graph"?"Cartesian graph of a straight line with labelled plotted points":spec.kind==="cutout-rectangle"?"L-shaped region with rectangular cutout":spec.kind==="composite-rectangle"?"Schematic rectangular courtyard with an internal square flower bed":"Schematic triangular prism showing triangular base, perpendicular height and length"});svg.style.maxWidth="520px";svg.style.width="100%";
 const line=(x1,y1,x2,y2)=>node(svg,"line",{x1,y1,x2,y2,stroke:"#214a67","stroke-width":2});
 const txt=(x,y,t)=>node(svg,"text",{x,y,"font-size":15,fill:"#183a50"},t);
 if(spec.kind==="composite-rectangle"){
@@ -18,15 +18,21 @@ line(c[0],c[1],170,198);svg.lastChild.setAttribute("stroke-dasharray","5 5");
 txt(146,220,spec.base+" "+spec.unit);txt(178,130,spec.height+" "+spec.unit);txt(302,146,spec.length+" "+spec.unit);txt(137,253,"Diagram not to scale");
 }
 else if(spec.kind==="linear-graph"){
- const ox=190,oy=150,k=22;
- for(let x=-5;x<=5;x++)line(ox+x*k,35,ox+x*k,245);
- for(let y=-4;y<=4;y++)line(75,oy-y*k,310,oy-y*k);
- const pts=spec.points;
- const lo=pts[0],hi=pts[1];
- line(ox+lo[0]*k,oy-lo[1]*k,ox+hi[0]*k,oy-hi[1]*k);
- pts.forEach(p=>node(svg,"circle",{cx:ox+p[0]*k,cy:oy-p[1]*k,r:4,fill:"#c2483b"}));
- txt(330,88,"Points labelled:");pts.forEach((p,i)=>txt(330,113+i*27,"("+p[0]+", "+p[1]+")"));
- txt(130,265,"Schematic axes");
+ const pts=spec.points||[], m=spec.slope, c=spec.intercept;
+ const ox=185, xScale=24, yBottom=224, yTop=38;
+ const ys=[0,...pts.map(p=>p[1])];
+ const minY=Math.min(...ys)-1,maxY=Math.max(...ys)+1;
+ const yScale=Math.min(23,(yBottom-yTop)/(maxY-minY));
+ const oy=yBottom+minY*yScale;
+ const Y=v=>oy-v*yScale, X=v=>ox+v*xScale;
+ for(let x=-4;x<=4;x++)line(X(x),yTop,X(x),yBottom);
+ const low=Math.ceil(minY),high=Math.floor(maxY);
+ for(let y=low;y<=high;y++)line(65,Y(y),300,Y(y));
+ line(X(-4),Y(m*(-4)+c),X(4),Y(m*4+c));
+ pts.forEach(p=>node(svg,"circle",{cx:X(p[0]),cy:Y(p[1]),r:4,fill:"#c2483b"}));
+ txt(325,83,"Plotted points:");
+ pts.forEach((p,i)=>txt(325,109+i*26,"("+p[0]+", "+p[1]+")"));
+ txt(140,257,"Axes schematic; plotted points to scale");
  }else if(spec.kind==="cutout-rectangle"){
  const W=spec.outer[0],H=spec.outer[1],w=spec.inner[0],h=spec.inner[1];
  node(svg,"path",{d:"M65 45 H370 V"+(45+175*h/H)+" H"+(370-305*w/W)+" V220 H65 Z",fill:"#e0f0fc",stroke:"#214a67","stroke-width":2});
