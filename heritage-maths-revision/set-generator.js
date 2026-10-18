@@ -111,7 +111,7 @@ function make(level,paper,set){
   };
   question.explanation=specific[question.topic]||'Check the calculation against the given relationship and verify its units.';
  }
- for(const question of q){if((level===1&&question.topic==='Statistics')||(level===2&&['Averages','Surface area'].includes(question.topic)))question.steps[1].format={decimalPlaces:2};if(level===2&&['Probability','Combined probability'].includes(question.topic))question.steps[1].format={decimalPlaces:3};}
+ for(const question of q){if((level===1&&question.topic==='Statistics')||(level===2&&['Averages','Surface area'].includes(question.topic)))question.steps[1].format={decimalPlaces:2};if(level===2&&['Probability','Combined probability'].includes(question.topic))question.steps[1].format={decimalPlaces:3};if(level===2&&question.topic==='Volume of cones')question.steps[1].format={significantFigures:3};}
  return {status:'DRAFT generated content — accuracy, difficulty and exam similarity pending review',title:'Secondary '+level+' Paper '+paper+' Set '+set,questions:q};
 }
 window.HASetGenerator={make};
