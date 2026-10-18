@@ -42,3 +42,16 @@ test('geometry diagram on question 7 and graph canvas loads',async({page})=>{
  await expect(page.locator('#question-diagram svg')).toHaveCount(1);
  await expect(page.locator('#graph-lab svg')).toHaveCount(1);
 });
+
+test('switching levels, papers and sets loads separate draft banks',async({page})=>{
+ await page.locator('#level').selectOption('Secondary 2');
+ await page.locator('#paper').selectOption('Paper 2');
+ await page.locator('#set').selectOption('Set 3');
+ await expect(page.locator('.workspace article')).toContainText('Secondary 2 · Paper 2 · Set 3');
+ await expect(page.locator('[data-jump]')).toHaveCount(10);
+ await page.locator('[data-answer="0"]').fill('999');
+ await page.locator('#set').selectOption('Set 2');
+ await expect(page.locator('[data-answer="0"]')).toHaveValue('');
+ await page.locator('#set').selectOption('Set 3');
+ await expect(page.locator('[data-answer="0"]')).toHaveValue('999');
+});
