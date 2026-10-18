@@ -15,7 +15,7 @@
         2,
         3
       ],
-      "prompt": "A school library receives 378 new books in 9 equal cartons. First find books per carton, then find the number of books in 4 cartons.",
+      "prompt": "A packaging centre distributes 378 protective sleeves equally among 9 cartons. Find the number in each carton, then the total in 4 cartons.",
       "steps": [
         {
           "label": "Part (a)",
@@ -149,13 +149,13 @@
       "set": 1,
       "book": "1B",
       "difficulty": "basic",
-      "topic": "Average speed",
+      "topic": "Rate",
       "marks": 5,
       "stepMarks": [
         2,
         3
       ],
-      "prompt": "A cyclist travels 36 km in 2 hours, then 24 km in another 1 hour. Find the total distance and then the average speed in km/h.",
+      "prompt": "A water pump transfers 36 litres in 2 minutes, then another 24 litres in 1 minute. Find the total volume transferred, then the average flow rate in litres per minute.",
       "steps": [
         {
           "label": "Part (a)",
@@ -167,12 +167,12 @@
         }
       ],
       "hints": [
-        "Add the two distances.",
-        "Divide total distance by total time, not the individual speeds."
+        "Add both volumes of water.",
+        "Divide total volume by total time."
       ],
       "solution": [
-        "Total distance = 36 + 24 = 60 km",
-        "Average speed = 60 ÷ 3 = 20 km/h"
+        "Total = 36 + 24 = 60 litres",
+        "Average rate = 60 ÷ 3 = 20 litres/min"
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft"
