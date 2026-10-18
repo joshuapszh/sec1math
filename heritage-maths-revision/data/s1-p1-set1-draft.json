@@ -1,0 +1,356 @@
+{
+  "status": "DRAFT - NOT CONFIDENTIALITY OR TEACHER APPROVED",
+  "title": "Secondary 1 · Paper 1 · Set 1",
+  "questions": [
+    {
+      "id": "S1P1S1-Q01",
+      "level": "Secondary 1",
+      "paper": 1,
+      "set": 1,
+      "book": "1A",
+      "difficulty": "basic",
+      "topic": "Numbers and estimation",
+      "marks": 5,
+      "stepMarks": [
+        2,
+        3
+      ],
+      "prompt": "A school library receives 378 new books in 9 equal cartons. First find books per carton, then find the number of books in 4 cartons.",
+      "steps": [
+        {
+          "label": "Part (a)",
+          "answer": 42
+        },
+        {
+          "label": "Part (b)",
+          "answer": 168
+        }
+      ],
+      "hints": [
+        "Divide 378 by 9.",
+        "Multiply your first answer by 4."
+      ],
+      "solution": [
+        "378 ÷ 9 = 42",
+        "42 × 4 = 168"
+      ],
+      "teacherReviewStatus": "UNVERIFIED",
+      "source": "independently authored development draft"
+    },
+    {
+      "id": "S1P1S1-Q02",
+      "level": "Secondary 1",
+      "paper": 1,
+      "set": 1,
+      "book": "1A",
+      "difficulty": "basic",
+      "topic": "Algebraic manipulation",
+      "marks": 5,
+      "stepMarks": [
+        2,
+        3
+      ],
+      "prompt": "A rectangle has width 8 cm and length \\(x+5\\) cm. If its perimeter is 46 cm, find its length, then find \\(x\\).",
+      "steps": [
+        {
+          "label": "Part (a)",
+          "answer": 15
+        },
+        {
+          "label": "Part (b)",
+          "answer": 10
+        }
+      ],
+      "hints": [
+        "The perimeter is twice the sum of length and width.",
+        "After finding length, subtract 5."
+      ],
+      "solution": [
+        "Length = 46 ÷ 2 − 8 = 15",
+        "x = 15 − 5 = 10"
+      ],
+      "teacherReviewStatus": "UNVERIFIED",
+      "source": "independently authored development draft"
+    },
+    {
+      "id": "S1P1S1-Q03",
+      "level": "Secondary 1",
+      "paper": 1,
+      "set": 1,
+      "book": "1B",
+      "difficulty": "basic",
+      "topic": "Ratio",
+      "marks": 5,
+      "stepMarks": [
+        2,
+        3
+      ],
+      "prompt": "Red and blue badges are in the ratio \\(2:7\\). There are 63 blue badges. Find the value of one ratio part, then the number of red badges.",
+      "steps": [
+        {
+          "label": "Part (a)",
+          "answer": 9
+        },
+        {
+          "label": "Part (b)",
+          "answer": 18
+        }
+      ],
+      "hints": [
+        "Seven parts represent 63 badges.",
+        "Red badges represent two parts."
+      ],
+      "solution": [
+        "One part = 63 ÷ 7 = 9",
+        "Red = 2 × 9 = 18"
+      ],
+      "teacherReviewStatus": "UNVERIFIED",
+      "source": "independently authored development draft"
+    },
+    {
+      "id": "S1P1S1-Q04",
+      "level": "Secondary 1",
+      "paper": 1,
+      "set": 1,
+      "book": "1B",
+      "difficulty": "basic",
+      "topic": "Percentage",
+      "marks": 5,
+      "stepMarks": [
+        2,
+        3
+      ],
+      "prompt": "A museum ticket costs $80 before a discount of 15%. Find the discount in dollars, then find the price after discount.",
+      "steps": [
+        {
+          "label": "Part (a)",
+          "answer": 12
+        },
+        {
+          "label": "Part (b)",
+          "answer": 68
+        }
+      ],
+      "hints": [
+        "Find 15% of 80.",
+        "Subtract the discount from the original price."
+      ],
+      "solution": [
+        "Discount = 0.15 × 80 = $12",
+        "New price = 80 − 12 = $68"
+      ],
+      "teacherReviewStatus": "UNVERIFIED",
+      "source": "independently authored development draft"
+    },
+    {
+      "id": "S1P1S1-Q05",
+      "level": "Secondary 1",
+      "paper": 1,
+      "set": 1,
+      "book": "1B",
+      "difficulty": "basic",
+      "topic": "Average speed",
+      "marks": 5,
+      "stepMarks": [
+        2,
+        3
+      ],
+      "prompt": "A cyclist travels 36 km in 2 hours, then 24 km in another 1 hour. Find the total distance and then the average speed in km/h.",
+      "steps": [
+        {
+          "label": "Part (a)",
+          "answer": 60
+        },
+        {
+          "label": "Part (b)",
+          "answer": 20
+        }
+      ],
+      "hints": [
+        "Add the two distances.",
+        "Divide total distance by total time, not the individual speeds."
+      ],
+      "solution": [
+        "Total distance = 36 + 24 = 60 km",
+        "Average speed = 60 ÷ 3 = 20 km/h"
+      ],
+      "teacherReviewStatus": "UNVERIFIED",
+      "source": "independently authored development draft"
+    },
+    {
+      "id": "S1P1S1-Q06",
+      "level": "Secondary 1",
+      "paper": 1,
+      "set": 1,
+      "book": "1B",
+      "difficulty": "moderate",
+      "topic": "Number patterns",
+      "marks": 5,
+      "stepMarks": [
+        2,
+        3
+      ],
+      "prompt": "A sequence starts at 8 and increases by 6 each term. Find the seventh term, then the twentieth term.",
+      "steps": [
+        {
+          "label": "Part (a)",
+          "answer": 44
+        },
+        {
+          "label": "Part (b)",
+          "answer": 122
+        }
+      ],
+      "hints": [
+        "The nth term is 8 + 6(n−1).",
+        "Substitute n=7, then n=20."
+      ],
+      "solution": [
+        "Seventh term = 8 + 6(6) = 44",
+        "Twentieth term = 8 + 6(19) = 122"
+      ],
+      "teacherReviewStatus": "UNVERIFIED",
+      "source": "independently authored development draft"
+    },
+    {
+      "id": "S1P1S1-Q07",
+      "level": "Secondary 1",
+      "paper": 1,
+      "set": 1,
+      "book": "1B",
+      "difficulty": "moderate",
+      "topic": "Area of composite shapes",
+      "marks": 5,
+      "stepMarks": [
+        2,
+        3
+      ],
+      "prompt": "A rectangular garden measures 18 m by 11 m. A square pond of side 5 m is excluded from planting. Find the full rectangle area, then the planting area.",
+      "steps": [
+        {
+          "label": "Part (a)",
+          "answer": 198
+        },
+        {
+          "label": "Part (b)",
+          "answer": 173
+        }
+      ],
+      "hints": [
+        "Area of a rectangle = length × width.",
+        "Subtract the square pond's area."
+      ],
+      "solution": [
+        "Rectangle = 18 × 11 = 198 m²",
+        "Planting = 198 − 25 = 173 m²"
+      ],
+      "teacherReviewStatus": "UNVERIFIED",
+      "source": "independently authored development draft"
+    },
+    {
+      "id": "S1P1S1-Q08",
+      "level": "Secondary 1",
+      "paper": 1,
+      "set": 1,
+      "book": "1B",
+      "difficulty": "moderate",
+      "topic": "Statistical averages",
+      "marks": 5,
+      "stepMarks": [
+        2,
+        3
+      ],
+      "prompt": "The quiz marks are 9, 12, 7, 13, 12, 11 and 6. Find the median, then the mean correct to 3 significant figures.",
+      "steps": [
+        {
+          "label": "Part (a)",
+          "answer": 11
+        },
+        {
+          "label": "Part (b)",
+          "answer": 10
+        }
+      ],
+      "hints": [
+        "Order all seven marks to locate the middle value.",
+        "Add all marks and divide by seven."
+      ],
+      "solution": [
+        "Ordered: 6,7,9,11,12,12,13; median = 11",
+        "Sum = 70; mean = 70 ÷ 7 = 10"
+      ],
+      "teacherReviewStatus": "UNVERIFIED",
+      "source": "independently authored development draft"
+    },
+    {
+      "id": "S1P1S1-Q09",
+      "level": "Secondary 1",
+      "paper": 1,
+      "set": 1,
+      "book": "1B",
+      "difficulty": "moderate",
+      "topic": "Volume of prisms",
+      "marks": 5,
+      "stepMarks": [
+        2,
+        3
+      ],
+      "prompt": "A prism has triangular cross-section base 10 cm and perpendicular height 7 cm; the prism length is 16 cm. Find the cross-sectional area, then its volume.",
+      "steps": [
+        {
+          "label": "Part (a)",
+          "answer": 35
+        },
+        {
+          "label": "Part (b)",
+          "answer": 560
+        }
+      ],
+      "hints": [
+        "Triangle area = 1/2 × base × perpendicular height.",
+        "Volume = area × prism length."
+      ],
+      "solution": [
+        "Area = 0.5 × 10 × 7 = 35 cm²",
+        "Volume = 35 × 16 = 560 cm³"
+      ],
+      "teacherReviewStatus": "UNVERIFIED",
+      "source": "independently authored development draft"
+    },
+    {
+      "id": "S1P1S1-Q10",
+      "level": "Secondary 1",
+      "paper": 1,
+      "set": 1,
+      "book": "1B",
+      "difficulty": "challenging",
+      "topic": "Financial mathematics",
+      "marks": 5,
+      "stepMarks": [
+        2,
+        3
+      ],
+      "prompt": "A shop buys 40 identical notebooks for $6 each. It sells 30 at $9 each and sells the remaining 10 at $5 each. Find the total sales revenue, then calculate the overall profit.",
+      "steps": [
+        {
+          "label": "Part (a)",
+          "answer": 320
+        },
+        {
+          "label": "Part (b)",
+          "answer": 80
+        }
+      ],
+      "hints": [
+        "Work out the sales revenue from both groups.",
+        "Profit = total sales revenue − total purchase cost."
+      ],
+      "solution": [
+        "Revenue = 30 × 9 + 10 × 5 = $320",
+        "Cost = 40 × 6 = $240; profit = $320 − $240 = $80"
+      ],
+      "teacherReviewStatus": "UNVERIFIED",
+      "source": "independently authored development draft"
+    }
+  ]
+}
