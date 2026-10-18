@@ -304,7 +304,7 @@
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
       "commonMistakes": [
-        "Do not average 18 and 24 without accounting for the different durations."
+        "Do not average the separate rates 48 ÷ 3 and 36 ÷ 2; use total volume ÷ total time = 84 ÷ 5."
       ],
       "explanation": "The answer is in litres per minute, not minutes per litre.",
       "markingNotes": [
@@ -436,7 +436,7 @@
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
       "commonMistakes": [
-        "Do not subtract the pond's side length instead of its area."
+        "Subtract the flower bed area, 6 × 6 = 36 m², rather than its side length."
       ],
       "explanation": "Check units: both answers are square metres.",
       "markingNotes": [
