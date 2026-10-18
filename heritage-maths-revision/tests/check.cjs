@@ -91,3 +91,14 @@ test('Generated practice topic coverage and question classifications remain expl
   for(const topic of required[level])assert.ok(topics.has(topic),level+' missing '+topic);
  }
 });
+
+test('Secondary 1 new coordinate line uses correct substitution and intercept',()=>{
+ for(let paper=1;paper<=2;paper++){
+  const q=sandbox.window.HASetGenerator.make(1,paper,3).questions[4];
+  assert.equal(q.topic,'Linear graphs');
+  assert.equal(q.diagram.kind,'linear-graph');
+  assert.equal(q.steps[1].answer,q.diagram.intercept);
+  assert.equal(q.steps[0].answer,2*q.diagram.slope+q.diagram.intercept);
+  for(const [x,y] of q.diagram.points)assert.equal(y,q.diagram.slope*x+q.diagram.intercept);
+ }
+});
