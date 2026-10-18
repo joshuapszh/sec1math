@@ -40,9 +40,9 @@
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
       "commonMistakes": [
-        "A frequent error is multiplying 378 by 4 before dividing by 9."
+        "Do not multiply 432 by 7 before finding the number in one carton."
       ],
-      "explanation": "Write the number per carton first; check that 9 × 42 = 378.",
+      "explanation": "432 ÷ 12 = 36 wristbands per carton; 7 cartons contain 36 × 7 = 252 wristbands.",
       "markingNotes": [
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
@@ -106,9 +106,9 @@
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
       "commonMistakes": [
-        "Do not subtract the width directly from the full perimeter."
+        "Do not subtract the width directly from the full perimeter; first divide the perimeter by 2."
       ],
-      "explanation": "Check: 2(15 + 8) = 46 cm.",
+      "explanation": "Half the perimeter is 27 cm, so length = 27 − 9 = 18 cm. Since x + 4 = 18, x = 14.",
       "markingNotes": [
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
@@ -172,9 +172,9 @@
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
       "commonMistakes": [
-        "Avoid treating 63 as the total number of badges."
+        "Do not treat 72 as the total number of lights; it represents only the eight purple parts."
       ],
-      "explanation": "Check: 18 : 63 simplifies to 2 : 7.",
+      "explanation": "Eight ratio parts represent 72 purple lights, so one part is 9. Yellow lights = 3 × 9 = 27.",
       "markingNotes": [
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
@@ -238,9 +238,9 @@
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
       "commonMistakes": [
-        "Do not treat 15% as a discount of $15."
+        "A 15% discount is not automatically $15; calculate 15% of the original ticket price."
       ],
-      "explanation": "Check: 85% of $80 is $68.",
+      "explanation": "The discount is 15% of $120 = $18. The amount payable is $120 − $18 = $102.",
       "markingNotes": [
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
@@ -370,9 +370,9 @@
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
       "commonMistakes": [
-        "Do not use 8 + 6n because the first term would be 14."
+        "The nth term is not 5n + 7, because this gives 12 instead of 7 for n = 1."
       ],
-      "explanation": "Check: n = 1 gives 8; n = 2 gives 14.",
+      "explanation": "The difference is 5, so the nth term is 7 + 5(n − 1) = 5n + 2. Check n = 1 gives 7 and n = 2 gives 12.",
       "markingNotes": [
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
@@ -499,7 +499,10 @@
         {
           "label": "Part (b)",
           "type": "numeric",
-          "answer": 11.1
+          "answer": 11.1,
+          "format": {
+            "significantFigures": 3
+          }
         }
       ],
       "hints": [
@@ -580,9 +583,9 @@
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
       "commonMistakes": [
-        "Do not use 10 × 7 without the factor ½."
+        "Remember the factor ½ when finding a triangular cross-sectional area."
       ],
-      "explanation": "Area is cm², while prism volume is cm³.",
+      "explanation": "The triangular area is ½ × 12 × 8 = 48 cm². Volume = 48 × 15 = 720 cm³.",
       "markingNotes": [
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
@@ -638,7 +641,10 @@
         {
           "label": "Part (b)",
           "type": "numeric",
-          "answer": 45
+          "answer": 45,
+          "format": {
+            "decimalPlaces": 1
+          }
         }
       ],
       "hints": [
