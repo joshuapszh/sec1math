@@ -17,3 +17,17 @@ Question-specific method marks require teacher review. Automatic final-answer sc
 | Q10 | Add both sales groups (M1); revenue $290 (A1) | Find cost and profit (M1); profit as share of cost (M1); 45.0% (A1) |
 
 M = method, A = accuracy. These are proposed teacher-facing marking points only. Equivalent valid methods should be accepted. Follow-through method credit may apply when a later calculation consistently uses an incorrect earlier result; teacher judgment is necessary. Units and specified rounding must be checked manually. This table is not fed into automated grading.
+
+## Calibration addendum (simulated scripts, not actual submissions)
+
+The test cases in [TEACHER_SCRIPT_CALIBRATION.md](../TEACHER_SCRIPT_CALIBRATION.md) identify the following necessary interpretation of this table:
+
+- **Q4(b):** Accept the direct method 120 × 0.85 = 102 for full credit, without artificially requiring a separate subtraction.
+- **Q5(b):** 84 ÷ (3+2) = 16.8 demonstrates elapsed time and average rate in one expression. Accept compact correct working.
+- **Q6(a):** Accept 7 + 5(n−1), 5n+2, or an equivalent expression. Do not require expansion for the accuracy mark.
+- **Q8(b):** 78/7 = 11.142857… rounded to 11.14 does not meet 3 significant figures; with correct working, provisionally award the two method marks but withhold A1.
+- **Q10(b):** The correct percentage is 45.0% to one decimal place. The 45 versus 45.0 formatting issue requires a consistent, teacher-approved precision policy.
+- **Follow-through:** Consider up to the process marks when part (b) correctly uses an incorrect part (a) result, where the original error does not invalidate the mathematical method. Repeatedly penalising the same arithmetic slip should be avoided.
+- **Bare correct answers:** Do not equate the application's full-part automatic answer score with a formal award of all M and A marks.
+
+**Calibration outcome:** guide remains provisional. Real anonymised student work and teacher moderation have not been supplied.
