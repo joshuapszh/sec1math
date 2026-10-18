@@ -4,7 +4,7 @@
 (function(){
  const num=(value,target,options={})=>{
   const raw=String(value).trim();
-  if(!raw||!/^[-+]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(raw))return {supported:false,reason:"Enter a numeric answer."};
+  if(!raw||!/^[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?$/.test(raw))return {supported:false,reason:"Enter a numeric answer."};
   const expected=Number(target),got=Number(raw);
   const tol=Number.isFinite(options.tolerance)?options.tolerance:1e-8;
   const correct=Math.abs(got-expected)<=tol;
