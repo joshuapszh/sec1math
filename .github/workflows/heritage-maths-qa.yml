@@ -1,0 +1,26 @@
+name: Heritage Maths Development QA
+on:
+  push:
+    branches:
+      - development/heritage-maths-revision
+    paths:
+      - 'heritage-maths-revision/**'
+      - '.github/workflows/heritage-maths-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax checks
+        run: |
+          for file in heritage-maths-revision/*.js; do node --check "$file"; done
+      - name: Regression tests
+        run: node heritage-maths-revision/tests/check.cjs
+      - name: Blueprint schema checks
+        run: python heritage-maths-revision/validate_reference_set.py
