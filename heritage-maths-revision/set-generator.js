@@ -78,6 +78,39 @@ function make(level,paper,set){
    'Total surface area = 3.142 × '+r+' × ('+r+' + '+(r+h)+') = '+curved+' cm²');
   q[8].steps[0].format={decimalPlaces:2};q[8].steps[1].format={decimalPlaces:2};
  }
+
+ // Extend terse generated working with explicit teaching explanations.
+ for(const question of q){
+  question.solution=question.solution.map((line,i)=>{
+    const lead=i===0?'Part (a): identify the quantity or formula and calculate it. ':'Part (b): apply the appropriate relationship to the given values. ';
+    return lead+line+'. Check that your answer matches the required units or accuracy.';
+  });
+  const specific={
+   'Arithmetic':'Equal sharing uses division; to scale up, multiply one group by the required number.',
+   'Linear equations':'Perimeter counts two lengths and two widths; halve before subtracting the known width.',
+   'Ratio':'First identify the number of equal ratio parts represented by the known amount.',
+   'Percentage':'A percentage discount is calculated from the original price, not the discounted price.',
+   'Average rate':'Average rate uses total distance or quantity divided by total elapsed time.',
+   'Number patterns':'The nth term uses (n−1) differences from the first term.',
+   'Area':'Find the full rectangular area, then subtract the excluded region.',
+   'Statistics':'Sort the values for the median; use the sum divided by the count for the mean.',
+   'Volume of prisms':'Area of the triangular cross-section is half base times perpendicular height.',
+   'Financial arithmetic':'Sales revenue and initial purchase cost are different quantities.',
+   'Linear graphs':'Gradient is the change in y divided by the change in x; intercept is y when x=0.',
+   'Pythagoras theorem':'The longest side is opposite the right angle.',
+   'Similarity':'Every corresponding length changes by the same scale factor.',
+   'Averages':'For an odd number of ordered values, choose the middle position.',
+   'Trigonometry':'Choose a trigonometric ratio based on the named sides.',
+   'Surface area':'Distinguish one face, curved surface and total surface where appropriate.',
+   'Probability':'Count favourable outcomes and compare them with all equally likely outcomes.',
+   'Combined probability':'List or count ordered outcomes systematically.',
+   'Volume of cones':'A cone occupies one third of a cylinder with matching base and height.',
+   'Surface area of cones':'Total cone area includes the circular base plus the curved side.',
+   'Speed and distance':'For the full journey, divide total distance by total duration.',
+   'Composite area':'A composite region can be found by subtracting the cutout from an outer shape.'
+  };
+  question.explanation=specific[question.topic]||'Check the calculation against the given relationship and verify its units.';
+ }
  for(const question of q){if((level===1&&question.topic==='Statistics')||(level===2&&['Averages','Surface area'].includes(question.topic)))question.steps[1].format={decimalPlaces:2};if(level===2&&['Probability','Combined probability'].includes(question.topic))question.steps[1].format={decimalPlaces:3};}
  return {status:'DRAFT generated content — accuracy, difficulty and exam similarity pending review',title:'Secondary '+level+' Paper '+paper+' Set '+set,questions:q};
 }
