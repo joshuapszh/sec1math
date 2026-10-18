@@ -72,7 +72,7 @@ function make(level,paper,set){
  if(level===2&&set===3){
   const r=c+3, h=a+4, pi=3.142, curved=r2(pi*r*(2*r+h));
   q[8]=add(9,bookB,'moderate','Surface area of cones',
-   'A cone has radius '+r+' cm, height '+h+' cm and slant height '+(r+h)+' cm. Use pi = 3.142. (a) Find the circular base area to 2 decimal places. (b) Find the total surface area to 2 decimal places.',
+   'A cone has radius '+r+' cm and slant height '+(r+h)+' cm. Use pi = 3.142. (a) Find the circular base area to 2 decimal places. (b) Find the total surface area to 2 decimal places.',
    r2(pi*r*r),curved,
    'Base area = 3.142 × '+r+'² = '+r2(pi*r*r)+' cm²',
    'Total surface area = 3.142 × '+r+' × ('+r+' + '+(r+h)+') = '+curved+' cm²');
