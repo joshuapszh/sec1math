@@ -59,6 +59,25 @@ function make(level,paper,set){
    'Tiled area = '+(outerL*outerW)+' − '+cutL+' × '+cutW+' = '+(outerL*outerW-cutL*cutW)+' m²');
   q[6].diagram={kind:'cutout-rectangle',outer:[outerL,outerW],inner:[cutL,cutW],unit:'m'};
  }
+
+ if(level===1&&set===2){
+  const walking=12+a,cycling=18+b,minutes=2+c;
+  q[4]=add(5,bookB,'basic','Speed and distance',
+   'A delivery rider covers '+cycling+' km in 2 hours and then '+walking+' km in '+minutes+' hours. (a) Find the total distance in kilometres. (b) Calculate the average speed for the entire journey in km/h, correct to 2 decimal places.',
+   cycling+walking,r2((cycling+walking)/(2+minutes)),
+   'Total distance = '+cycling+' + '+walking+' = '+(cycling+walking)+' km',
+   'Average speed = '+(cycling+walking)+' ÷ (2 + '+minutes+') = '+r2((cycling+walking)/(2+minutes))+' km/h');
+  q[4].steps[1].format={decimalPlaces:2};
+ }
+ if(level===2&&set===3){
+  const r=c+3, h=a+4, pi=3.142, curved=r2(pi*r*(2*r+h));
+  q[8]=add(9,bookB,'moderate','Surface area of cones',
+   'A cone has radius '+r+' cm, height '+h+' cm and slant height '+(r+h)+' cm. Use pi = 3.142. (a) Find the circular base area to 2 decimal places. (b) Find the total surface area to 2 decimal places.',
+   r2(pi*r*r),curved,
+   'Base area = 3.142 × '+r+'² = '+r2(pi*r*r)+' cm²',
+   'Total surface area = 3.142 × '+r+' × ('+r+' + '+(r+h)+') = '+curved+' cm²');
+  q[8].steps[0].format={decimalPlaces:2};q[8].steps[1].format={decimalPlaces:2};
+ }
  for(const question of q){if((level===1&&question.topic==='Statistics')||(level===2&&['Averages','Surface area'].includes(question.topic)))question.steps[1].format={decimalPlaces:2};if(level===2&&['Probability','Combined probability'].includes(question.topic))question.steps[1].format={decimalPlaces:3};}
  return {status:'DRAFT generated content — accuracy, difficulty and exam similarity pending review',title:'Secondary '+level+' Paper '+paper+' Set '+set,questions:q};
 }
