@@ -229,7 +229,7 @@ test('Independent Secondary 2 Pythagoras, similarity and trigonometry audit',()=
   const tri=q.find(x=>x.topic==='Trigonometry');
   assert.ok(tri);const tm=tri.prompt.match(/opposite side is (\d+) cm/);assert.ok(tm);
   assert.equal(tri.steps[0].answer,0.5);
-  assert.equal(tri.steps[1].answer,Number(tm[1])/Math.sin(Math.PI/6));
+  assert.ok(Math.abs(tri.steps[1].answer-Number(tm[1])/Math.sin(Math.PI/6))<1e-10);
   const sim=q.find(x=>x.topic==='Similarity'||x.topic==='Similarity of areas');
   assert.ok(sim);
   if(sim.topic==='Similarity of areas'){
