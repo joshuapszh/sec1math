@@ -5,6 +5,7 @@ on:
       - development/heritage-maths-revision
     paths:
       - 'heritage-maths-revision/**'
+      - 'playwright.config.cjs'
       - '.github/workflows/heritage-maths-qa.yml'
   workflow_dispatch:
 permissions:
