@@ -303,3 +303,20 @@ test('Reference Set 1 review checks current scenario details',()=>{
  assert.equal(HAMarking.evaluate('numeric','45.0',qs[9].steps[1].answer,qs[9].steps[1].format).correct,true);
  assert.equal(HAMarking.evaluate('numeric','45',qs[9].steps[1].answer,qs[9].steps[1].format).correct,false);
 });
+
+test('Paper 2 opening questions use independently checked linked applications',()=>{
+ for(let set=1;set<=3;set++){
+  const s1=sandbox.window.HASetGenerator.make(1,2,set).questions[0];
+  const m=s1.prompt.match(/receives (\d+) cartons, each with (\d+) bookmarks.*distributes (\d+) bookmarks to each of 3/);
+  assert.ok(m);const [cartons,per,club]=m.slice(1).map(Number);
+  assert.equal(s1.steps[0].answer,cartons*per);
+  assert.equal(s1.steps[1].answer,cartons*per-3*club);
+  const s2=sandbox.window.HASetGenerator.make(2,2,set).questions[0];
+  const v=s2.prompt.match(/there are (\d+) visitors.*Ticket revenue is SGD (\d+)/);
+  assert.ok(v);const [people,revenue]=v.slice(1).map(Number);
+  const x=(revenue-7*people)/5,y=people-x;
+  assert.ok(Number.isInteger(x)&&Number.isInteger(y)&&x>0&&y>0);
+  assert.equal(s2.steps[0].answer,x);assert.equal(s2.steps[1].answer,y);
+  assert.equal(12*x+7*y,revenue);
+ }
+});
