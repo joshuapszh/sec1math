@@ -105,14 +105,17 @@ test('Secondary 1 new coordinate line uses correct substitution and intercept',(
 
 test('Paper 2 application variants compute independently',()=>{
  for(const set of [1,2,3]){
-  const a=sandbox.window.HASetGenerator.make(1,2,set).questions[9],b=sandbox.window.HASetGenerator.make(2,2,set).questions[3];
-  assert.equal(a.topic,'Financial decisions');assert.equal(b.topic,'Similarity of areas');
-  const nums=a.prompt.match(/purchases (\d+) reusable cups for \$(\d+) each\. It sells (\d+) cups at \$(\d+) each and the last 5 at \$(\d+) each.*\$(\d+) transport/);
-  assert.ok(nums);const [total,cost,full,high,low,transport]=nums.slice(1).map(Number);
-  const revenue=full*high+5*low;assert.equal(a.steps[0].answer,revenue);
-  assert.equal(a.steps[1].answer,revenue-total*cost-transport);
-  const sq=b.prompt.match(/smaller has side (\d+) cm and the larger has side (\d+) cm/);
-  assert.ok(sq);const x=Number(sq[1]),y=Number(sq[2]);
-  assert.equal(b.steps[0].answer,x*x);assert.equal(b.steps[1].answer,y*y-x*x);
+  const a=sandbox.window.HASetGenerator.make(1,2,set).questions[9];
+  const b=sandbox.window.HASetGenerator.make(2,2,set).questions[3];
+  assert.equal(a.topic,'Financial decisions');
+  assert.equal(b.topic,'Similarity of areas');
+  const m=a.prompt.match(/buys (\d+) reusable cups for SGD (\d+) each.*sells (\d+) cups at SGD (\d+) and five cups at SGD (\d+).*SGD (\d+) delivery/);
+  assert.ok(m);const [qty,cost,sold,price,clearance,delivery]=m.slice(1).map(Number);
+  const revenue=sold*price+5*clearance;
+  assert.equal(sold+5,qty);assert.equal(a.steps[0].answer,revenue);
+  assert.equal(a.steps[1].answer,revenue-qty*cost-delivery);
+  const side=Number(b.prompt.match(/have sides (\d+) cm/)[1]);
+  assert.equal(b.steps[0].answer,side*side);
+  assert.equal(b.steps[1].answer,3*side*side);
  }
 });
