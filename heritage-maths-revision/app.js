@@ -34,3 +34,5 @@ function downloadCSV(){const csv=[['Question','Topic','Book','Difficulty','Marks
 async function init(){const workspace=document.querySelector('.workspace');workspace.innerHTML='<article>Loading development reference set…</article>';for(const id of ['level','paper','set']){$(id).disabled=true}
 try{const res=await fetch('./data/s1-p1-set1-draft.json',{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);const data=await res.json();bank=data.questions;if(bank.length!==10||bank.reduce((s,q)=>s+q.marks,0)!==50)throw Error('Question bank fails count/marks validation');state=loadState();draw()}catch(e){workspace.innerHTML='<article><h2>Unable to load draft questions</h2><p>'+escapeHTML(e.message)+'</p><p>Run through a local web server, not file://.</p></article>'}}
 init();
+
+window.addEventListener('DOMContentLoaded',()=>{window.HAMathInput?.enhance();const g=document.getElementById('graph-lab');if(g)window.HAGraph?.init(g)});
