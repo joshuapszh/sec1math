@@ -45,3 +45,15 @@ test('Cone surface-area variant arithmetic and format',()=>{for(let paper=1;pape
 test('Every generated draft includes answer explanations and correct allocations',()=>{for(let level=1;level<=2;level++)for(let paper=1;paper<=2;paper++)for(let set=1;set<=3;set++){if(level===1&&paper===1&&set===1)continue;const qs=sandbox.window.HASetGenerator.make(level,paper,set).questions;for(const q of qs){assert.ok(q.prompt.length>35);assert.equal(q.hints.length,3);assert.equal(q.solution.length,2);assert.ok(q.solution.every(s=>typeof s==='string'&&s.trim().length>0));assert.equal(q.stepMarks[0]+q.stepMarks[1],5);assert.equal(q.teacherReviewStatus,'UNVERIFIED')}}});
 
 test('All generated solutions contain calculation and concept explanation',()=>{for(let level=1;level<=2;level++)for(let paper=1;paper<=2;paper++)for(let set=1;set<=3;set++){if(level===1&&paper===1&&set===1)continue;const qs=sandbox.window.HASetGenerator.make(level,paper,set).questions;for(const q of qs){assert.equal(q.solution.length,2);assert.ok(q.solution.every(x=>x.includes('Part (')&&x.includes('Check that your answer')));assert.ok(q.explanation.length>=40)}}});
+
+test('Two-dice application independently counts favourable sums',()=>{
+ const outcomes=[];for(let x=1;x<=6;x++)for(let y=1;y<=6;y++)outcomes.push(x+y);
+ const favourable=outcomes.filter(n=>n>=9).length;
+ assert.equal(outcomes.length,36);assert.equal(favourable,10);
+ for(let level=2;level<=2;level++)for(let paper=1;paper<=2;paper++)for(let set=1;set<=3;set++){
+  const q=sandbox.window.HASetGenerator.make(level,paper,set).questions[9];
+  assert.match(q.prompt,/number cube is rolled twice/);
+  assert.equal(q.steps[0].answer,outcomes.length);
+  assert.equal(q.steps[1].answer,Number((favourable/outcomes.length).toFixed(3)));
+ }
+});
