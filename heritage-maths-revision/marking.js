@@ -2,7 +2,19 @@
    Browser-only deterministic marking; every attempted part is scored once independently.
 */
 (function(){
- const num=(value,target,tolerance=1e-8)=>{const s=String(value).trim();if(!s||!/^[-+]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(s))return {supported:false,reason:"Enter a numeric answer."};return{supported:true,correct:Math.abs(Number(s)-target)<=tolerance}};
+ const num=(value,target,options={})=>{
+  const raw=String(value).trim();
+  if(!raw||!/^[-+]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(raw))return {supported:false,reason:"Enter a numeric answer."};
+  const expected=Number(target),got=Number(raw);
+  const tol=Number.isFinite(options.tolerance)?options.tolerance:1e-8;
+  const correct=Math.abs(got-expected)<=tol;
+  const places=options.decimalPlaces;
+  if(correct&&Number.isInteger(places)&&places>=0){
+   const fractional=raw.includes('.')?raw.split('.')[1].length:0;
+   if(fractional!==places)return {supported:true,correct:false,reason:"Your value is correct, but write the answer to "+places+" decimal place(s)."};
+  }
+  return {supported:true,correct};
+ };
  const algebra=(value,expected)=>{const r=window.HAAlgebra?.check(value,expected);return r?.supported?{supported:true,correct:r.equivalent}:{supported:false,reason:r?.reason||"Algebra checking is unavailable."}};
  const graph=(value,expected)=>{
   if(!value||!Array.isArray(value.points))return{supported:false,reason:"Graph response unavailable."};
@@ -25,6 +37,6 @@
   const parts=[pointsCorrect,modeCorrect&&geometryCorrect];
   return{supported:true,correct:parts.every(Boolean),parts,message:"Coordinates and collinearity checked. Line extension, curve smoothness and construction accuracy not assessed."};
  };
- const evaluate=(type,value,expected)=>type==="numeric"?num(value,expected):type==="algebra"?algebra(value,expected):type==="graph"?graph(value,expected):{supported:false,reason:"Unsupported question type."};
+ const evaluate=(type,value,expected,options={})=>type==="numeric"?num(value,expected,options):type==="algebra"?algebra(value,expected):type==="graph"?graph(value,expected):{supported:false,reason:"Unsupported question type."};
  window.HAMarking={evaluate};
 })();
