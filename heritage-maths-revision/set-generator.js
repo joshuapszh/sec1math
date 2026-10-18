@@ -39,6 +39,26 @@ function make(level,paper,set){
  add(10,bookB,'challenging','Combined probability','A spinner has four equal sectors numbered 1, 2, 3 and 4. It is spun twice, independently. (a) Find the number of equally likely ordered outcomes. (b) Find the probability that the sum is at least 6, correct to 3 decimal places.',16,0.375,'Four outcomes per spin: 4 × 4 = 16','Favourable ordered pairs: (2,4), (3,3), (3,4), (4,2), (4,3), (4,4). Probability = 6/16 = 0.375.')
  ];
  }
+ // Distinct graph and multi-step applications. Keep existing mark blueprint.
+ if(level===2){
+  const slope=c, intercept=b-2, x1=-1, x2=2;
+  const graphQuestion=add(2,bookA,'basic','Linear graphs',
+   'The straight line passes through ('+x1+', '+(slope*x1+intercept)+') and ('+x2+', '+(slope*x2+intercept)+'). (a) Find its gradient. (b) Find its y-intercept.',
+   slope,intercept,
+   'Gradient = ('+(slope*x2+intercept)+' − '+(slope*x1+intercept)+') ÷ ('+x2+' − ('+x1+')) = '+slope,
+   'Using y = mx + c, c = '+intercept);
+  graphQuestion.diagram={kind:'linear-graph',slope,intercept,points:[[x1,slope*x1+intercept],[x2,slope*x2+intercept]]};
+  q[1]=graphQuestion;
+ }
+ if(level===1&&set===3){
+  const outerL=a+14,outerW=b+10,cutL=c+2,cutW=c+1;
+  q[6]=add(7,bookB,'moderate','Composite area',
+   'An L-shaped tiled region is made by removing a '+cutL+' m by '+cutW+' m rectangle from one corner of a '+outerL+' m by '+outerW+' m rectangle. (a) Find the outer area. (b) Find the tiled area.',
+   outerL*outerW,outerL*outerW-cutL*cutW,
+   'Outer area = '+outerL+' × '+outerW+' = '+(outerL*outerW)+' m²',
+   'Tiled area = '+(outerL*outerW)+' − '+cutL+' × '+cutW+' = '+(outerL*outerW-cutL*cutW)+' m²');
+  q[6].diagram={kind:'cutout-rectangle',outer:[outerL,outerW],inner:[cutL,cutW],unit:'m'};
+ }
  for(const question of q){if((level===1&&question.topic==='Statistics')||(level===2&&['Averages','Surface area'].includes(question.topic)))question.steps[1].format={decimalPlaces:2};if(level===2&&['Probability','Combined probability'].includes(question.topic))question.steps[1].format={decimalPlaces:3};}
  return {status:'DRAFT generated content — accuracy, difficulty and exam similarity pending review',title:'Secondary '+level+' Paper '+paper+' Set '+set,questions:q};
 }
