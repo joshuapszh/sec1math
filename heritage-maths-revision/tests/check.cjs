@@ -287,3 +287,19 @@ test('Generated geometry has positive physically consistent measurements',()=>{
   }
  }
 });
+
+test('Reference Set 1 review checks current scenario details',()=>{
+ const qs=JSON.parse(fs.readFileSync(path.join(root,'data/s1-p1-set1-draft.json'),'utf8')).questions;
+ const expected=[
+ ['432 ÷ 12 = 36','432'],['27 − 9 = 18','54'],['3 × 9 = 27','72'],['$120 − $18 = $102','$120'],['litres per minute','48'],['5n + 2','7, 12, 17'],['square metres','20 m'],['fourth ordered value','6, 14'],['48 × 15 = 720','12 cm'],['percentage of the original cost','50 pens']];
+ for(let i=0;i<qs.length;i++){
+  const q=qs[i];assert.ok(q.prompt.includes(expected[i][1]));
+  assert.ok(q.explanation.includes(expected[i][0]),'Reference explanation outdated for '+q.id);
+  assert.equal(q.steps.length,2);
+ }
+ assert.equal(qs[7].steps[1].format.significantFigures,3);
+ assert.equal(qs[9].steps[1].format.decimalPlaces,1);
+ assert.equal(HAMarking.evaluate('numeric','11.1',qs[7].steps[1].answer,qs[7].steps[1].format).correct,true);
+ assert.equal(HAMarking.evaluate('numeric','45.0',qs[9].steps[1].answer,qs[9].steps[1].format).correct,true);
+ assert.equal(HAMarking.evaluate('numeric','45',qs[9].steps[1].answer,qs[9].steps[1].format).correct,false);
+});
