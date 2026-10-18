@@ -36,3 +36,20 @@ try{const res=await fetch('./data/s1-p1-set1-draft.json',{cache:'no-store'});if(
 init();
 
 window.addEventListener('DOMContentLoaded',()=>{window.HAMathInput?.enhance();const g=document.getElementById('graph-lab');if(g)window.HAGraph?.init(g)});
+
+window.addEventListener('DOMContentLoaded',()=>{
+ const alg=document.getElementById('algebra-check');
+ if(alg)alg.addEventListener('click',()=>{
+  const value=document.getElementById('algebra-answer').value;
+  const result=window.HAAlgebra?.check(value,'2x+6');
+  document.getElementById('algebra-feedback').textContent=!result?.supported?'Cannot assess this expression: '+(result?.reason||'unsupported syntax'):result.equivalent?'Correct: equivalent to 2x + 6.':'Not equivalent to 2x + 6. Try expanding the bracket.';
+ });
+ const btn=document.getElementById('graph-check');
+ if(btn)btn.addEventListener('click',()=>{
+  const data=document.getElementById('graph-lab')?.getGraphState?.();
+  const expected=['0,1','1,3','2,5'];
+  const actual=(data?.points||[]).map(p=>p.join(','));
+  const right=expected.every(p=>actual.includes(p))&&actual.length===3;
+  document.getElementById('graph-feedback').textContent=(right?'All three points correct. ':'Check coordinates: three exact points are required. ')+(data?.mode==='line'?'Line mode selected.':'Select Connect points for the line.');
+ });
+});
