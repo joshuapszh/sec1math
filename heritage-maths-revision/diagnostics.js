@@ -20,11 +20,11 @@ alg.onclick=function(){
 };
 graph.onclick=function(){
  const response=holder?.getGraphState?.();if(!response){gResult.textContent="Graph tool unavailable. No marks recorded.";return}
- const expected=new Set(["0,1","1,3","2,5"]),actual=response.points.map(p=>p.join(","));const unique=new Set(actual);
+ const expected=new Set(["0,1","1,2","2,3"]),actual=response.points.map(p=>p.join(","));const unique=new Set(actual);
  const correctPoints=actual.length===3&&unique.size===3&&[...expected].every(p=>unique.has(p));
- const lineSelected=response.mode==="line",score=(correctPoints?2:0)+(lineSelected?1:0);
+ const geometry=window.HAMarking?.evaluate('graph',response,{points:[[0,1],[1,2],[2,3]],mode:'line',line:{m:1,c:1}});const lineSelected=!!geometry?.parts?.[1],score=(correctPoints?2:0)+(lineSelected?1:0);
  if(!graphAttempted){firstGraph=score;graphAttempted=true}
- gResult.textContent=(correctPoints?"All three points correct (2/2).":"Incorrect or extra points (0/2).")+" "+(lineSelected?"Connection mode selected (1/1).":"Connection mode not selected (0/1).")+" Independent first attempt: "+firstGraph+"/3. Note: this checks selected line mode, not whether the rendered line extends correctly.";
+ gResult.textContent=(correctPoints?"All three points correct (2/2).":"Incorrect or extra points (0/2).")+" "+(lineSelected?"Correct straight-line relationship (1/1).":"Straight-line relationship not verified (0/1).")+" Independent first attempt: "+firstGraph+"/3. Note: this checks selected line mode, not whether the rendered line extends correctly.";
 };
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",setup);else setup();
