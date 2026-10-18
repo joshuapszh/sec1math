@@ -1,5 +1,5 @@
 {
-  "status": "DRAFT v2 — independently authored practice; teacher validation and confidentiality sign-off required",
+  "status": "DRAFT v3 - redesigned question contexts and deterministic diagram specifications; manual marking review required",
   "title": "Secondary 1 · Paper 1 · Set 1",
   "questions": [
     {
@@ -15,27 +15,27 @@
         2,
         3
       ],
-      "prompt": "A packaging centre distributes 378 protective sleeves equally among 9 cartons. Find the number in each carton, then the total in 4 cartons.",
+      "prompt": "An exhibition centre packs 432 wristbands equally into 12 cartons. (a) How many wristbands are in each carton? (b) How many wristbands are in 7 cartons?",
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 42,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 36
         },
         {
           "label": "Part (b)",
-          "answer": 168,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 252
         }
       ],
       "hints": [
-        "Apply equal sharing before scaling to four cartons.",
-        "One carton holds 378 ÷ 9 sleeves.",
-        "Four cartons contain 4 × 42 sleeves."
+        "Identify the relevant formula or relationship.",
+        "Work through part (a), showing each operation.",
+        "Use the result and check the units and reasonableness of part (b)."
       ],
       "solution": [
-        "378 ÷ 9 = 42",
-        "42 × 4 = 168"
+        "432 ÷ 12 = 36 wristbands",
+        "36 × 7 = 252 wristbands"
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
@@ -47,7 +47,7 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 2
+      "reviewVersion": 3
     },
     {
       "id": "S1P1S1-Q02",
@@ -62,27 +62,27 @@
         2,
         3
       ],
-      "prompt": "A rectangle has width 8 cm and length \\(x+5\\) cm. If its perimeter is 46 cm, find its length, then find \\(x\\).",
+      "prompt": "A rectangle has width 9 cm and length \\(x+4\\) cm. Its perimeter is 54 cm. (a) Find its length. (b) Find \\(x\\).",
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 15,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 18
         },
         {
           "label": "Part (b)",
-          "answer": 10,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 14
         }
       ],
       "hints": [
-        "Use the perimeter formula P = 2(l + w).",
-        "Half the perimeter is 46 ÷ 2 = 23 cm.",
-        "Length = 23 − 8 = 15 cm; then solve x + 5 = 15."
+        "Identify the relevant formula or relationship.",
+        "Work through part (a), showing each operation.",
+        "Use the result and check the units and reasonableness of part (b)."
       ],
       "solution": [
-        "Length = 46 ÷ 2 − 8 = 15",
-        "x = 15 − 5 = 10"
+        "Length = 54 ÷ 2 − 9 = 18 cm",
+        "x + 4 = 18, hence x = 14"
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
@@ -94,7 +94,7 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 2
+      "reviewVersion": 3
     },
     {
       "id": "S1P1S1-Q03",
@@ -109,27 +109,27 @@
         2,
         3
       ],
-      "prompt": "Red and blue badges are in the ratio \\(2:7\\). There are 63 blue badges. Find the value of one ratio part, then the number of red badges.",
+      "prompt": "A display has yellow and purple lights in the ratio 3 : 8. There are 72 purple lights. (a) Find the number of lights represented by one part. (b) Find the number of yellow lights.",
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 9,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 9
         },
         {
           "label": "Part (b)",
-          "answer": 18,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 27
         }
       ],
       "hints": [
-        "Identify which quantity corresponds to seven parts.",
-        "One part = 63 ÷ 7.",
-        "Red badges = 2 × 9."
+        "Identify the relevant formula or relationship.",
+        "Work through part (a), showing each operation.",
+        "Use the result and check the units and reasonableness of part (b)."
       ],
       "solution": [
-        "One part = 63 ÷ 7 = 9",
-        "Red = 2 × 9 = 18"
+        "One part = 72 ÷ 8 = 9",
+        "Yellow lights = 3 × 9 = 27"
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
@@ -141,7 +141,7 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 2
+      "reviewVersion": 3
     },
     {
       "id": "S1P1S1-Q04",
@@ -156,27 +156,27 @@
         2,
         3
       ],
-      "prompt": "A museum ticket costs $80 before a discount of 15%. Find the discount in dollars, then find the price after discount.",
+      "prompt": "A science-centre admission ticket costs $120. A promotional discount of 15% is offered. (a) Find the discount. (b) Find the amount payable.",
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 12,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 18
         },
         {
           "label": "Part (b)",
-          "answer": 68,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 102
         }
       ],
       "hints": [
-        "Percentage discount is calculated from the original price.",
-        "15% of $80 = 0.15 × 80.",
-        "Discounted price = 80 − 12."
+        "Identify the relevant formula or relationship.",
+        "Work through part (a), showing each operation.",
+        "Use the result and check the units and reasonableness of part (b)."
       ],
       "solution": [
-        "Discount = 0.15 × 80 = $12",
-        "New price = 80 − 12 = $68"
+        "Discount = 15/100 × 120 = $18",
+        "Amount payable = $120 − $18 = $102"
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
@@ -188,7 +188,7 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 2
+      "reviewVersion": 3
     },
     {
       "id": "S1P1S1-Q05",
@@ -203,27 +203,27 @@
         2,
         3
       ],
-      "prompt": "A water pump transfers 36 litres in 2 minutes, then another 24 litres in 1 minute. Find the total volume transferred, then the average flow rate in litres per minute.",
+      "prompt": "A water tank receives 48 litres in 3 minutes and another 36 litres in the following 2 minutes. (a) Find the total volume received. (b) Find the average flow rate in litres per minute.",
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 60,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 84
         },
         {
           "label": "Part (b)",
-          "answer": 20,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 16.8
         }
       ],
       "hints": [
-        "Average rate is total volume divided by total elapsed time.",
-        "Total volume = 36 + 24 and total time = 2 + 1.",
-        "Average flow rate = 60 ÷ 3."
+        "Identify the relevant formula or relationship.",
+        "Work through part (a), showing each operation.",
+        "Use the result and check the units and reasonableness of part (b)."
       ],
       "solution": [
-        "Total = 36 + 24 = 60 litres",
-        "Average rate = 60 ÷ 3 = 20 litres/min"
+        "Total = 48 + 36 = 84 litres",
+        "Average flow rate = 84 ÷ (3 + 2) = 16.8 litres/min"
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
@@ -235,7 +235,7 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 2
+      "reviewVersion": 3
     },
     {
       "id": "S1P1S1-Q06",
@@ -247,30 +247,30 @@
       "topic": "Number patterns",
       "marks": 5,
       "stepMarks": [
-        2,
-        3
+        3,
+        2
       ],
-      "prompt": "A sequence starts at 8 and increases by 6 each term. Let x denote the term position. Write an algebraic expression for the xth term, then find the twentieth term.",
+      "prompt": "The first three terms of a sequence are 7, 12, 17. (a) Express the nth term in terms of n (enter using x for the term position). (b) Find its 15th term.",
       "steps": [
         {
-          "label": "Part (a): expression for the xth term",
+          "label": "Part (a)",
           "type": "algebra",
-          "answer": "6x+2"
+          "answer": "5x+2"
         },
         {
-          "label": "Part (b): twentieth term",
+          "label": "Part (b)",
           "type": "numeric",
-          "answer": 122
+          "answer": 77
         }
       ],
       "hints": [
-        "Find the common difference, 6, and start with the first term, 8.",
-        "The nth term is 8 + 6(n − 1).",
-        "Expand to 6n + 2 and substitute n = 20."
+        "Identify the relevant formula or relationship.",
+        "Work through part (a), showing each operation.",
+        "Use the result and check the units and reasonableness of part (b)."
       ],
       "solution": [
-        "8 + 6(x − 1) = 6x + 2",
-        "6(20) + 2 = 122"
+        "nth term = 7 + 5(n − 1) = 5n + 2",
+        "15th term = 5(15) + 2 = 77"
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
@@ -282,7 +282,7 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 2
+      "reviewVersion": 3
     },
     {
       "id": "S1P1S1-Q07",
@@ -297,27 +297,27 @@
         2,
         3
       ],
-      "prompt": "A rectangular garden measures 18 m by 11 m. A square pond of side 5 m is excluded from planting. Find the full rectangle area, then the planting area.",
+      "prompt": "A rectangular courtyard measures 20 m by 12 m. A square flower bed of side 6 m is excluded from the paved region. (a) Find the area of the courtyard. (b) Find the remaining paved area.",
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 198,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 240
         },
         {
           "label": "Part (b)",
-          "answer": 173,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 204
         }
       ],
       "hints": [
-        "Treat the planted region as an outer rectangle minus an inner square.",
-        "Outer area = 18 × 11.",
-        "Pond area = 5 × 5; subtract it from 198."
+        "Identify the relevant formula or relationship.",
+        "Work through part (a), showing each operation.",
+        "Use the result and check the units and reasonableness of part (b)."
       ],
       "solution": [
-        "Rectangle = 18 × 11 = 198 m²",
-        "Planting = 198 − 25 = 173 m²"
+        "Courtyard area = 20 × 12 = 240 m²",
+        "Paved area = 240 − 6² = 204 m²"
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
@@ -329,7 +329,19 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 2
+      "reviewVersion": 3,
+      "diagram": {
+        "kind": "composite-rectangle",
+        "outer": [
+          20,
+          12
+        ],
+        "inner": [
+          6,
+          6
+        ],
+        "unit": "m"
+      }
     },
     {
       "id": "S1P1S1-Q08",
@@ -344,27 +356,27 @@
         2,
         3
       ],
-      "prompt": "The quiz marks are 9, 12, 7, 13, 12, 11 and 6. Find the median, then the mean. Give exact answers where possible.",
+      "prompt": "The seven scores are 6, 14, 9, 11, 14, 8 and 15. (a) Find the median. (b) Find the mean, correct to 3 significant figures.",
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 11,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 11
         },
         {
           "label": "Part (b)",
-          "answer": 10,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 11
         }
       ],
       "hints": [
-        "The median is the middle value of an ordered list.",
-        "Order the seven values: 6, 7, 9, 11, 12, 12, 13.",
-        "The sum is 70; divide by 7 to find the mean."
+        "Identify the relevant formula or relationship.",
+        "Work through part (a), showing each operation.",
+        "Use the result and check the units and reasonableness of part (b)."
       ],
       "solution": [
-        "Ordered: 6,7,9,11,12,12,13; median = 11",
-        "Sum = 70; mean = 70 ÷ 7 = 10"
+        "Ordered scores: 6, 8, 9, 11, 14, 14, 15; median = 11",
+        "Sum = 77, so mean = 77 ÷ 7 = 11 exactly."
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
@@ -376,7 +388,7 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 2
+      "reviewVersion": 3
     },
     {
       "id": "S1P1S1-Q09",
@@ -391,27 +403,27 @@
         2,
         3
       ],
-      "prompt": "A prism has triangular cross-section base 10 cm and perpendicular height 7 cm; the prism length is 16 cm. Find the cross-sectional area, then its volume.",
+      "prompt": "A prism has a triangular cross-section with base 12 cm and perpendicular height 8 cm. The prism is 15 cm long. (a) Find the cross-sectional area. (b) Find the volume.",
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 35,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 48
         },
         {
           "label": "Part (b)",
-          "answer": 560,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 720
         }
       ],
       "hints": [
-        "Calculate the area of the triangular cross-section first.",
-        "Triangle area = ½ × 10 × 7.",
-        "Multiply the cross-sectional area by the prism's length 16."
+        "Identify the relevant formula or relationship.",
+        "Work through part (a), showing each operation.",
+        "Use the result and check the units and reasonableness of part (b)."
       ],
       "solution": [
-        "Area = 0.5 × 10 × 7 = 35 cm²",
-        "Volume = 35 × 16 = 560 cm³"
+        "Area = ½ × 12 × 8 = 48 cm²",
+        "Volume = 48 × 15 = 720 cm³"
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
@@ -423,7 +435,14 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 2
+      "reviewVersion": 3,
+      "diagram": {
+        "kind": "triangular-prism",
+        "base": 12,
+        "height": 8,
+        "length": 15,
+        "unit": "cm"
+      }
     },
     {
       "id": "S1P1S1-Q10",
@@ -435,30 +454,30 @@
       "topic": "Financial mathematics",
       "marks": 5,
       "stepMarks": [
-        2,
-        3
+        3,
+        2
       ],
-      "prompt": "A shop buys 40 identical notebooks for $6 each. It sells 30 at $9 each and sells the remaining 10 at $5 each. Find the total sales revenue, then calculate the overall profit.",
+      "prompt": "A stationery stall buys 50 pens for $4 each. It sells 35 pens at $7 each and sells the other 15 at $3 each. (a) Find the total sales revenue. (b) Find the overall profit.",
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 320,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 290
         },
         {
           "label": "Part (b)",
-          "answer": 80,
-          "type": "numeric"
+          "type": "numeric",
+          "answer": 90
         }
       ],
       "hints": [
-        "Separate revenue, costs and profit.",
-        "Revenue = (30 × 9) + (10 × 5).",
-        "Profit = revenue − (40 × 6)."
+        "Identify the relevant formula or relationship.",
+        "Work through part (a), showing each operation.",
+        "Use the result and check the units and reasonableness of part (b)."
       ],
       "solution": [
-        "Revenue = 30 × 9 + 10 × 5 = $320",
-        "Cost = 40 × 6 = $240; profit = $320 − $240 = $80"
+        "Revenue = 35 × 7 + 15 × 3 = $290",
+        "Cost = 50 × 4 = $200; profit = $290 − $200 = $90"
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
@@ -470,7 +489,7 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 2
+      "reviewVersion": 3
     }
   ]
 }
