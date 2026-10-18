@@ -1,12 +1,11 @@
 /* Heritage Academy Mathematics Portal - DEVELOPMENT ONLY.
    No confidential examination question or marking scheme data is embedded here. */
 const $ = id => document.getElementById(id);
-const STORE='ha-maths-dev-s1p1set1-v1';
+/* Earlier V1 records are not silently merged into changed question content. */
 let bank=[],index=0,state={},quarantined=[],started=Date.now(),timerPaused=false,elapsed=0;
 const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const typeset=()=>window.MathJax?.typesetPromise?.().catch(()=>{});
 function persist(){try{window.HAProgress.save(bank,state,quarantined)}catch(e){console.warn('Local save unavailable',e)}}
-function loadState(){try{return JSON.parse(localStorage.getItem(STORE))||{}}catch{return {}}}
 const record=id=>state[id]??(state[id]={answers:['',''],attempts:[0,0],firstScore:[null,null],hints:0,revealed:false,flag:false,completed:false});
 function marks(q,r){return r.firstScore.reduce((s,n)=>s+(n||0),0)}
 function draw(){
@@ -30,7 +29,7 @@ window.HAMethodReview?.mount(q,document.querySelector('.workspace article'));
 typeset();
 }
 function drawResults(q,r){for(let i=0;i<2;i++){const raw=r.answers[i].trim();if(!raw)continue;const result=window.HAMarking?.evaluate(q.steps[i].type||'numeric',raw,q.steps[i].answer);const correct=result?.supported&&result.correct;$('result'+i).textContent=correct?'Correct.':'Not correct. Retry or use a hint.'}document.querySelector('aside .muted').textContent='First-attempt score: '+bank.reduce((s,x)=>s+marks(x,record(x.id)),0)+' / 50';persist()}
-function solutionHTML(q){return '<strong>Model working</strong><ol>'+q.solution.map(s=>'<li>'+escapeHTML(s)+'</li>').join('')+'</ol><p>Compare each step with your own written working.</p>'}
+function solutionHTML(q){return '<strong>Model working</strong><ol>'+q.solution.map(step=>'<li>'+escapeHTML(step)+'</li>').join('')+'</ol><p><strong>Check your reasoning:</strong> '+escapeHTML(q.explanation||'Compare each step with your own written working.')+'</p>'+(q.commonMistakes?.length?'<p><strong>Common mistake:</strong> '+q.commonMistakes.map(escapeHTML).join(' ')+'</p>':'')+'<p class="muted">These are model answers for learning, not automatic method-mark certification.</p>'}
 function downloadCSV(){const csv=[['Question','Topic','Book','Difficulty','Marks','Independent Marks','Part A Entry','Part B Entry','Hints','Revealed','Flagged'],...bank.map(q=>{const r=record(q.id);return [q.id,q.topic,q.book,q.difficulty,q.marks,marks(q,r),...r.answers,r.hints,r.revealed,r.flag]})].map(a=>a.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const link=document.createElement('a'),url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));link.href=url;link.download='heritage-maths-dev-s1p1-set1.csv';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 async function init(){const workspace=document.querySelector('.workspace');workspace.innerHTML='<article>Loading development reference set…</article>';for(const id of ['level','paper','set']){$(id).disabled=true}
 try{const res=await fetch('./data/s1-p1-set1-draft.json',{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);const data=await res.json();bank=data.questions;if(bank.length!==10||bank.reduce((s,q)=>s+q.marks,0)!==50)throw Error('Question bank fails count/marks validation');{const saved=window.HAProgress.load(bank);state=saved.records;quarantined=saved.quarantined;if(saved.notice)console.warn(saved.notice)}draw()}catch(e){workspace.innerHTML='<article><h2>Unable to load draft questions</h2><p>'+escapeHTML(e.message)+'</p><p>Run through a local web server, not file://.</p></article>'}}
