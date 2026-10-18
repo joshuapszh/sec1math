@@ -45,3 +45,9 @@ Safeguards added: development regression tests require the corrected Secondary 2
 - Verify every draft numerical answer and model-working step, particularly precision, diagrams and physical units
 - Confirm question variety and Paper 2 application demand, then record a teacher-only approval outside public GitHub
 - Do not assign or publish while these checks remain incomplete
+
+## Presentation-consistency follow-up (18 October 2026)
+- Corrected the generated Secondary 1 average-rate question to explicitly request two decimal places; its stored answer already used two-place rounding.
+- Required two decimal places for generated monetary discount and payable-amount responses and added corresponding checker regression coverage.
+- These checks assess mathematical answer presentation, not student written methods or full examination equivalence.
+- Unresolved: rendered equations and figures from several confidential exam DOCX pages remain unavailable for complete visual comparison. No full confidentiality clearance or teacher approval is claimed.
