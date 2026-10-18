@@ -51,3 +51,6 @@ Safeguards added: development regression tests require the corrected Secondary 2
 - Required two decimal places for generated monetary discount and payable-amount responses and added corresponding checker regression coverage.
 - These checks assess mathematical answer presentation, not student written methods or full examination equivalence.
 - Unresolved: rendered equations and figures from several confidential exam DOCX pages remain unavailable for complete visual comparison. No full confidentiality clearance or teacher approval is claimed.
+
+## Reference-bank question-by-question audit (18 October 2026)
+The separately authored Secondary 1 Paper 1 Set 1 was inspected against its own ten current question prompts and stored answers. Several explanation and common-mistake notes contained numbers or contexts from abandoned earlier drafts rather than the actual questions. Corrected affected explanatory fields in Questions 1, 2, 3, 4, 5, 6, 7 and 9; retained the valid arithmetic answers. Added explicit answer-format metadata for Q8 mean (3 significant figures) and Q10 profit percentage (1 decimal place), plus regression tests covering reference explanations and rounding. This is verified content cleanup, not teacher sign-off or comprehensive confidential-exam clearance.
