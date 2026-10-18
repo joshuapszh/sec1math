@@ -41,7 +41,7 @@ function make(level,paper,set){
  }
  // Distinct graph and multi-step applications. Keep existing mark blueprint.
  if(level===2){
-  const slope=c, intercept=b-2, x1=-1, x2=2;
+  const slope=c, intercept=b-2, x1=-1, x2=0;
   const graphQuestion=add(2,bookA,'basic','Linear graphs',
    'The straight line passes through ('+x1+', '+(slope*x1+intercept)+') and ('+x2+', '+(slope*x2+intercept)+'). (a) Find its gradient. (b) Find its y-intercept.',
    slope,intercept,
