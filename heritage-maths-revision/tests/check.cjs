@@ -192,3 +192,18 @@ test('Independently verify generated sequences and inequalities where present',(
   }
  }
 });
+
+test('Generated percentage and rate accuracy instructions match numeric checker',()=>{
+ for(const paper of [1,2])for(const set of [1,2,3]){
+  if(paper===1&&set===1)continue;
+  const qs=sandbox.window.HASetGenerator.make(1,paper,set).questions;
+  const pct=qs.find(q=>q.topic==='Percentage');
+  assert.ok(pct);
+  assert.equal(pct.steps[0].format.decimalPlaces,2);
+  assert.equal(pct.steps[1].format.decimalPlaces,2);
+  assert.equal(HAMarking.evaluate('numeric',pct.steps[1].answer.toFixed(2),pct.steps[1].answer,pct.steps[1].format).correct,true);
+  assert.equal(HAMarking.evaluate('numeric',String(pct.steps[1].answer),pct.steps[1].answer,pct.steps[1].format).correct, String(pct.steps[1].answer).split('.')[1]?.length===2);
+  const rate=qs.find(q=>q.topic==='Average rate');
+  if(rate){assert.match(rate.prompt,/2 decimal places/);assert.equal(rate.steps[1].format.decimalPlaces,2);}
+ }
+});
