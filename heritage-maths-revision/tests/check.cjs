@@ -126,9 +126,13 @@ test('Paper 2 journey and composite volumes',()=>{
   assert.equal(q1.topic,'Average speed with rest');assert.equal(q1.steps[1].answer,Math.round(q1.steps[0].answer/4*100)/100);
   if(set!==1)continue;
   assert.equal(q2.topic,'Composite solid volume');
-  const m=q2.prompt.match(/radius (\d+) cm and perpendicular height (\d+) cm/);assert.ok(m);
-  const r=Number(m[1]),h=Number(m[2]);
-  assert.equal(q2.steps[0].answer,Math.round(3.142*r*r*h/3*100)/100);
-  assert.equal(q2.steps[1].answer,Math.round((3.142*r*r*h/3+2*3.142*r*r*r/3)*100)/100);
+  const m=q2.prompt.match(/base (\d+) cm by (\d+) cm and height (\d+) cm.*perpendicular height is (\d+) cm/);assert.ok(m);
+  const [side,other,h,pyr]=m.slice(1).map(Number);
+  assert.equal(side,other);
+  const pv=side*side*pyr/3,cv=side*side*h;
+  assert.equal(q2.steps[0].answer,pv);
+  assert.equal(q2.steps[1].answer,pv+cv);
+  assert.ok(!q2.prompt.includes('hemisphere'));
+
  }
 });
