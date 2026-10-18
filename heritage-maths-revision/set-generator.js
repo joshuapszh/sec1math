@@ -166,4 +166,4 @@ function make(level,paper,set){
  return {status:'DRAFT generated content — accuracy, difficulty and exam similarity pending review',title:'Secondary '+level+' Paper '+paper+' Set '+set,questions:q};
 }
 window.HASetGenerator={make};
-})()
+})();
