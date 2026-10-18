@@ -107,6 +107,25 @@ function make(level,paper,set){
   q[4].diagram={kind:'linear-graph',slope:m,intercept,points:[[0,intercept],[1,m+intercept]]};
  }
 
+ // More distinct Paper 2 word problems while preserving the chapter and marks blueprint.
+ if(paper===2&&level===1){
+  const width=b+4,original=a+12,extended=original+c,perimeter=2*(extended+width);
+  q[1]=add(2,bookA,'basic','Linear equations',
+   'A rectangular display has width '+width+' cm. Its length was increased by '+c+' cm, and the new perimeter is '+perimeter+' cm. (a) Find its new length. (b) Find the original length before the increase.',
+   extended,original,
+   'New length = (perimeter ÷ 2) − width = '+perimeter+' ÷ 2 − '+width+' = '+extended+' cm.',
+   'Original length = '+extended+' − '+c+' = '+original+' cm.');
+  q[1].explanation='Halve the entire perimeter first; the given increase applies only to the length.';
+ }
+ if(paper===2&&level===2){
+  const radius=c+3,height=a+5,pi=3.142,wrap=Math.round(2*pi*radius*height*100)/100,base=Math.round(pi*radius*radius*100)/100;
+  q[6]=add(7,bookB,'moderate','Surface area',
+   'A cylindrical display has radius '+radius+' cm and height '+height+' cm. The curved side is wrapped in material, while one circular end receives a label. Use pi = 3.142. (a) Find the label area to 2 decimal places. (b) Find the wrapping area to 2 decimal places.',
+   base,wrap,
+   'Circular label area = 3.142 × '+radius+'² = '+base+' cm².',
+   'Curved wrapping area = 2 × 3.142 × '+radius+' × '+height+' = '+wrap+' cm².');
+  q[6].steps[0].format={decimalPlaces:2};q[6].steps[1].format={decimalPlaces:2};
+ }
  // Paper 2 uses linked quantities rather than repeating Paper 1 opening drills.
  if(paper===2&&level===1){
   const cartons=a+3,perCarton=12+b,used=2*c,total=cartons*perCarton;
