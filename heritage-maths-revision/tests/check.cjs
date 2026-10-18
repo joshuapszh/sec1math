@@ -207,3 +207,13 @@ test('Generated percentage and rate accuracy instructions match numeric checker'
   if(rate){assert.match(rate.prompt,/2 decimal places/);assert.equal(rate.steps[1].format.decimalPlaces,2);}
  }
 });
+
+test('Paper 2 application explanations describe the actual mathematics',()=>{
+ for(let set=1;set<=2;set++){
+  const q=sandbox.window.HASetGenerator.make(1,2,set).questions[4];
+  assert.equal(q.topic,'Unit rates and combined cost');
+  assert.match(q.explanation,/total cost divided by total quantity/);
+ }
+ const solid=sandbox.window.HASetGenerator.make(2,2,1).questions[8];
+ assert.match(solid.explanation,/pyramid and cuboid volumes separately/);
+});
