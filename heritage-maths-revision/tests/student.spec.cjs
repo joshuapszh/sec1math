@@ -73,3 +73,17 @@ test('Secondary 1 Set 3 L-shape diagram and answers render',async({page})=>{
  await expect(figure.locator('path')).toHaveCount(1);
  await expect(page.locator('.workspace article')).toContainText('Composite area');
 });
+
+test('Secondary 1 generated graph points remain inside diagram frame',async({page})=>{
+ await page.locator('#set').selectOption('Set 3');
+ await page.locator('[data-jump="4"]').click();
+ const svg=page.locator('#question-diagram svg');
+ await expect(svg).toHaveAttribute('aria-label',/Cartesian graph/);
+ const dots=svg.locator('circle');
+ await expect(dots).toHaveCount(2);
+ for(let i=0;i<2;i++){
+   const {x,y}=await dots.nth(i).evaluate(el=>({x:Number(el.getAttribute('cx')),y:Number(el.getAttribute('cy'))}));
+   expect(x).toBeGreaterThan(0);expect(x).toBeLessThan(480);
+   expect(y).toBeGreaterThan(20);expect(y).toBeLessThan(245);
+ }
+});
