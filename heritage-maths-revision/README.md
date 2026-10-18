@@ -21,3 +21,6 @@ Run `python -m http.server 8000` at the repository root and visit `http://localh
 
 ## Release gate
 Do not link this directory from the student homepage or enable it as the published Pages source until mathematical, curriculum, functional, accessibility and confidentiality review is complete.
+
+## QA: browser regression tests
+Run a local server from the repository root (`python -m http.server 8000`), then visit `/heritage-maths-revision/qa.html` and inspect all results. This checks restricted algebra, graph scoring, progress versioning, and the paper's mark allocation. It does **not** validate the final classroom UI, confidential-exam similarity, pedagogy, mathematical working, or smooth curves. Do not infer student readiness from automated test passes alone.
