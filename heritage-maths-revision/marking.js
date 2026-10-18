@@ -15,13 +15,15 @@
   }
   const figures=options.significantFigures;
   if(correct&&Number.isInteger(figures)&&figures>0){
-   const signless=raw.replace(/^[-+]/,'');
-   const digits=signless.replace('.','').replace(/^0+/,'');
-   const counted=digits.length;
-   const integerTrailingZeros=!signless.includes('.')&&/0$/.test(signless);
+   const mantissa=raw.replace(/^[-+]/,'').split(/[eE]/)[0];
+   const digits=mantissa.replace('.','').replace(/^0+/,'');
+   const ambiguous=!mantissa.includes('.')&&/0$/.test(mantissa);
    const canonical=Number(expected.toPrecision(figures));
-   if(Math.abs(got-canonical)>tol||(!integerTrailingZeros&&counted!==figures)|| (integerTrailingZeros&&counted<figures))
+   if(Math.abs(got-canonical)>tol || digits.length<figures || (!ambiguous&&digits.length!==figures))
     return {supported:true,correct:false,reason:"Write the answer to "+figures+" significant figure(s)."};
+   if(ambiguous&&digits.length>figures)
+    return {supported:true,correct:true,message:"Trailing zeroes in a whole number are ambiguous; scientific notation shows significant figures clearly."};
+
   }
   return {supported:true,correct};
  };
