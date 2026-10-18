@@ -190,24 +190,26 @@
         2,
         3
       ],
-      "prompt": "A sequence starts at 8 and increases by 6 each term. Find the seventh term, then the twentieth term.",
+      "prompt": "A sequence starts at 8 and increases by 6 each term. Let x denote the term position. Write an algebraic expression for the xth term, then find the twentieth term.",
       "steps": [
         {
-          "label": "Part (a)",
-          "answer": 44
+          "label": "Part (a): expression for the xth term",
+          "type": "algebra",
+          "answer": "6x+2"
         },
         {
-          "label": "Part (b)",
+          "label": "Part (b): twentieth term",
+          "type": "numeric",
           "answer": 122
         }
       ],
       "hints": [
-        "The nth term is 8 + 6(n−1).",
-        "Substitute n=7, then n=20."
+        "The xth term is 8 + 6(x − 1).",
+        "Expand the expression and substitute x = 20."
       ],
       "solution": [
-        "Seventh term = 8 + 6(6) = 44",
-        "Twentieth term = 8 + 6(19) = 122"
+        "8 + 6(x − 1) = 6x + 2",
+        "6(20) + 2 = 122"
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft"
