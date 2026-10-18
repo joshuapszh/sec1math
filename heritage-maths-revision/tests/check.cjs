@@ -120,19 +120,24 @@ test('Paper 2 application variants compute independently',()=>{
  }
 });
 
-test('Paper 2 journey and composite volumes',()=>{
+test('Paper 2 notebook unit costs and composite volumes',()=>{
  for(let set=1;set<=2;set++){
-  const q1=sandbox.window.HASetGenerator.make(1,2,set).questions[4],q2=sandbox.window.HASetGenerator.make(2,2,set).questions[8];
-  assert.equal(q1.topic,'Average speed with rest');assert.equal(q1.steps[1].answer,Math.round(q1.steps[0].answer/4*100)/100);
-  if(set!==1)continue;
-  assert.equal(q2.topic,'Composite solid volume');
-  const m=q2.prompt.match(/base (\d+) cm by (\d+) cm and height (\d+) cm.*perpendicular height is (\d+) cm/);assert.ok(m);
-  const [side,other,h,pyr]=m.slice(1).map(Number);
-  assert.equal(side,other);
-  const pv=side*side*pyr/3,cv=side*side*h;
-  assert.equal(q2.steps[0].answer,pv);
-  assert.equal(q2.steps[1].answer,pv+cv);
-  assert.ok(!q2.prompt.includes('hemisphere'));
-
+  const q1=sandbox.window.HASetGenerator.make(1,2,set).questions[4];
+  assert.equal(q1.topic,'Unit rates and combined cost');
+  const m=q1.prompt.match(/sells (\d+) identical notebooks at SGD (\d+) each and (\d+) identical notebooks at SGD (\d+) each/);
+  assert.ok(m);const [n1,p1,n2,p2]=m.slice(1).map(Number);
+  const total=n1*p1+n2*p2;
+  assert.equal(q1.steps[0].answer,total);
+  assert.equal(q1.steps[1].answer,Math.round(total/(n1+n2)*100)/100);
+  assert.equal(q1.steps[1].format.decimalPlaces,2);
  }
+ const q2=sandbox.window.HASetGenerator.make(2,2,1).questions[8];
+ assert.equal(q2.topic,'Composite solid volume');
+ const m=q2.prompt.match(/base (\d+) cm by (\d+) cm and height (\d+) cm.*perpendicular height is (\d+) cm/);
+ assert.ok(m);const [side,other,height,pyrHeight]=m.slice(1).map(Number);
+ assert.equal(side,other);
+ const pv=side*side*pyrHeight/3;
+ assert.equal(q2.steps[0].answer,pv);
+ assert.equal(q2.steps[1].answer,pv+side*side*height);
+ assert.ok(!q2.prompt.includes('hemisphere'));
 });
