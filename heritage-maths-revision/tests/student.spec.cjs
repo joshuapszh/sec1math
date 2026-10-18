@@ -55,3 +55,21 @@ test('switching levels, papers and sets loads separate draft banks',async({page}
  await page.locator('#set').selectOption('Set 3');
  await expect(page.locator('[data-answer="0"]')).toHaveValue('999');
 });
+
+test('Secondary 2 line graph diagram displays correct plotted points',async({page})=>{
+ await page.locator('#level').selectOption('Secondary 2');
+ await page.locator('[data-jump="1"]').click();
+ const figure=page.locator('#question-diagram svg');
+ await expect(figure).toHaveCount(1);
+ await expect(figure.locator('circle')).toHaveCount(2);
+ await expect(figure).toHaveAttribute('role','img');
+ await expect(page.locator('.workspace article')).toContainText('Linear graphs');
+});
+test('Secondary 1 Set 3 L-shape diagram and answers render',async({page})=>{
+ await page.locator('#set').selectOption('Set 3');
+ await page.locator('[data-jump="6"]').click();
+ const figure=page.locator('#question-diagram svg');
+ await expect(figure).toHaveCount(1);
+ await expect(figure.locator('path')).toHaveCount(1);
+ await expect(page.locator('.workspace article')).toContainText('Composite area');
+});
