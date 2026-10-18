@@ -107,6 +107,23 @@ function make(level,paper,set){
   q[4].diagram={kind:'linear-graph',slope:m,intercept,points:[[0,intercept],[1,m+intercept]]};
  }
 
+ // Paper 2 uses linked quantities rather than repeating Paper 1 opening drills.
+ if(paper===2&&level===1){
+  const cartons=a+3,perCarton=12+b,used=2*c,total=cartons*perCarton;
+  q[0]=add(1,bookA,'basic','Arithmetic',
+   'A library receives '+cartons+' cartons, each with '+perCarton+' bookmarks. It distributes '+used+' bookmarks to each of 3 reading clubs. (a) Find the total bookmarks received. (b) Find the number remaining after the distribution.',
+   total,total-3*used,
+   'Total bookmarks = '+cartons+' × '+perCarton+' = '+total+'.',
+   'Distributed = 3 × '+used+' = '+(3*used)+'; remaining = '+total+' − '+(3*used)+' = '+(total-3*used)+'.');
+ }
+ if(paper===2&&level===2){
+  const adult=a+4,student=b+5,adultPrice=12,studentPrice=7,count=adult+student,cost=adultPrice*adult+studentPrice*student;
+  q[0]=add(1,bookA,'basic','Simultaneous equations',
+   'At a museum there are '+count+' visitors holding either adult or student tickets. Adult tickets cost SGD 12 and student tickets cost SGD 7. Ticket revenue is SGD '+cost+'. Let x be adult tickets and y be student tickets. (a) Find x. (b) Find y. Show how two equations describe the situation.',
+   adult,student,
+   'x + y = '+count+' and 12x + 7y = '+cost+'. Subtract 7(x + y) from the revenue equation: 5x = '+(cost-7*count)+', hence x = '+adult+'.',
+   'y = '+count+' − '+adult+' = '+student+'. Check revenue: 12('+adult+') + 7('+student+') = '+cost+'.');
+ }
  // Paper 2: extended applications.
  if(paper===2&&level===1){
   const cost=a+3,qty=5*b,markup=c+2,transport=b+3;
