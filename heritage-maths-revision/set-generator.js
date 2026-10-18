@@ -125,6 +125,16 @@ function make(level,paper,set){
    'Smaller area = '+side+'² = '+small+' cm².',
    'Larger area = '+(2*side)+'² = '+large+' cm²; difference = '+(large-small)+' cm².');
  }
+ if(paper===2&&level===1){
+ const d1=15+a,d2=8+b,dist=d1+d2;
+ q[4]=add(5,bookB,'basic','Average speed with rest','A shuttle travels '+d1+' km in 2 hours, rests 1 hour, then travels '+d2+' km in 1 hour. (a) Find total distance. (b) Find average speed including rest to 2 decimal places.',dist,Math.round(dist/4*100)/100,'Distance = '+d1+' + '+d2+' = '+dist+' km.','Elapsed time = 4 hours. Speed = '+dist+' ÷ 4 = '+(Math.round(dist/4*100)/100)+' km/h.');
+ q[4].steps[1].format={decimalPlaces:2};
+ }
+ if(paper===2&&level===2){
+ const radius=c+2,height=a+3,cone=3.142*radius*radius*height/3,hemisphere=2*3.142*radius*radius*radius/3;
+ q[8]=add(9,bookB,'moderate','Composite solid volume','A cone of radius '+radius+' cm and perpendicular height '+height+' cm is joined to a hemisphere of the same radius. Use pi = 3.142. (a) Find the cone volume to 2 decimal places. (b) Find total volume to 2 decimal places.',Math.round(cone*100)/100,Math.round((cone+hemisphere)*100)/100,'Cone volume = pi × r² × h ÷ 3 = '+(Math.round(cone*100)/100)+' cm³.','Hemisphere volume = 2 × pi × r³ ÷ 3; total = '+(Math.round((cone+hemisphere)*100)/100)+' cm³.');
+ q[8].steps[0].format={decimalPlaces:2};q[8].steps[1].format={decimalPlaces:2};
+ }
  // Extend terse generated working with explicit teaching explanations.
  for(const question of q){
   question.solution=question.solution.map((line,i)=>{
