@@ -17,6 +17,22 @@ line(...a,a[0]+dx,a[1]+dy);line(...b,b[0]+dx,b[1]+dy);line(c[0],c[1],c[0]+dx,c[1
 line(c[0],c[1],170,198);svg.lastChild.setAttribute("stroke-dasharray","5 5");
 txt(146,220,spec.base+" "+spec.unit);txt(178,130,spec.height+" "+spec.unit);txt(302,146,spec.length+" "+spec.unit);txt(137,253,"Diagram not to scale");
 }
-return svg}
+else if(spec.kind==="linear-graph"){
+ const ox=190,oy=150,k=22;
+ for(let x=-5;x<=5;x++)line(ox+x*k,35,ox+x*k,245);
+ for(let y=-4;y<=4;y++)line(75,oy-y*k,310,oy-y*k);
+ const pts=spec.points;
+ const lo=pts[0],hi=pts[1];
+ line(ox+lo[0]*k,oy-lo[1]*k,ox+hi[0]*k,oy-hi[1]*k);
+ pts.forEach(p=>node(svg,"circle",{cx:ox+p[0]*k,cy:oy-p[1]*k,r:4,fill:"#c2483b"}));
+ txt(330,88,"Points labelled:");pts.forEach((p,i)=>txt(330,113+i*27,"("+p[0]+", "+p[1]+")"));
+ txt(130,265,"Schematic axes");
+ }else if(spec.kind==="cutout-rectangle"){
+ const W=spec.outer[0],H=spec.outer[1],w=spec.inner[0],h=spec.inner[1];
+ node(svg,"path",{d:"M65 45 H370 V"+(45+175*h/H)+" H"+(370-305*w/W)+" V220 H65 Z",fill:"#e0f0fc",stroke:"#214a67","stroke-width":2});
+ txt(182,38,W+" "+spec.unit);txt(12,125,H+" "+spec.unit);txt(330,240,w+" "+spec.unit);txt(390,130,h+" "+spec.unit);
+ txt(150,255,"Diagram not to scale");
+ }
+ return svg}
 window.HADiagrams={render};
 })();
