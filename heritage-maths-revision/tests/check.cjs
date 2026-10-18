@@ -217,3 +217,31 @@ test('Paper 2 application explanations describe the actual mathematics',()=>{
  const solid=sandbox.window.HASetGenerator.make(2,2,1).questions[8];
  assert.match(solid.explanation,/pyramid and cuboid volumes separately/);
 });
+
+test('Independent Secondary 2 Pythagoras, similarity and trigonometry audit',()=>{
+ for(let paper=1;paper<=2;paper++)for(let set=1;set<=3;set++){
+  const q=sandbox.window.HASetGenerator.make(2,paper,set).questions;
+  const py=q.find(x=>x.topic==='Pythagoras theorem');
+  const pm=py.prompt.match(/shorter sides (\d+) cm and (\d+) cm/);assert.ok(pm);
+  const x=Number(pm[1]),y=Number(pm[2]);
+  assert.equal(py.steps[0].answer,x*x+y*y);
+  assert.equal(py.steps[1].answer,Math.hypot(x,y));
+  const tri=q.find(x=>x.topic==='Trigonometry');
+  assert.ok(tri);const tm=tri.prompt.match(/opposite side is (\d+) cm/);assert.ok(tm);
+  assert.equal(tri.steps[0].answer,0.5);
+  assert.equal(tri.steps[1].answer,Number(tm[1])/Math.sin(Math.PI/6));
+  const sim=q.find(x=>x.topic==='Similarity'||x.topic==='Similarity of areas');
+  assert.ok(sim);
+  if(sim.topic==='Similarity of areas'){
+   const sm=sim.prompt.match(/sides (\d+) cm and (\d+) cm/);assert.ok(sm);
+   const [a,b]=sm.slice(1).map(Number);
+   assert.equal(sim.steps[0].answer,a*a);
+   assert.equal(sim.steps[1].answer,b*b-a*a);
+  }else{
+   const sm=sim.prompt.match(/sides are (\d+) cm and (\d+) cm.*is (\d+) cm/);assert.ok(sm);
+   const [a,b,c]=sm.slice(1).map(Number);
+   assert.equal(sim.steps[0].answer,b/a);
+   assert.equal(sim.steps[1].answer,c*b/a);
+  }
+ }
+});
