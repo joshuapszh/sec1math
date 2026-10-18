@@ -36,7 +36,7 @@ function make(level,paper,set){
  add(7,bookB,'moderate','Surface area','A cylindrical display has radius '+rad+' cm and height '+h+' cm. Use π = 3.142. (a) Find the area of its circular base to 2 decimal places. (b) Find the curved surface area to 2 decimal places.',r2(3.142*rad*rad),r2(2*3.142*rad*h),'Base area = 3.142 × '+rad+'² = '+r2(3.142*rad*rad)+' cm²','Curved surface area = 2 × 3.142 × '+rad+' × '+h+' = '+r2(2*3.142*rad*h)+' cm²'),
  add(8,bookB,'moderate','Probability','A bag contains '+a+' red, '+b+' green and '+c+' yellow counters. Find (a) total counters and (b) probability of green to 3 decimal places.',counts,Number((b/counts).toFixed(3)),'Total = '+counts,'P(green) = '+b+'/'+counts+' = '+Number((b/counts).toFixed(3))),
  add(9,bookB,'moderate','Volume of cones','A cone has radius '+rad+' cm and height '+h+' cm. Use π=3.142. Find (a) r²h and (b) cone volume to 3 significant figures.',rad*rad*h,Number((3.142*rad*rad*h/3).toPrecision(3)),'r²h = '+rad*rad*h,'Volume = πr²h/3 = '+Number((3.142*rad*rad*h/3).toPrecision(3))),
- add(10,bookB,'challenging','Combined probability','A fair six-sided number cube is rolled twice, independently. (a) Find the number of equally likely ordered outcomes. (b) Find the probability the total score is at least 9, correct to 3 decimal places.',36,0.278,'There are 6 possibilities per roll, giving 6 × 6 = 36 ordered outcomes.','Possible sums at least 9 occur for 4 ways to make 9, 3 ways for 10, 2 ways for 11, and 1 way for 12. Hence 10/36 ≈ 0.278.')
+ add(10,bookB,'challenging','Probability of single events','Twelve cards labelled 1 to 12 are mixed. One card is selected at random. (a) How many cards have numbers divisible by 3? (b) Find the probability the number is divisible by 3 or by 4, correct to 3 decimal places.',4,0.5,'Multiples of 3: 3, 6, 9, 12, giving four favourable cards.','Multiples of 3 or 4: 3, 4, 6, 8, 9, 12. There are 6 distinct outcomes out of 12, so probability = 6/12 = 0.500.')
  ];
  }
  // Distinct graph and multi-step applications. Keep existing mark blueprint.
@@ -104,6 +104,7 @@ function make(level,paper,set){
    'Surface area':'Distinguish one face, curved surface and total surface where appropriate.',
    'Probability':'Count favourable outcomes and compare them with all equally likely outcomes.',
    'Combined probability':'List or count ordered outcomes systematically.',
+   'Probability of single events':'When counting an OR event, list each successful outcome once even if it belongs to both groups.',
    'Volume of cones':'A cone occupies one third of a cylinder with matching base and height.',
    'Surface area of cones':'Total cone area includes the circular base plus the curved side.',
    'Speed and distance':'For the full journey, divide total distance by total duration.',
@@ -111,7 +112,7 @@ function make(level,paper,set){
   };
   question.explanation=specific[question.topic]||'Check the calculation against the given relationship and verify its units.';
  }
- for(const question of q){if((level===1&&question.topic==='Statistics')||(level===2&&['Averages','Surface area'].includes(question.topic)))question.steps[1].format={decimalPlaces:2};if(level===2&&['Probability','Combined probability'].includes(question.topic))question.steps[1].format={decimalPlaces:3};if(level===2&&question.topic==='Volume of cones')question.steps[1].format={significantFigures:3};}
+ for(const question of q){if((level===1&&question.topic==='Statistics')||(level===2&&['Averages','Surface area'].includes(question.topic)))question.steps[1].format={decimalPlaces:2};if(level===2&&['Probability','Combined probability','Probability of single events'].includes(question.topic))question.steps[1].format={decimalPlaces:3};if(level===2&&question.topic==='Volume of cones')question.steps[1].format={significantFigures:3};}
  return {status:'DRAFT generated content — accuracy, difficulty and exam similarity pending review',title:'Secondary '+level+' Paper '+paper+' Set '+set,questions:q};
 }
 window.HASetGenerator={make};
