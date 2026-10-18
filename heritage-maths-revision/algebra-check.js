@@ -22,9 +22,10 @@ function parse(raw){
  let i=0;
  const add=(a,b)=>a.map((v,j)=>v+b[j]),neg=a=>a.map(v=>-v);
  function multiply(a,b){const out=[0,0,0];a.forEach((v,j)=>b.forEach((w,k)=>{if(j+k>2&&Math.abs(v*w)>1e-9)throw Error('Degree above 2 is unsupported.');if(j+k<=2)out[j+k]+=v*w}));return out}
- function primary(){if(tokens[i]==='+'){i++;return primary()}if(tokens[i]==='-'){i++;return neg(primary())}if(tokens[i]==='('){i++;const a=sum();if(tokens[i++]!==')')throw Error('Missing closing bracket.');return a}const t=tokens[i++];if(t==='x')return[0,1,0];if(t&&/^\d|^\./.test(t))return[Number(t),0,0];throw Error('Expected a term.')}
+ function primary(){if(tokens[i]==='('){i++;const a=sum();if(tokens[i++]!==')')throw Error('Missing closing bracket.');return a}const t=tokens[i++];if(t==='x')return[0,1,0];if(t&&/^(?:\d|\.)/.test(t))return[Number(t),0,0];throw Error('Expected a term.')}
  function power(){let a=primary();if(tokens[i]==='^'){i++;const exp=tokens[i++];if(!['0','1','2'].includes(exp))throw Error('Only powers 0, 1, 2 supported.');if(exp==='0')a=[1,0,0];if(exp==='2')a=multiply(a,a)}return a}
- function product(){let a=power();while(tokens[i]==='*'){i++;a=multiply(a,power())}return a}
+ function signed(){if(tokens[i]==='+'){i++;return signed()}if(tokens[i]==='-'){i++;return neg(signed())}return power()}
+ function product(){let a=signed();while(tokens[i]==='*'){i++;a=multiply(a,signed())}return a}
  function sum(){let a=product();while(tokens[i]==='+'||tokens[i]==='-'){const op=tokens[i++],b=product();a=add(a,op==='+'?b:neg(b))}return a}
  const a=sum();if(i!==tokens.length)throw Error('Unexpected operator.');if(a.some(x=>!Number.isFinite(x)))throw Error('Non-finite expression.');return a;
 }
