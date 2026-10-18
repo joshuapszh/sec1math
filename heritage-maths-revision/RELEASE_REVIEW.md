@@ -57,3 +57,9 @@ The separately authored Secondary 1 Paper 1 Set 1 was inspected against its own 
 
 ## Final release decision — 18 October 2026
 **NO-GO: teacher preview only.** See [FINAL_120_QUESTION_AUDIT.md](FINAL_120_QUESTION_AUDIT.md) for the item-by-item inventory of all 120 questions. Every item passes baseline structural inventory checks but retains UNVERIFIED teacher approval. Private visual comparison with examination equations/diagrams remains incomplete; Paper 1 and Paper 2 still share broad structures and identical nominal difficulty allocations; an end-to-end teacher attempt has not been signed off. Do not assign, merge or publish without satisfying those gates. Existing tests passing does not establish a student-release certificate.
+
+## Focused correction/release checkpoint — 18 October 2026
+- Replaced Paper 2 Question 1 throughout the three Secondary 1 generated sets with a connected distribution/remaining-stock task rather than repeating Paper 1's single division exercise.
+- Replaced Paper 2 Question 1 throughout the three Secondary 2 generated sets with a ticket-revenue simultaneous-equations application rather than a bare pair of equations.
+- Added independent calculations for all six replacements and reran development-branch checks.
+- **Release outcome remains NO-GO for student publishing**: these six replacements improve Paper 2 differentiation but do not independently resolve all remaining pedagogical repetition, unverified teacher review statuses or missing private examination-image comparisons. No confidential source data are committed to the repository. The live main branch is not changed.
