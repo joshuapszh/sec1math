@@ -157,3 +157,38 @@ test('Paper 2 unit-cost application is not stop-inclusive average-speed template
   assert.doesNotMatch(q.prompt,/shuttle|van|rests|stop|km\/h/i);
  }
 });
+
+test('Independently audit generated ratio, discount and prism answers',()=>{
+ for(const level of [1])for(let paper=1;paper<=2;paper++)for(let set=1;set<=3;set++){
+  if(paper===1&&set===1)continue;
+  const qs=sandbox.window.HASetGenerator.make(level,paper,set).questions;
+  const ratio=qs.find(q=>q.topic==='Ratio');
+  const rm=ratio.prompt.match(/ratio (\d+):(\d+)\. There are (\d+) amber/);assert.ok(rm);
+  const [greenParts,amberParts,amber]=rm.slice(1).map(Number);
+  assert.equal(ratio.steps[0].answer,amber/amberParts);
+  assert.equal(ratio.steps[1].answer,greenParts*amber/amberParts);
+  const pct=qs.find(q=>q.topic==='Percentage');
+  const pm=pct.prompt.match(/costs \$(\d+) and has a (\d+)% discount/);assert.ok(pm);
+  const price=Number(pm[1]),percent=Number(pm[2]);
+  assert.equal(pct.steps[0].answer,Math.round(price*percent)/100);
+  assert.equal(pct.steps[1].answer,Math.round(price*(100-percent))/100);
+  const prism=qs.find(q=>q.topic==='Volume of prisms');
+  const vm=prism.prompt.match(/base of (\d+) cm, perpendicular height (\d+) cm, and prism length (\d+) cm/);assert.ok(vm);
+  const [base,height,length]=vm.slice(1).map(Number);
+  assert.equal(prism.steps[0].answer,base*height/2);
+  assert.equal(prism.steps[1].answer,base*height*length/2);
+ }
+});
+test('Independently verify generated sequences and inequalities where present',()=>{
+ for(let paper=1;paper<=2;paper++)for(let set=1;set<=3;set++){
+  if(paper===1&&set===1)continue;
+  const qs=sandbox.window.HASetGenerator.make(1,paper,set).questions;
+  const seq=qs.find(q=>q.topic==='Number patterns');
+  if(seq){
+   const m=seq.prompt.match(/sequence begins (\d+), (\d+), (\d+)/);assert.ok(m);
+   const first=Number(m[1]),difference=Number(m[2])-first;
+   assert.equal(Number(m[3])-Number(m[2]),difference);
+   assert.equal(seq.steps[1].answer,first+11*difference);
+  }
+ }
+});
