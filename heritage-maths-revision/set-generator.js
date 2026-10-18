@@ -97,6 +97,15 @@ function make(level,paper,set){
    'Frequency density = frequency ÷ class width = '+freq[1]+' ÷ '+widths[1]+' = '+densities[1]+'.',
    'Compare '+densities.join(', ')+': the greatest is '+Math.max(...densities)+'.');
  }
+ if(level===1&&set===3){
+  const m=c,intercept=b;
+  q[4]=add(5,bookB,'basic','Linear graphs',
+   'A straight line has equation y = '+m+'x + '+intercept+'. (a) Find y when x = 2. (b) Find its y-intercept.',
+   2*m+intercept,intercept,
+   'Substitute x = 2: y = '+m+' × 2 + '+intercept+' = '+(2*m+intercept)+'.',
+   'At x = 0, y = '+intercept+'; this is the y-intercept.');
+  q[4].diagram={kind:'linear-graph',slope:m,intercept,points:[[0,intercept],[1,m+intercept]]};
+ }
  // Extend terse generated working with explicit teaching explanations.
  for(const question of q){
   question.solution=question.solution.map((line,i)=>{
