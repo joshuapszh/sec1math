@@ -179,7 +179,9 @@ function make(level,paper,set){
    'Simple inequalities':'Use the same operations as equations, but preserve the inequality direction when dividing by a positive number.',
    'Statistical diagrams':'Histogram bar heights represent frequency density, not raw frequency when class widths differ.',
    'Financial decisions':'Revenue is not profit: deduct purchases and all additional expenses.',
-   'Similarity of areas':'A linear scale factor of two gives an area factor of four.'
+   'Similarity of areas':'A linear scale factor of two gives an area factor of four.',
+   'Unit rates and combined cost':'A combined unit price is total cost divided by total quantity, not the mean of the two prices.',
+   'Composite solid volume':'Compute the pyramid and cuboid volumes separately, then add; the common joining face does not affect volume.'
   };
   question.explanation=specific[question.topic]||'Check the calculation against the given relationship and verify its units.';
  }
