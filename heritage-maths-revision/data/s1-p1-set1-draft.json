@@ -1,5 +1,5 @@
 {
-  "status": "DRAFT v3 - redesigned question contexts and deterministic diagram specifications; manual marking review required",
+  "status": "DRAFT v4 — teacher-moderation rubrics included; automatic first-answer score is NOT exam method score",
   "title": "Secondary 1 · Paper 1 · Set 1",
   "questions": [
     {
@@ -47,7 +47,26 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 3
+      "reviewVersion": 4,
+      "teacherRubric": {
+        "status": "PROVISIONAL_TEACHER_RUBRIC",
+        "partA": {
+          "marks": 2,
+          "criteria": [
+            "M1: Select and apply an appropriate relationship or calculation.",
+            "A1: Obtain the correct answer with appropriate units where applicable."
+          ]
+        },
+        "partB": {
+          "marks": 3,
+          "criteria": [
+            "M1: Establish a valid calculation or relationship.",
+            "M1: Show a correct intermediate step or justified use of part (a).",
+            "A1: Obtain the correct final answer with units or rounding as required."
+          ]
+        },
+        "automaticScoring": "DOES NOT ASSESS METHOD MARKS"
+      }
     },
     {
       "id": "S1P1S1-Q02",
@@ -94,7 +113,26 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 3
+      "reviewVersion": 4,
+      "teacherRubric": {
+        "status": "PROVISIONAL_TEACHER_RUBRIC",
+        "partA": {
+          "marks": 2,
+          "criteria": [
+            "M1: Select and apply an appropriate relationship or calculation.",
+            "A1: Obtain the correct answer with appropriate units where applicable."
+          ]
+        },
+        "partB": {
+          "marks": 3,
+          "criteria": [
+            "M1: Establish a valid calculation or relationship.",
+            "M1: Show a correct intermediate step or justified use of part (a).",
+            "A1: Obtain the correct final answer with units or rounding as required."
+          ]
+        },
+        "automaticScoring": "DOES NOT ASSESS METHOD MARKS"
+      }
     },
     {
       "id": "S1P1S1-Q03",
@@ -141,7 +179,26 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 3
+      "reviewVersion": 4,
+      "teacherRubric": {
+        "status": "PROVISIONAL_TEACHER_RUBRIC",
+        "partA": {
+          "marks": 2,
+          "criteria": [
+            "M1: Select and apply an appropriate relationship or calculation.",
+            "A1: Obtain the correct answer with appropriate units where applicable."
+          ]
+        },
+        "partB": {
+          "marks": 3,
+          "criteria": [
+            "M1: Establish a valid calculation or relationship.",
+            "M1: Show a correct intermediate step or justified use of part (a).",
+            "A1: Obtain the correct final answer with units or rounding as required."
+          ]
+        },
+        "automaticScoring": "DOES NOT ASSESS METHOD MARKS"
+      }
     },
     {
       "id": "S1P1S1-Q04",
@@ -188,7 +245,26 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 3
+      "reviewVersion": 4,
+      "teacherRubric": {
+        "status": "PROVISIONAL_TEACHER_RUBRIC",
+        "partA": {
+          "marks": 2,
+          "criteria": [
+            "M1: Select and apply an appropriate relationship or calculation.",
+            "A1: Obtain the correct answer with appropriate units where applicable."
+          ]
+        },
+        "partB": {
+          "marks": 3,
+          "criteria": [
+            "M1: Establish a valid calculation or relationship.",
+            "M1: Show a correct intermediate step or justified use of part (a).",
+            "A1: Obtain the correct final answer with units or rounding as required."
+          ]
+        },
+        "automaticScoring": "DOES NOT ASSESS METHOD MARKS"
+      }
     },
     {
       "id": "S1P1S1-Q05",
@@ -235,7 +311,26 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 3
+      "reviewVersion": 4,
+      "teacherRubric": {
+        "status": "PROVISIONAL_TEACHER_RUBRIC",
+        "partA": {
+          "marks": 2,
+          "criteria": [
+            "M1: Select and apply an appropriate relationship or calculation.",
+            "A1: Obtain the correct answer with appropriate units where applicable."
+          ]
+        },
+        "partB": {
+          "marks": 3,
+          "criteria": [
+            "M1: Establish a valid calculation or relationship.",
+            "M1: Show a correct intermediate step or justified use of part (a).",
+            "A1: Obtain the correct final answer with units or rounding as required."
+          ]
+        },
+        "automaticScoring": "DOES NOT ASSESS METHOD MARKS"
+      }
     },
     {
       "id": "S1P1S1-Q06",
@@ -282,7 +377,26 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 3
+      "reviewVersion": 4,
+      "teacherRubric": {
+        "status": "PROVISIONAL_TEACHER_RUBRIC",
+        "partA": {
+          "marks": 3,
+          "criteria": [
+            "M1: Establish a valid rule or relationship.",
+            "M1: Show a valid substitution or simplification.",
+            "A1: Obtain the correct expression or value."
+          ]
+        },
+        "partB": {
+          "marks": 2,
+          "criteria": [
+            "M1: Use a correct continuation based on the appropriate method.",
+            "A1: Obtain the correct answer with units where applicable."
+          ]
+        },
+        "automaticScoring": "DOES NOT ASSESS METHOD MARKS"
+      }
     },
     {
       "id": "S1P1S1-Q07",
@@ -329,7 +443,7 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 3,
+      "reviewVersion": 4,
       "diagram": {
         "kind": "composite-rectangle",
         "outer": [
@@ -341,6 +455,25 @@
           6
         ],
         "unit": "m"
+      },
+      "teacherRubric": {
+        "status": "PROVISIONAL_TEACHER_RUBRIC",
+        "partA": {
+          "marks": 2,
+          "criteria": [
+            "M1: Select and apply an appropriate relationship or calculation.",
+            "A1: Obtain the correct answer with appropriate units where applicable."
+          ]
+        },
+        "partB": {
+          "marks": 3,
+          "criteria": [
+            "M1: Establish a valid calculation or relationship.",
+            "M1: Show a correct intermediate step or justified use of part (a).",
+            "A1: Obtain the correct final answer with units or rounding as required."
+          ]
+        },
+        "automaticScoring": "DOES NOT ASSESS METHOD MARKS"
       }
     },
     {
@@ -356,7 +489,7 @@
         2,
         3
       ],
-      "prompt": "The seven scores are 6, 14, 9, 11, 14, 8 and 15. (a) Find the median. (b) Find the mean, correct to 3 significant figures.",
+      "prompt": "The seven scores are 6, 14, 9, 11, 14, 8 and 16. (a) Find the median. (b) Find the mean, correct to 3 significant figures.",
       "steps": [
         {
           "label": "Part (a)",
@@ -366,7 +499,7 @@
         {
           "label": "Part (b)",
           "type": "numeric",
-          "answer": 11
+          "answer": 11.1
         }
       ],
       "hints": [
@@ -375,20 +508,39 @@
         "Use the result and check the units and reasonableness of part (b)."
       ],
       "solution": [
-        "Ordered scores: 6, 8, 9, 11, 14, 14, 15; median = 11",
-        "Sum = 77, so mean = 77 ÷ 7 = 11 exactly."
+        "Ordered scores: 6, 8, 9, 11, 14, 14, 16; median = 11",
+        "Sum = 78, so mean = 78 ÷ 7 = 11.142857… ≈ 11.1 (3 significant figures)."
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
       "commonMistakes": [
-        "Do not find the middle number from the original unsorted order."
+        "Do not take the median from the unsorted list or round the sum before dividing."
       ],
-      "explanation": "Mean = 10 exactly; this does not need artificial trailing zeros.",
+      "explanation": "Seven values give a median at the fourth ordered value. Round the calculated mean only at the end.",
       "markingNotes": [
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 3
+      "reviewVersion": 4,
+      "teacherRubric": {
+        "status": "PROVISIONAL_TEACHER_RUBRIC",
+        "partA": {
+          "marks": 2,
+          "criteria": [
+            "M1: Select and apply an appropriate relationship or calculation.",
+            "A1: Obtain the correct answer with appropriate units where applicable."
+          ]
+        },
+        "partB": {
+          "marks": 3,
+          "criteria": [
+            "M1: Establish a valid calculation or relationship.",
+            "M1: Show a correct intermediate step or justified use of part (a).",
+            "A1: Obtain the correct final answer with units or rounding as required."
+          ]
+        },
+        "automaticScoring": "DOES NOT ASSESS METHOD MARKS"
+      }
     },
     {
       "id": "S1P1S1-Q09",
@@ -435,13 +587,32 @@
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 3,
+      "reviewVersion": 4,
       "diagram": {
         "kind": "triangular-prism",
         "base": 12,
         "height": 8,
         "length": 15,
         "unit": "cm"
+      },
+      "teacherRubric": {
+        "status": "PROVISIONAL_TEACHER_RUBRIC",
+        "partA": {
+          "marks": 2,
+          "criteria": [
+            "M1: Select and apply an appropriate relationship or calculation.",
+            "A1: Obtain the correct answer with appropriate units where applicable."
+          ]
+        },
+        "partB": {
+          "marks": 3,
+          "criteria": [
+            "M1: Establish a valid calculation or relationship.",
+            "M1: Show a correct intermediate step or justified use of part (a).",
+            "A1: Obtain the correct final answer with units or rounding as required."
+          ]
+        },
+        "automaticScoring": "DOES NOT ASSESS METHOD MARKS"
       }
     },
     {
@@ -454,10 +625,10 @@
       "topic": "Financial mathematics",
       "marks": 5,
       "stepMarks": [
-        3,
-        2
+        2,
+        3
       ],
-      "prompt": "A stationery stall buys 50 pens for $4 each. It sells 35 pens at $7 each and sells the other 15 at $3 each. (a) Find the total sales revenue. (b) Find the overall profit.",
+      "prompt": "A stationery stall buys 50 pens at $4 each. It sells 35 pens at $7 each and sells the other 15 at $3 each. (a) Calculate its total sales revenue. (b) Express the overall profit as a percentage of the total cost, correct to 1 decimal place.",
       "steps": [
         {
           "label": "Part (a)",
@@ -467,29 +638,48 @@
         {
           "label": "Part (b)",
           "type": "numeric",
-          "answer": 90
+          "answer": 45
         }
       ],
       "hints": [
-        "Identify the relevant formula or relationship.",
-        "Work through part (a), showing each operation.",
-        "Use the result and check the units and reasonableness of part (b)."
+        "Revenue comes from both groups of sales.",
+        "Find total cost and subtract it from total revenue to find profit.",
+        "Profit percentage uses the cost price as denominator: profit ÷ cost × 100%."
       ],
       "solution": [
-        "Revenue = 35 × 7 + 15 × 3 = $290",
-        "Cost = 50 × 4 = $200; profit = $290 − $200 = $90"
+        "Revenue = 35 × $7 + 15 × $3 = $290",
+        "Cost = 50 × $4 = $200; profit = $290 − $200 = $90; profit percentage = ($90 ÷ $200) × 100% = 45.0%."
       ],
       "teacherReviewStatus": "UNVERIFIED",
       "source": "independently authored development draft",
       "commonMistakes": [
-        "Do not treat selling all notebooks at $9 or ignore the ten reduced-price sales."
+        "Do not divide profit by revenue when asked for profit as a percentage of cost."
       ],
-      "explanation": "Profit is $80; this is not the same as revenue of $320.",
+      "explanation": "The result is a percentage of the original cost, not of the sales revenue.",
       "markingNotes": [
         "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
         "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
       ],
-      "reviewVersion": 3
+      "reviewVersion": 4,
+      "teacherRubric": {
+        "status": "PROVISIONAL_TEACHER_RUBRIC",
+        "partA": {
+          "marks": 2,
+          "criteria": [
+            "M1: Select and apply an appropriate relationship or calculation.",
+            "A1: Obtain the correct answer with appropriate units where applicable."
+          ]
+        },
+        "partB": {
+          "marks": 3,
+          "criteria": [
+            "M1: Establish a valid calculation or relationship.",
+            "M1: Show a correct intermediate step or justified use of part (a).",
+            "A1: Obtain the correct final answer with units or rounding as required."
+          ]
+        },
+        "automaticScoring": "DOES NOT ASSESS METHOD MARKS"
+      }
     }
   ]
 }
