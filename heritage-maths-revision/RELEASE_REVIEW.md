@@ -34,3 +34,14 @@ Available school files were reviewed privately: Secondary 1 EOY Paper 1 (version
 - A genuine display defect was corrected: generated straight-line graphs with high intercepts could place plotted points outside the fixed vertical area. The graph now scales to plotted values, and browser regression coverage was added.
 - Unresolved: several draft sets reuse the same ten-question template with different numbers; they do not fully reproduce the intended Paper 1/Paper 2 cognitive-demand distinction. Chapter-level coverage and all individual model solutions need teacher approval.
 - **Release gate remains closed.** Never upload original papers, figures, answer keys or similarity matrices to this public GitHub repository.
+
+## Visual review extension — 18 October 2026
+The four available paper files were located. Selected pages containing geometry, inequalities, graphs and composite solids were requested in rendered-page mode. One Secondary 2 composite-solid diagram was visually inspectable and confirms the substantial construction-level similarity risk already corrected in the development bank. Some other embedded page images or equations were unavailable or omitted in the document reader; therefore no complete four-paper **visual clearance** is claimed.
+
+Safeguards added: development regression tests require the corrected Secondary 2 Paper 2 composite to use a different joined-solid construction, and the corrected Secondary 1 Paper 2 unit-rate questions to avoid the previously flagged stop-inclusive travel template. These are narrow regression checks, not comprehensive plagiarism detection.
+
+### Remaining private teacher gate
+- Compare every question and embedded diagram in all four examination papers against all twelve revision sets; inspect equations and plotted graphs at native resolution where the reader failed
+- Verify every draft numerical answer and model-working step, particularly precision, diagrams and physical units
+- Confirm question variety and Paper 2 application demand, then record a teacher-only approval outside public GitHub
+- Do not assign or publish while these checks remain incomplete
