@@ -126,10 +126,16 @@ function make(level,paper,set){
    'Larger area = '+(2*side)+'² = '+large+' cm²; difference = '+(large-small)+' cm².');
  }
  if(paper===2&&level===1&&set!==3){
- const d1=15+a,d2=8+b,dist=d1+d2;
- q[4]=add(5,bookB,'basic','Average speed with rest','A shuttle travels '+d1+' km in 2 hours, rests 1 hour, then travels '+d2+' km in 1 hour. (a) Find total distance. (b) Find average speed including rest to 2 decimal places.',dist,Math.round(dist/4*100)/100,'Distance = '+d1+' + '+d2+' = '+dist+' km.','Elapsed time = 4 hours. Speed = '+dist+' ÷ 4 = '+(Math.round(dist/4*100)/100)+' km/h.');
+ const price1=a+2,qty1=b+3,price2=a+5,qty2=b+2;
+ const cost1=price1*qty1,cost2=price2*qty2,total=cost1+cost2,quantity=qty1+qty2;
+ q[4]=add(5,bookB,'basic','Unit rates and combined cost',
+  'A supply shop sells '+qty1+' identical notebooks at SGD '+price1+' each and '+qty2+' identical notebooks at SGD '+price2+' each. (a) Find the total cost in SGD. (b) Find the average cost per notebook, to 2 decimal places.',
+  total,Math.round(total/quantity*100)/100,
+  'Total cost = '+qty1+' × '+price1+' + '+qty2+' × '+price2+' = SGD '+total+'.',
+  'Total notebooks = '+qty1+' + '+qty2+' = '+quantity+'. Average unit cost = '+total+' ÷ '+quantity+' = SGD '+(Math.round(total/quantity*100)/100)+'.');
  q[4].steps[1].format={decimalPlaces:2};
  }
+
  if(paper===2&&level===2&&set===1){
  const side=c+6,baseHeight=a+3,pyramidHeight=3*(b+2);
  const cuboid=side*side*baseHeight,pyramid=side*side*pyramidHeight/3;
