@@ -24,3 +24,17 @@ jobs:
         run: node heritage-maths-revision/tests/check.cjs
       - name: Blueprint schema checks
         run: python heritage-maths-revision/validate_reference_set.py
+
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright
+        run: |
+          npm install --no-save @playwright/test
+          npx playwright install --with-deps chromium
+      - name: End-to-end browser tests
+        run: npx playwright test --config=playwright.config.cjs
