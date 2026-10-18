@@ -27,3 +27,10 @@ Available school files were reviewed privately: Secondary 1 EOY Paper 1 (version
 - **Structural similarity risk remains:** Both level banks share routine contexts such as average speed, similarity, surface area and median/mean with the examinations. These are standard curriculum topics, and overlap at the topic level is not automatically leakage. A private item-by-item comparison of numbers, phrasing, diagrams and solution paths is still needed before release.
 - **Scope mismatch remains:** The generated questions do not fully cover every chapter named in the TOS, particularly statistical diagrams and inequalities. The 20%/80% marks split does not on its own guarantee topic coverage.
 - **No publication approval:** The site remains teacher-preview only, with teacherReviewStatus UNVERIFIED. Never commit examination content, exam excerpts or private similarity matrices to public GitHub.
+
+## 18 October source cross-check (four exam papers, parsed text)
+- The Secondary 1 Paper 1 and Paper 2 and Secondary 2 Paper 1 and Paper 2 were examined privately at question-heading and extractable-context level, together with the existing TOS. Most assessed topics recur in the practice bank by design; such topic overlap alone is not a confidential-question match.
+- Full visual inspection remains necessary: source DOCX math expressions, embedded graphs and construction diagrams were incompletely represented in extracted text, so exact item-by-item similarity cannot yet be certified.
+- A genuine display defect was corrected: generated straight-line graphs with high intercepts could place plotted points outside the fixed vertical area. The graph now scales to plotted values, and browser regression coverage was added.
+- Unresolved: several draft sets reuse the same ten-question template with different numbers; they do not fully reproduce the intended Paper 1/Paper 2 cognitive-demand distinction. Chapter-level coverage and all individual model solutions need teacher approval.
+- **Release gate remains closed.** Never upload original papers, figures, answer keys or similarity matrices to this public GitHub repository.
