@@ -107,11 +107,25 @@ function make(level,paper,set){
   q[4].diagram={kind:'linear-graph',slope:m,intercept,points:[[0,intercept],[1,m+intercept]]};
  }
 
- // Paper 2: replace several procedural items with independent applications.
+ // Paper 2: extended applications.
  if(paper===2&&level===1){
-  const unitCost=a+3,quantity=5*b,markup=c+2;
+  const cost=a+3,qty=5*b,markup=c+2,transport=b+3;
+  const revenue=(qty-5)*(cost+markup)+5*(cost-1);
   q[9]=add(10,bookB,'challenging','Financial decisions',
-   'A class fundraiser purchases '+quantity+' reusable cups for  with explicit teaching explanations.
+   'A class fundraiser buys '+qty+' reusable cups for SGD '+cost+' each. It sells '+(qty-5)+' cups at SGD '+(cost+markup)+' and five cups at SGD '+(cost-1)+'. There is an additional SGD '+transport+' delivery charge. (a) Find revenue. (b) Find net profit after all costs.',
+   revenue,revenue-qty*cost-transport,
+   'Revenue = '+(qty-5)+' × '+(cost+markup)+' + 5 × '+(cost-1)+' = '+revenue+'.',
+   'Net profit = '+revenue+' − '+(qty*cost)+' − '+transport+' = '+(revenue-qty*cost-transport)+'.');
+ }
+ if(paper===2&&level===2){
+  const side=a+4,small=side*side,large=4*small;
+  q[3]=add(4,bookB,'basic','Similarity of areas',
+   'Two similar square panels have sides '+side+' cm and '+(2*side)+' cm. (a) Find the smaller area. (b) Find how much larger the other area is.',
+   small,large-small,
+   'Smaller area = '+side+'² = '+small+' cm².',
+   'Larger area = '+(2*side)+'² = '+large+' cm²; difference = '+(large-small)+' cm².');
+ }
+ // Extend terse generated working with explicit teaching explanations.
  for(const question of q){
   question.solution=question.solution.map((line,i)=>{
     const lead=i===0?'Part (a): identify the quantity or formula and calculate it. ':'Part (b): apply the appropriate relationship to the given values. ';
