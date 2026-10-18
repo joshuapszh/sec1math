@@ -1,0 +1,65 @@
+{
+  "status": "draft: textbook contents mapping only; not approved for student release",
+  "distribution": {
+    "paper_marks": 50,
+    "semester_1_marks": 10,
+    "semester_2_marks": 40,
+    "basic_marks": 25,
+    "moderate_marks": 20,
+    "challenging_marks": 5
+  },
+  "levels": {
+    "Secondary 1": {
+      "semester1_book": "Casco Mathematics Tutor 1A",
+      "semester2_book": "Casco Mathematics Tutor 1B",
+      "semester1_topics": [
+        "Factors and multiples",
+        "Numbers and estimation",
+        "Algebraic manipulation",
+        "Linear equations",
+        "Angles and polygons"
+      ],
+      "semester2_topics": [
+        "Ratio, rate and speed",
+        "Percentage and financial arithmetic",
+        "Number patterns",
+        "Linear graphs",
+        "Simple inequalities",
+        "Perimeter and area",
+        "Volume and surface area",
+        "Statistics"
+      ]
+    },
+    "Secondary 2": {
+      "semester1_book": "Casco Mathematics Tutor 2A",
+      "semester2_book": "Think! Mathematics 2B",
+      "semester1_topics": [
+        "Linear graphs and simultaneous equations",
+        "Inequalities",
+        "Algebraic factorisation",
+        "Quadratic graphs",
+        "Algebraic fractions and formulae",
+        "Direct and inverse proportion"
+      ],
+      "semester2_topics": [
+        "Congruence and similarity",
+        "Pythagoras theorem",
+        "Trigonometric ratios",
+        "Volume and surface area",
+        "Probability",
+        "Statistical diagrams",
+        "Averages"
+      ]
+    }
+  },
+  "release_checks": [
+    "Every question independently solved",
+    "Question marks sum to 50",
+    "Semester split 10/40",
+    "Difficulty split 25/20/5",
+    "Math formatting valid",
+    "Interactive graph inputs validated",
+    "No confidential source documents uploaded",
+    "Private comparison against confidential SA2 completed"
+  ]
+}
