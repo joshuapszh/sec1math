@@ -25,7 +25,7 @@ $('flag').onclick=()=>{r.flag=!r.flag;persist();draw()};
 $('prev').onclick=()=>{index--;draw()};
 $('next').onclick=()=>{index++;draw()};
 $('report').onclick=downloadCSV;
-window.HAMethodReview?.mount(q,document.querySelector('.workspace article'));
+window.HADiagrams?.render(document.getElementById('question-diagram'),q.diagram);window.HAMethodReview?.mount(q,document.querySelector('.workspace article'));
 typeset();
 }
 function drawResults(q,r){for(let i=0;i<2;i++){const raw=r.answers[i].trim();if(!raw)continue;const result=window.HAMarking?.evaluate(q.steps[i].type||'numeric',raw,q.steps[i].answer);const correct=result?.supported&&result.correct;$('result'+i).textContent=correct?'Correct.':'Not correct. Retry or use a hint.'}document.querySelector('aside .muted').textContent='First-attempt score: '+bank.reduce((s,x)=>s+marks(x,record(x.id)),0)+' / 50';persist()}
