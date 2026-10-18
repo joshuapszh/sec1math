@@ -131,10 +131,15 @@ function make(level,paper,set){
  q[4].steps[1].format={decimalPlaces:2};
  }
  if(paper===2&&level===2&&set===1){
- const radius=c+2,height=a+3,cone=3.142*radius*radius*height/3,hemisphere=2*3.142*radius*radius*radius/3;
- q[8]=add(9,bookB,'moderate','Composite solid volume','A cone of radius '+radius+' cm and perpendicular height '+height+' cm is joined to a hemisphere of the same radius. Use pi = 3.142. (a) Find the cone volume to 2 decimal places. (b) Find total volume to 2 decimal places.',Math.round(cone*100)/100,Math.round((cone+hemisphere)*100)/100,'Cone volume = pi × r² × h ÷ 3 = '+(Math.round(cone*100)/100)+' cm³.','Hemisphere volume = 2 × pi × r³ ÷ 3; total = '+(Math.round((cone+hemisphere)*100)/100)+' cm³.');
- q[8].steps[0].format={decimalPlaces:2};q[8].steps[1].format={decimalPlaces:2};
+ const side=c+6,baseHeight=a+3,pyramidHeight=3*(b+2);
+ const cuboid=side*side*baseHeight,pyramid=side*side*pyramidHeight/3;
+ q[8]=add(9,bookB,'moderate','Composite solid volume',
+  'A display model consists of a square-based cuboid of base '+side+' cm by '+side+' cm and height '+baseHeight+' cm. A square pyramid of the same base is fixed on top. Its perpendicular height is '+pyramidHeight+' cm. (a) Find the volume of the pyramid. (b) Find the total volume of the display model.',
+  pyramid,pyramid+cuboid,
+  'Pyramid volume = (1/3) × '+side+'² × '+pyramidHeight+' = '+pyramid+' cm³.',
+  'Cuboid volume = '+side+'² × '+baseHeight+' = '+cuboid+' cm³. Total = '+pyramid+' + '+cuboid+' = '+(pyramid+cuboid)+' cm³.');
  }
+
  // Extend terse generated working with explicit teaching explanations.
  for(const question of q){
   question.solution=question.solution.map((line,i)=>{
