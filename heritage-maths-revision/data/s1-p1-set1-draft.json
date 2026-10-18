@@ -1,5 +1,5 @@
 {
-  "status": "DRAFT - NOT CONFIDENTIALITY OR TEACHER APPROVED",
+  "status": "DRAFT v2 — independently authored practice; teacher validation and confidentiality sign-off required",
   "title": "Secondary 1 · Paper 1 · Set 1",
   "questions": [
     {
@@ -19,23 +19,35 @@
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 42
+          "answer": 42,
+          "type": "numeric"
         },
         {
           "label": "Part (b)",
-          "answer": 168
+          "answer": 168,
+          "type": "numeric"
         }
       ],
       "hints": [
-        "Divide 378 by 9.",
-        "Multiply your first answer by 4."
+        "Apply equal sharing before scaling to four cartons.",
+        "One carton holds 378 ÷ 9 sleeves.",
+        "Four cartons contain 4 × 42 sleeves."
       ],
       "solution": [
         "378 ÷ 9 = 42",
         "42 × 4 = 168"
       ],
       "teacherReviewStatus": "UNVERIFIED",
-      "source": "independently authored development draft"
+      "source": "independently authored development draft",
+      "commonMistakes": [
+        "A frequent error is multiplying 378 by 4 before dividing by 9."
+      ],
+      "explanation": "Write the number per carton first; check that 9 × 42 = 378.",
+      "markingNotes": [
+        "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
+        "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
+      ],
+      "reviewVersion": 2
     },
     {
       "id": "S1P1S1-Q02",
@@ -54,23 +66,35 @@
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 15
+          "answer": 15,
+          "type": "numeric"
         },
         {
           "label": "Part (b)",
-          "answer": 10
+          "answer": 10,
+          "type": "numeric"
         }
       ],
       "hints": [
-        "The perimeter is twice the sum of length and width.",
-        "After finding length, subtract 5."
+        "Use the perimeter formula P = 2(l + w).",
+        "Half the perimeter is 46 ÷ 2 = 23 cm.",
+        "Length = 23 − 8 = 15 cm; then solve x + 5 = 15."
       ],
       "solution": [
         "Length = 46 ÷ 2 − 8 = 15",
         "x = 15 − 5 = 10"
       ],
       "teacherReviewStatus": "UNVERIFIED",
-      "source": "independently authored development draft"
+      "source": "independently authored development draft",
+      "commonMistakes": [
+        "Do not subtract the width directly from the full perimeter."
+      ],
+      "explanation": "Check: 2(15 + 8) = 46 cm.",
+      "markingNotes": [
+        "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
+        "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
+      ],
+      "reviewVersion": 2
     },
     {
       "id": "S1P1S1-Q03",
@@ -89,23 +113,35 @@
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 9
+          "answer": 9,
+          "type": "numeric"
         },
         {
           "label": "Part (b)",
-          "answer": 18
+          "answer": 18,
+          "type": "numeric"
         }
       ],
       "hints": [
-        "Seven parts represent 63 badges.",
-        "Red badges represent two parts."
+        "Identify which quantity corresponds to seven parts.",
+        "One part = 63 ÷ 7.",
+        "Red badges = 2 × 9."
       ],
       "solution": [
         "One part = 63 ÷ 7 = 9",
         "Red = 2 × 9 = 18"
       ],
       "teacherReviewStatus": "UNVERIFIED",
-      "source": "independently authored development draft"
+      "source": "independently authored development draft",
+      "commonMistakes": [
+        "Avoid treating 63 as the total number of badges."
+      ],
+      "explanation": "Check: 18 : 63 simplifies to 2 : 7.",
+      "markingNotes": [
+        "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
+        "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
+      ],
+      "reviewVersion": 2
     },
     {
       "id": "S1P1S1-Q04",
@@ -124,23 +160,35 @@
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 12
+          "answer": 12,
+          "type": "numeric"
         },
         {
           "label": "Part (b)",
-          "answer": 68
+          "answer": 68,
+          "type": "numeric"
         }
       ],
       "hints": [
-        "Find 15% of 80.",
-        "Subtract the discount from the original price."
+        "Percentage discount is calculated from the original price.",
+        "15% of $80 = 0.15 × 80.",
+        "Discounted price = 80 − 12."
       ],
       "solution": [
         "Discount = 0.15 × 80 = $12",
         "New price = 80 − 12 = $68"
       ],
       "teacherReviewStatus": "UNVERIFIED",
-      "source": "independently authored development draft"
+      "source": "independently authored development draft",
+      "commonMistakes": [
+        "Do not treat 15% as a discount of $15."
+      ],
+      "explanation": "Check: 85% of $80 is $68.",
+      "markingNotes": [
+        "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
+        "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
+      ],
+      "reviewVersion": 2
     },
     {
       "id": "S1P1S1-Q05",
@@ -159,23 +207,35 @@
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 60
+          "answer": 60,
+          "type": "numeric"
         },
         {
           "label": "Part (b)",
-          "answer": 20
+          "answer": 20,
+          "type": "numeric"
         }
       ],
       "hints": [
-        "Add both volumes of water.",
-        "Divide total volume by total time."
+        "Average rate is total volume divided by total elapsed time.",
+        "Total volume = 36 + 24 and total time = 2 + 1.",
+        "Average flow rate = 60 ÷ 3."
       ],
       "solution": [
         "Total = 36 + 24 = 60 litres",
         "Average rate = 60 ÷ 3 = 20 litres/min"
       ],
       "teacherReviewStatus": "UNVERIFIED",
-      "source": "independently authored development draft"
+      "source": "independently authored development draft",
+      "commonMistakes": [
+        "Do not average 18 and 24 without accounting for the different durations."
+      ],
+      "explanation": "The answer is in litres per minute, not minutes per litre.",
+      "markingNotes": [
+        "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
+        "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
+      ],
+      "reviewVersion": 2
     },
     {
       "id": "S1P1S1-Q06",
@@ -204,15 +264,25 @@
         }
       ],
       "hints": [
-        "The xth term is 8 + 6(x − 1).",
-        "Expand the expression and substitute x = 20."
+        "Find the common difference, 6, and start with the first term, 8.",
+        "The nth term is 8 + 6(n − 1).",
+        "Expand to 6n + 2 and substitute n = 20."
       ],
       "solution": [
         "8 + 6(x − 1) = 6x + 2",
         "6(20) + 2 = 122"
       ],
       "teacherReviewStatus": "UNVERIFIED",
-      "source": "independently authored development draft"
+      "source": "independently authored development draft",
+      "commonMistakes": [
+        "Do not use 8 + 6n because the first term would be 14."
+      ],
+      "explanation": "Check: n = 1 gives 8; n = 2 gives 14.",
+      "markingNotes": [
+        "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
+        "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
+      ],
+      "reviewVersion": 2
     },
     {
       "id": "S1P1S1-Q07",
@@ -231,23 +301,35 @@
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 198
+          "answer": 198,
+          "type": "numeric"
         },
         {
           "label": "Part (b)",
-          "answer": 173
+          "answer": 173,
+          "type": "numeric"
         }
       ],
       "hints": [
-        "Area of a rectangle = length × width.",
-        "Subtract the square pond's area."
+        "Treat the planted region as an outer rectangle minus an inner square.",
+        "Outer area = 18 × 11.",
+        "Pond area = 5 × 5; subtract it from 198."
       ],
       "solution": [
         "Rectangle = 18 × 11 = 198 m²",
         "Planting = 198 − 25 = 173 m²"
       ],
       "teacherReviewStatus": "UNVERIFIED",
-      "source": "independently authored development draft"
+      "source": "independently authored development draft",
+      "commonMistakes": [
+        "Do not subtract the pond's side length instead of its area."
+      ],
+      "explanation": "Check units: both answers are square metres.",
+      "markingNotes": [
+        "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
+        "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
+      ],
+      "reviewVersion": 2
     },
     {
       "id": "S1P1S1-Q08",
@@ -262,27 +344,39 @@
         2,
         3
       ],
-      "prompt": "The quiz marks are 9, 12, 7, 13, 12, 11 and 6. Find the median, then the mean correct to 3 significant figures.",
+      "prompt": "The quiz marks are 9, 12, 7, 13, 12, 11 and 6. Find the median, then the mean. Give exact answers where possible.",
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 11
+          "answer": 11,
+          "type": "numeric"
         },
         {
           "label": "Part (b)",
-          "answer": 10
+          "answer": 10,
+          "type": "numeric"
         }
       ],
       "hints": [
-        "Order all seven marks to locate the middle value.",
-        "Add all marks and divide by seven."
+        "The median is the middle value of an ordered list.",
+        "Order the seven values: 6, 7, 9, 11, 12, 12, 13.",
+        "The sum is 70; divide by 7 to find the mean."
       ],
       "solution": [
         "Ordered: 6,7,9,11,12,12,13; median = 11",
         "Sum = 70; mean = 70 ÷ 7 = 10"
       ],
       "teacherReviewStatus": "UNVERIFIED",
-      "source": "independently authored development draft"
+      "source": "independently authored development draft",
+      "commonMistakes": [
+        "Do not find the middle number from the original unsorted order."
+      ],
+      "explanation": "Mean = 10 exactly; this does not need artificial trailing zeros.",
+      "markingNotes": [
+        "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
+        "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
+      ],
+      "reviewVersion": 2
     },
     {
       "id": "S1P1S1-Q09",
@@ -301,23 +395,35 @@
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 35
+          "answer": 35,
+          "type": "numeric"
         },
         {
           "label": "Part (b)",
-          "answer": 560
+          "answer": 560,
+          "type": "numeric"
         }
       ],
       "hints": [
-        "Triangle area = 1/2 × base × perpendicular height.",
-        "Volume = area × prism length."
+        "Calculate the area of the triangular cross-section first.",
+        "Triangle area = ½ × 10 × 7.",
+        "Multiply the cross-sectional area by the prism's length 16."
       ],
       "solution": [
         "Area = 0.5 × 10 × 7 = 35 cm²",
         "Volume = 35 × 16 = 560 cm³"
       ],
       "teacherReviewStatus": "UNVERIFIED",
-      "source": "independently authored development draft"
+      "source": "independently authored development draft",
+      "commonMistakes": [
+        "Do not use 10 × 7 without the factor ½."
+      ],
+      "explanation": "Area is cm², while prism volume is cm³.",
+      "markingNotes": [
+        "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
+        "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
+      ],
+      "reviewVersion": 2
     },
     {
       "id": "S1P1S1-Q10",
@@ -336,23 +442,35 @@
       "steps": [
         {
           "label": "Part (a)",
-          "answer": 320
+          "answer": 320,
+          "type": "numeric"
         },
         {
           "label": "Part (b)",
-          "answer": 80
+          "answer": 80,
+          "type": "numeric"
         }
       ],
       "hints": [
-        "Work out the sales revenue from both groups.",
-        "Profit = total sales revenue − total purchase cost."
+        "Separate revenue, costs and profit.",
+        "Revenue = (30 × 9) + (10 × 5).",
+        "Profit = revenue − (40 × 6)."
       ],
       "solution": [
         "Revenue = 30 × 9 + 10 × 5 = $320",
         "Cost = 40 × 6 = $240; profit = $320 − $240 = $80"
       ],
       "teacherReviewStatus": "UNVERIFIED",
-      "source": "independently authored development draft"
+      "source": "independently authored development draft",
+      "commonMistakes": [
+        "Do not treat selling all notebooks at $9 or ignore the ten reduced-price sales."
+      ],
+      "explanation": "Profit is $80; this is not the same as revenue of $320.",
+      "markingNotes": [
+        "Part (a): 2 marks associated with a correct answer; written reasoning requires teacher review.",
+        "Part (b): 3 marks associated with a correct answer; written reasoning requires teacher review."
+      ],
+      "reviewVersion": 2
     }
   ]
 }
