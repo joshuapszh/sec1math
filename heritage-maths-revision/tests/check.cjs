@@ -60,3 +60,29 @@ test('Two-dice application independently counts favourable sums',()=>{
 
 test('Significant figure checker',()=>{assert.equal(HAMarking.evaluate('numeric','12.3',12.3,{significantFigures:3}).correct,true);assert.equal(HAMarking.evaluate('numeric','12.30',12.3,{significantFigures:3}).correct,false);assert.equal(HAMarking.evaluate('numeric','0.0123',0.0123,{significantFigures:3}).correct,true);assert.equal(HAMarking.evaluate('numeric','0.01230',0.0123,{significantFigures:3}).correct,false)});
 test('Cone-volume draft sets explicitly require three significant figures',()=>{for(let paper=1;paper<=2;paper++)for(let set=1;set<=2;set++){const q=sandbox.window.HASetGenerator.make(2,paper,set).questions[8];assert.equal(q.steps[1].format.significantFigures,3)}});
+
+test('Scientific notation and ambiguous integer significant figures',()=>{
+ assert.equal(HAMarking.evaluate('numeric','1.20e3',1200,{significantFigures:3}).correct,true);
+ assert.equal(HAMarking.evaluate('numeric','1.2e3',1200,{significantFigures:3}).correct,false);
+ assert.equal(HAMarking.evaluate('numeric','0.01230',0.0123,{significantFigures:3}).correct,false);
+ assert.equal(HAMarking.evaluate('numeric','0.0123',0.0123,{significantFigures:3}).correct,true);
+ assert.match(HAMarking.evaluate('numeric','1200',1200,{significantFigures:3}).message,/ambiguous/);
+});
+test('Independently recompute generated statistics and numerical probability',()=>{
+ for(let level=1;level<=2;level++)for(let paper=1;paper<=2;paper++)for(let set=1;set<=3;set++){
+  if(level===1&&paper===1&&set===1)continue;
+  const qs=sandbox.window.HASetGenerator.make(level,paper,set).questions;
+  const stat=qs.find(q=>q.topic==='Statistics'||q.topic==='Averages');
+  assert.ok(stat);
+  const values=(stat.prompt.match(/(?:are |values are )([\d, ]+)\./)||[])[1];
+  assert.ok(values,'Must find seven input values');
+  const nums=values.split(',').map(x=>Number(x.trim())),sorted=[...nums].sort((a,b)=>a-b);
+  assert.equal(nums.length,7);
+  assert.equal(stat.steps[0].answer,sorted[3]);
+  assert.equal(stat.steps[1].answer,Math.round(nums.reduce((a,b)=>a+b,0)/7*100)/100);
+  if(level===2){
+    const dice=qs[9];assert.equal(dice.steps[0].answer,36);
+    assert.equal(dice.steps[1].answer,Number((10/36).toFixed(3)));
+  }
+ }
+});
