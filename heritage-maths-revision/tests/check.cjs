@@ -141,3 +141,19 @@ test('Paper 2 notebook unit costs and composite volumes',()=>{
  assert.equal(q2.steps[1].answer,pv+side*side*height);
  assert.ok(!q2.prompt.includes('hemisphere'));
 });
+
+test('Paper 2 composite avoids previous exam-like cone hemisphere construction',()=>{
+ const q=sandbox.window.HASetGenerator.make(2,2,1).questions[8];
+ assert.equal(q.topic,'Composite solid volume');
+ assert.match(q.prompt,/cuboid/);
+ assert.match(q.prompt,/square pyramid/);
+ assert.doesNotMatch(q.prompt,/hemisphere/i);
+ assert.doesNotMatch(q.prompt,/cone of radius/i);
+});
+test('Paper 2 unit-cost application is not stop-inclusive average-speed template',()=>{
+ for(const set of [1,2]){
+  const q=sandbox.window.HASetGenerator.make(1,2,set).questions[4];
+  assert.equal(q.topic,'Unit rates and combined cost');
+  assert.doesNotMatch(q.prompt,/shuttle|van|rests|stop|km\/h/i);
+ }
+});
