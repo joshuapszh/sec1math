@@ -245,3 +245,45 @@ test('Independent Secondary 2 Pythagoras, similarity and trigonometry audit',()=
   }
  }
 });
+
+test('Independently verify remaining cylindrical and conical geometry',()=>{
+ for(let paper=1;paper<=2;paper++)for(let set=1;set<=3;set++){
+  const qs=sandbox.window.HASetGenerator.make(2,paper,set).questions;
+  const cylinder=qs.find(q=>q.topic==='Surface area');
+  const cm=cylinder.prompt.match(/radius (\d+) cm and height (\d+) cm/);assert.ok(cm);
+  const [r,h]=cm.slice(1).map(Number);
+  assert.equal(cylinder.steps[0].answer,Math.round(3.142*r*r*100)/100);
+  assert.equal(cylinder.steps[1].answer,Math.round(2*3.142*r*h*100)/100);
+  const cone=qs.find(q=>q.topic==='Volume of cones');
+  if(cone){
+   const m=cone.prompt.match(/radius (\d+) cm and height (\d+) cm/);assert.ok(m);
+   const [radius,height]=m.slice(1).map(Number);
+   assert.equal(cone.steps[0].answer,radius*radius*height);
+   assert.equal(cone.steps[1].answer,Number((3.142*radius*radius*height/3).toPrecision(3)));
+  }
+  const coneArea=qs.find(q=>q.topic==='Surface area of cones');
+  if(coneArea){
+   const m=coneArea.prompt.match(/radius (\d+) cm and slant height (\d+) cm/);assert.ok(m);
+   const [radius,slant]=m.slice(1).map(Number);
+   assert.ok(slant>radius);
+   assert.equal(coneArea.steps[0].answer,Math.round(3.142*radius*radius*100)/100);
+   assert.equal(coneArea.steps[1].answer,Math.round(3.142*radius*(radius+slant)*100)/100);
+  }
+ }
+});
+test('Generated geometry has positive physically consistent measurements',()=>{
+ for(let level=1;level<=2;level++)for(let paper=1;paper<=2;paper++)for(let set=1;set<=3;set++){
+  if(level===1&&paper===1&&set===1)continue;
+  for(const q of sandbox.window.HASetGenerator.make(level,paper,set).questions){
+   if(q.diagram?.kind==='cutout-rectangle'){
+    assert.ok(q.diagram.inner[0]>0&&q.diagram.inner[1]>0);
+    assert.ok(q.diagram.inner[0]<q.diagram.outer[0]);
+    assert.ok(q.diagram.inner[1]<q.diagram.outer[1]);
+    assert.ok(q.steps[1].answer>0);
+   }
+   if(q.diagram?.kind==='linear-graph'){
+    assert.ok(q.diagram.points.every(([x,y])=>y===q.diagram.slope*x+q.diagram.intercept));
+   }
+  }
+ }
+});
