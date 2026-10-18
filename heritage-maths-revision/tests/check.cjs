@@ -320,3 +320,20 @@ test('Paper 2 opening questions use independently checked linked applications',(
   assert.equal(12*x+7*y,revenue);
  }
 });
+
+test('Paper 2 perimeter extension and cylinder material applications',()=>{
+ for(let set=1;set<=3;set++){
+  const q1=sandbox.window.HASetGenerator.make(1,2,set).questions[1];
+  const m=q1.prompt.match(/width (\d+) cm.*increased by (\d+) cm.*perimeter is (\d+) cm/);
+  assert.ok(m);const [width,increase,perimeter]=m.slice(1).map(Number);
+  assert.equal(q1.steps[0].answer,perimeter/2-width);
+  assert.equal(q1.steps[1].answer,perimeter/2-width-increase);
+  const q2=sandbox.window.HASetGenerator.make(2,2,set).questions[6];
+  assert.match(q2.prompt,/wrapped in material/);
+  assert.match(q2.prompt,/circular end receives a label/);
+  const v=q2.prompt.match(/radius (\d+) cm and height (\d+) cm/);
+  assert.ok(v);const [r,h]=v.slice(1).map(Number);
+  assert.equal(q2.steps[0].answer,Math.round(3.142*r*r*100)/100);
+  assert.equal(q2.steps[1].answer,Math.round(2*3.142*r*h*100)/100);
+ }
+});
