@@ -26,6 +26,7 @@ $('flag').onclick=()=>{r.flag=!r.flag;persist();draw()};
 $('prev').onclick=()=>{index--;draw()};
 $('next').onclick=()=>{index++;draw()};
 $('report').onclick=downloadCSV;
+window.HAMethodReview?.mount(q,document.querySelector('.workspace article'));
 typeset();
 }
 function drawResults(q,r){for(let i=0;i<2;i++){const raw=r.answers[i].trim();if(!raw)continue;const result=window.HAMarking?.evaluate(q.steps[i].type||'numeric',raw,q.steps[i].answer);const correct=result?.supported&&result.correct;$('result'+i).textContent=correct?'Correct.':'Not correct. Retry or use a hint.'}document.querySelector('aside .muted').textContent='First-attempt score: '+bank.reduce((s,x)=>s+marks(x,record(x.id)),0)+' / 50';persist()}
@@ -35,6 +36,6 @@ async function init(){const workspace=document.querySelector('.workspace');works
 try{const res=await fetch('./data/s1-p1-set1-draft.json',{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);const data=await res.json();bank=data.questions;if(bank.length!==10||bank.reduce((s,q)=>s+q.marks,0)!==50)throw Error('Question bank fails count/marks validation');{const saved=window.HAProgress.load(bank);state=saved.records;quarantined=saved.quarantined;if(saved.notice)console.warn(saved.notice)}draw()}catch(e){workspace.innerHTML='<article><h2>Unable to load draft questions</h2><p>'+escapeHTML(e.message)+'</p><p>Run through a local web server, not file://.</p></article>'}}
 init();
 
-window.addEventListener('DOMContentLoaded',()=>{window.HAMathInput?.enhance();const g=document.getElementById('graph-lab');if(g)window.HAGraph?.init(g)});
+window.addEventListener('DOMContentLoaded',()=>{window.HAMathInput?.enhance();const g=document.getElementById('graph-lab');if(g)window.HAGraph?.init(g);window.HAMethodReview?.practice(document.querySelector('main'))});
 
 /* Developer question diagnostics are implemented in diagnostics.js. */
