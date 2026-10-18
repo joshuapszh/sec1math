@@ -39,6 +39,7 @@ function make(level,paper,set){
  add(10,bookB,'challenging','Combined probability','A spinner has four equal sectors numbered 1, 2, 3 and 4. It is spun twice, independently. (a) Find the number of equally likely ordered outcomes. (b) Find the probability that the sum is at least 6, correct to 3 decimal places.',16,0.375,'Four outcomes per spin: 4 × 4 = 16','Favourable ordered pairs: (2,4), (3,3), (3,4), (4,2), (4,3), (4,4). Probability = 6/16 = 0.375.')
  ];
  }
+ for(const question of q){if((level===1&&question.topic==='Statistics')||(level===2&&['Averages','Surface area'].includes(question.topic)))question.steps[1].format={decimalPlaces:2};if(level===2&&['Probability','Combined probability'].includes(question.topic))question.steps[1].format={decimalPlaces:3};}
  return {status:'DRAFT generated content — accuracy, difficulty and exam similarity pending review',title:'Secondary '+level+' Paper '+paper+' Set '+set,questions:q};
 }
 window.HASetGenerator={make};
